@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GC算法,内存分配," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="概述　　GC需要考虑的三件事情：哪些内存需要回收、何时回收、怎么回收。了解GC是为了更加熟练地排查内存溢出、内存泄漏等问题，根据应用特点，选择合适的JVM参数，调优JVM。在Java各个运行时数据区域，线程私有的虚拟机栈、本地方法栈、程序计数器的内存分配和回收都具有确定性，随线程生而生，随线程死而死。Java堆和方法区是多线程共享的，对象的分配和回收都是动态的，后续讲到的GC也主要针对这两个区域。">
+<meta name="keywords" content="GC算法,内存分配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="垃圾收集器与内存分配策略">
+<meta property="og:url" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/index.html">
+<meta property="og:site_name" content="一鸣惊人">
+<meta property="og:description" content="概述　　GC需要考虑的三件事情：哪些内存需要回收、何时回收、怎么回收。了解GC是为了更加熟练地排查内存溢出、内存泄漏等问题，根据应用特点，选择合适的JVM参数，调优JVM。在Java各个运行时数据区域，线程私有的虚拟机栈、本地方法栈、程序计数器的内存分配和回收都具有确定性，随线程生而生，随线程死而死。Java堆和方法区是多线程共享的，对象的分配和回收都是动态的，后续讲到的GC也主要针对这两个区域。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/2.png">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/1.jpg">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/4.jpg">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/3.jpg">
+<meta property="og:updated_time" content="2018-10-14T11:45:03.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="垃圾收集器与内存分配策略">
+<meta name="twitter:description" content="概述　　GC需要考虑的三件事情：哪些内存需要回收、何时回收、怎么回收。了解GC是为了更加熟练地排查内存溢出、内存泄漏等问题，根据应用特点，选择合适的JVM参数，调优JVM。在Java各个运行时数据区域，线程私有的虚拟机栈、本地方法栈、程序计数器的内存分配和回收都具有确定性，随线程生而生，随线程死而死。Java堆和方法区是多线程共享的，对象的分配和回收都是动态的，后续讲到的GC也主要针对这两个区域。">
+<meta name="twitter:image" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/"/>
+
+
+
+
+
+  <title>垃圾收集器与内存分配策略 | 一鸣惊人</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-125477179-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一鸣惊人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">骐骥一跃不能十步，驽马十驾功在不舍</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">垃圾收集器与内存分配策略</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-15T08:48:56+08:00">
+                2016-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深入理解JVM系列笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">深入理解JVM系列笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/15/垃圾收集器与内存分配策略/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/04/15/垃圾收集器与内存分配策略/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>　　GC需要考虑的三件事情：哪些内存需要回收、何时回收、怎么回收。了解GC是为了更加熟练地排查内存溢出、内存泄漏等问题，根据应用特点，选择合适的JVM参数，调优JVM。在Java各个运行时数据区域，线程私有的虚拟机栈、本地方法栈、程序计数器的内存分配和回收都具有确定性，随线程生而生，随线程死而死。Java堆和方法区是多线程共享的，对象的分配和回收都是动态的，后续讲到的GC也主要针对这两个区域。</p>
+<h2 id="收集对象的判断"><a href="#收集对象的判断" class="headerlink" title="收集对象的判断"></a>收集对象的判断</h2><p>　　对于GC而言，首先需要关注的问题就是哪些对象可以回收，目前有两种主流做法：引用计数算法（<a href="http://hbprotoss.github.io/posts/pythonla-ji-hui-shou-ji-zhi.html" target="_blank" rel="noopener">python</a>)和可达性分析算法（java)。</p>
+<h3 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h3><ul>
+<li>定义：每个对象都有一个引用计数器，当被引用时，计数器加1，当解除引用时，计数减1，当计数器为0时，表示该对象可以回收。</li>
+<li>优点：实现简单、判断效率高</li>
+<li>缺点：无法解决循环引用的问题，需要其他算法辅助</li>
+</ul>
+<h3 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h3><ul>
+<li>定义：定义一些GC Roots对象作为起点，凡是可以通过GC Roots对象直接或间接引用到的对象，就认为是可达的，对于不可达对象，就是需要回收的对象。</li>
+<li>优点：解决了循环引用问题，不需要其他算法辅助</li>
+<li>缺点：实现相对复杂，而且存在运行时卡顿的问题<br><img src="2.png" alt="可达性分析算法"><br>在Java中，可作为GC Roots对象包括如下几种：</li>
+<li>Java虚拟机栈局部变量表引用的对象</li>
+<li>方法区静态类属性引用的对象</li>
+<li>方法区常量引用的对象</li>
+<li>本地方法栈JNI引用的对象</li>
+</ul>
+<h3 id="可达性与引用分类"><a href="#可达性与引用分类" class="headerlink" title="可达性与引用分类"></a>可达性与引用分类</h3><p>　　在Java1.2版本之前，对象一共有3种状态：可达、可复活、不可达。GC Roots对象可以直接或间接引用到的对象，则该对象是可达的。一旦引用链断裂，就变成可复活的了,可复活对象在finalize方法中有且只有一次复活机会，复活就变成可达，否则就变成了不可达，等待被回收。Java1.2把可达性细分为：强可达、软可达、弱可达和幽灵可达，以描述一些“食之无味，弃之可惜”的对象（比如内存资源受限的缓存系统），对应四种引用强引用、软引用、弱引用、幽灵引用，四种引用强度依次减弱。</p>
+<ul>
+<li>强引用(Strong Reference)与强可达（Strong Reachable)<br>强引用：代码中出现最多的引用，比如<code>String s = new String(&quot;abc&quot;)</code>。<br>强可达：只要至少存在一条GC Roots到该对象的引用链全是强引用的，就是强可达的；只要该对象是强可达的，该对象就永远不会被回收，内存不足，JVM宁愿报OOM异常。</li>
+<li>软引用(Soft Reference)与软可达（Soft Reachable)<br>软引用：如<code>SoftReference&lt;Object&gt; softReference = new SoftReference&lt;&gt;(new Object())</code>, 用来描述一些有用但是非必要的对象，比如内存资源紧张的缓存系统。<br>软可达：对象不是强可达的，且至少存在一条GC Roots到该对象的引用链，所有引用强度大于等于软引用，且其中至少有一个引用是软引用的，就是软可达的；一个对象是软可达的，当Jave Heap空间充足时，它不会被回收，反之，就会被回收（当然也有复活的机会）。</li>
+<li>弱引用(Week Reference)与弱可达（Weak Reachable)<br>弱引用：如<code>WeakReference&lt;Object&gt; weakReference = new WeakReference&lt;&gt;(new Object())</code>, 用来描述一中规范映射，当映射中的key还被其他对象引用时，就继续保留，否则，下次GC就会被清除，例如WeakHashMap。<br>弱可达：对象不是强可达，也不是软可达，且至少存在一条GC Roots到该对象的引用链，所有引用强度大于等于弱引用， 且其中至少有一个引用是弱引用，则该对象是弱可达的。弱可达的对象，只能活到下一次系统GC（当然也有复活的机会）</li>
+<li>可复活：对象不是强、软、弱可达的，但是可以通过某些对象的终结方法（Finalize)恢复到上述某种状态。</li>
+<li>幽灵引用(Phantom Reference)与幽灵可达（Plantom Reachable)<br>幽灵引用：如<code>PhantomReference&lt;Object&gt; weakReference = new PhantomReference&lt;&gt;(new Object()， new ReferenceQueue())</code>, 主要用来实现除Finalize方法的以外更加复杂的资源回收机制, 因为Finalize方法执行时间不确定（gc线程优先级低，且该对象被复活过之后，就不会再执行该方法），而幽灵引用在对象被回收前会添加到引用队列中，使得资源回收线程可以得到一个通知（对于内存回收机制有严重依赖时，比如一定要该对象空间回收之后，JVM才能分配新对象，可以使用幽灵引用）<br>幽灵可达：对象不是强、软、弱可达的，也不是可复活的，且至少存在一条GC Roots到该对象的引用链，其中至少有一个引用是幽灵引用，则该对象是幽灵可达的，幽灵可达的对象是不可复活的。</li>
+<li>不可达：对象不是强、软、弱、幽灵可达的，也不是可复活的，不可达对象就是要被回收的对象。</li>
+</ul>
+<p><strong>判断原则</strong>: 引用<a href="http://www.cnblogs.com/fsjohnhuang/p/4268411.html" target="_blank" rel="noopener">Java魔法堂：四种引用类型、ReferenceQueue和WeakHashMap</a></p>
+<blockquote>
+<p>单条引用链的可达性以最弱的一个引用类型来决定；<br>多条引用链的可达性以最强的一个引用类型来决定；</p>
+</blockquote>
+<p><strong>注意几点</strong>：</p>
+<ul>
+<li>软引用和弱引用在还没有被清除前（clear方法），可以使用get方法得对象的强引用，被清除后，则得到null，而幽灵引用的get方法一直为null</li>
+<li>软引用、弱引用、幽灵引用在构建时，可以添加ReferenceQueue(幽灵引用必须添加）, 当被垃圾回收时，GC线程会将他们加入到对应的引用队列之中(enqueue)，对于软引用和弱引用，GC会调用他们的clear方法，而幽灵引用必须手动clear。</li>
+<li>关于WeakHashMap的详细介绍请参考我的一篇文章《<a href="http://sbwei.github.io/2016/04/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WeakHashMap%E5%AE%9E%E7%8E%B0/" target="_blank" rel="noopener">深入理解WeakHashMap实现</a>》</li>
+<li>关于引用队列ReferenceQueue 有各个方法enqueue(一个引用只能最多入队一次）、remove(移出队列中的对象，如果没有就一直等，或者等timeout时间），poll(也是移出队列中的对象，如果没有，就直接返回null)，具体可以看源码。</li>
+<li><p>可复活对象在回收前，有一次拯救自己的机会，就是<strong>该对象覆盖了finalize方法，并且没有执行过</strong>，这样就可以有机会在fianalize方法中重新复活该对象，fianalize()方法是由低优先级线程Finalizer执行的，所以不保证能执行完，且最多执行一次。由于finalize()方法具有太多不确定性，所以强烈建议不要使用，可以使用try…catch…finally或者幽灵引用的方式。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.gc;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeEscapeGC</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> FinalizeEscapeGC SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">isAlive</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"yes,i am still alive!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.finalize();</span><br><span class="line">        System.out.println(<span class="string">"finalize method executed!"</span>);</span><br><span class="line">        SAVE_HOOK = <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        SAVE_HOOK = <span class="keyword">new</span> FinalizeEscapeGC();</span><br><span class="line"></span><br><span class="line">        SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">        System.gc();</span><br><span class="line">        Thread.sleep(<span class="number">500</span>);</span><br><span class="line">        <span class="keyword">if</span>(SAVE_HOOK !=<span class="keyword">null</span>)&#123;</span><br><span class="line">            SAVE_HOOK.isAlive();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"no,i am dead!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">        System.gc();</span><br><span class="line">        Thread.sleep(<span class="number">500</span>);</span><br><span class="line">        <span class="keyword">if</span>(SAVE_HOOK !=<span class="keyword">null</span>)&#123;</span><br><span class="line">            SAVE_HOOK.isAlive();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"no,i am dead!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  运行结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">finalize method executed!</span><br><span class="line">yes,i am still alive!</span><br><span class="line">no,i am dead!</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h2><h3 id="标记-清除算法（Mark-Sweep"><a href="#标记-清除算法（Mark-Sweep" class="headerlink" title="标记-清除算法（Mark-Sweep)"></a>标记-清除算法（Mark-Sweep)</h3><ul>
+<li>描述：标记-清除算法是最基础的算法，后续算法都是在这个算法的基础上，针对其不足的改进，一共分为两个过程：标记（不可达对象）和清除。</li>
+<li>缺点：<br>  1） 标记和清除两个过程效率不高<br>  2） 会产生内存碎片问题<br><img src="1.jpg" alt="标记-清除算法"></li>
+</ul>
+<h3 id="复制算法-Copying"><a href="#复制算法-Copying" class="headerlink" title="复制算法(Copying)"></a>复制算法(Copying)</h3><p>初级版</p>
+<ul>
+<li>描述：将可用内存对半分开，每次使用其中的一半，当这一半使用完了，就把存活对象复制到另一半，并集中回收这一半。</li>
+<li>优点: 不会产生内存碎片问题，内存分配只需移动栈顶指针，连续分配，实现简单，运行高效。</li>
+<li>缺点: 每次只能利用一半的内存，利用率太低。<br><img src="4.jpg" alt="复制算法"><br>高级版</li>
+<li>描述：由于Java中绝大多数（98%）对象是短命的，在下一次GC前就没用了，所以不需要对半开，可以划分成一个Eden空间和两个Survivor空间（From、To), 每次使用其中的一个Eden空间和Survivor空间（比如大小8:1:1，则利用率是90%）， 将存活对象复制到另一个Survivor空间，并清除Eden空间和刚用过的Suvivor空间。</li>
+<li>优点：除了有初级版的优点外，内存利用率也大大提高。</li>
+<li>缺点：由于不能保证每次存活的对象大小都小于10%的内存大小，所以需要其他内存做担保（Handle Promotion), 比如老年代， 当另一个Survivor容纳不下时，直接分配到老年代。</li>
+</ul>
+<h3 id="标记-整理算法-Mark-Compact"><a href="#标记-整理算法-Mark-Compact" class="headerlink" title="标记-整理算法(Mark-Compact)"></a>标记-整理算法(Mark-Compact)</h3><ul>
+<li>描述：复制算法适合短命对象比例特别高的情况，如果每次存活过多，复制太多对象将严重影响效率，而且不想浪费空间，还行需要其他内存担保。标记-整理算法标记过程标记-清除算法一样，整理的时候，是把所以对象移到一端，然后清理掉边界外的内存空间。</li>
+<li>优点：内存利用率高（100%），整理后不存在内存碎片。</li>
+<li>缺点：效率不高，需要整理和清除<br><img src="3.jpg" alt="标记-整理算法"></li>
+</ul>
+<h3 id="分代收集思想"><a href="#分代收集思想" class="headerlink" title="分代收集思想"></a>分代收集思想</h3><blockquote>
+<p>90%以上的Java对象都是短命的<br>90%以上的Java程序都会有长命对象</p>
+</blockquote>
+<p>　　根据以上想法，将Java堆空间分为年轻代（Young Gerneration） 和 老年代（Old Gerneration）， 其中年轻代大多数对象都是短命的，可以使用高级版复制算法， 并由老年代担保，老年代由于对象存活率较高，且没有其他空间为他担保，可以使用标记整理或者标记清除算法。</p>
+<h2 id="个人观点区"><a href="#个人观点区" class="headerlink" title="个人观点区"></a>个人观点区</h2><p>　　个人认为可达性和引用分类部分，《Inside the Java Virtual Machine》比 《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》描述的更准确。后书中提到各种引用区别时，提到了垃圾回收方面区别，不能单纯说，只要一个对象强引用还在，就不能被回收（循环强引用呢,见下面的例子），必须和可达性结合起来，比如说强可达的对象，一定不能被回收更为准确。当然相信作者自己肯定明白，表述的瑕疵或者说表达清楚感觉很啰嗦，希望读者明白就好。<br>   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.gc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.ref.WeakReference;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 弱可达中的循环强引用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeakReferenceGC</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        A a =  <span class="keyword">new</span> A();</span><br><span class="line">        a.setB(<span class="keyword">new</span> B(<span class="keyword">new</span> C(a)));</span><br><span class="line">        WeakReference&lt;A&gt; weakReference = <span class="keyword">new</span> WeakReference&lt;&gt;(a);</span><br><span class="line">        a = <span class="keyword">null</span>;  <span class="comment">//消除强可达，变成弱可达</span></span><br><span class="line">        System.gc();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">500</span>);  <span class="comment">//GC线程优先级低，等500ms</span></span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(weakReference.get() != <span class="keyword">null</span>)&#123; <span class="comment">//还有C指向A的强引用，但弱可达，还是会被GC</span></span><br><span class="line">            System.out.println(<span class="string">"instance a is alive!"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"instance a is dead!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> B b;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setB</span><span class="params">(B b)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.b = b;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> C c;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">B</span><span class="params">(C c)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.c = c;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> A a;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">C</span><span class="params">(A a)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.a = a;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>   结果：<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">instance a is dead!</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>周志明.《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》[M]</li>
+<li>Bill Venners.《Inside the Java Virtual Machine, Second Edition》[M]</li>
+<li><a href="http://hbprotoss.github.io/posts/pythonla-ji-hui-shou-ji-zhi.html" target="_blank" rel="noopener">Python垃圾回收机制</a></li>
+<li><a href="https://www.zhihu.com/question/21663879" target="_blank" rel="noopener">Java 等语言的 GC 为什么不实时释放内存？</a></li>
+<li><a href="http://www.cnblogs.com/fsjohnhuang/p/4268411.html" target="_blank" rel="noopener">Java魔法堂：四种引用类型、ReferenceQueue和WeakHashMap</a></li>
+<li><a href="http://sbwei.github.io/2016/04/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WeakHashMap%E5%AE%9E%E7%8E%B0/" target="_blank" rel="noopener">深入理解WeakHashMap实现</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/public.jpg" alt="amazing0218 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="amazing0218 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="amazing0218 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GC算法/" rel="tag"># GC算法</a>
+          
+            <a href="/tags/内存分配/" rel="tag"># 内存分配</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/08/Java内存区域与内存溢出异常/" rel="next" title="Java内存区域与内存溢出异常">
+                <i class="fa fa-chevron-left"></i> Java内存区域与内存溢出异常
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/23/深入理解WeakHashMap实现/" rel="prev" title="深入理解WeakHashMap实现">
+                深入理解WeakHashMap实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.png"
+               alt="amazing0218" />
+          <p class="site-author-name" itemprop="name">amazing0218</p>
+           
+              <p class="site-description motion-element" itemprop="description">关注NOSQL、分布式、大数据、数据库等技术</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/amazing0218" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ifeve.com/" title="并发编程网" target="_blank">并发编程网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#收集对象的判断"><span class="nav-number">2.</span> <span class="nav-text">收集对象的判断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引用计数算法"><span class="nav-number">2.1.</span> <span class="nav-text">引用计数算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可达性分析算法"><span class="nav-number">2.2.</span> <span class="nav-text">可达性分析算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可达性与引用分类"><span class="nav-number">2.3.</span> <span class="nav-text">可达性与引用分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集算法"><span class="nav-number">3.</span> <span class="nav-text">垃圾收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记-清除算法（Mark-Sweep"><span class="nav-number">3.1.</span> <span class="nav-text">标记-清除算法（Mark-Sweep)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制算法-Copying"><span class="nav-number">3.2.</span> <span class="nav-text">复制算法(Copying)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记-整理算法-Mark-Compact"><span class="nav-number">3.3.</span> <span class="nav-text">标记-整理算法(Mark-Compact)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分代收集思想"><span class="nav-number">3.4.</span> <span class="nav-text">分代收集思想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个人观点区"><span class="nav-number">4.</span> <span class="nav-text">个人观点区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amazing0218</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://amazing.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/';
+          this.page.identifier = '2016/04/15/垃圾收集器与内存分配策略/';
+          this.page.title = '垃圾收集器与内存分配策略';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://amazing.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

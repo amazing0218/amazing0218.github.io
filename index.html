@@ -1,0 +1,2808 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="关注NOSQL、分布式、大数据、数据库等技术">
+<meta name="keywords" content="NOSQL 分布式 数据库 大数据">
+<meta property="og:type" content="website">
+<meta property="og:title" content="一鸣惊人">
+<meta property="og:url" content="http://amazing0218.github.io/index.html">
+<meta property="og:site_name" content="一鸣惊人">
+<meta property="og:description" content="关注NOSQL、分布式、大数据、数据库等技术">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一鸣惊人">
+<meta name="twitter:description" content="关注NOSQL、分布式、大数据、数据库等技术">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://amazing0218.github.io/"/>
+
+
+
+
+
+  <title>一鸣惊人</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-125477179-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一鸣惊人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">骐骥一跃不能十步，驽马十驾功在不舍</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-ii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/09/algorithms-for-cardinality-estimation-part-ii/" itemprop="url">(转)解读Cardinality Estimation算法（第二部分：Linear Counting）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-09T17:04:11+08:00">
+                2018-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/09/algorithms-for-cardinality-estimation-part-ii/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/09/algorithms-for-cardinality-estimation-part-ii/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在<a href="../algorithms-for-cardinality-estimation-part-i/index.html">上一篇文章中</a>，我们知道传统的精确基数计数算法在数据量大时会存在一定瓶颈，瓶颈主要来自于数据结构合并和内存使用两个方面。因此出现了很多基数估计的概率算法，这些算法虽然计算出的结果不是精确的，但误差可控，重要的是这些算法所使用的数据结构易于合并，同时比传统方法大大节省内存。</p>
+<p>在这一篇文章中，我们讨论Linear Counting算法。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Linear Counting（以下简称LC）在1990年的一篇论文“A linear-time probabilistic counting algorithm for database applications”中被提出。作为一个早期的基数估计算法，LC在空间复杂度方面并不算优秀，实际上LC的空间复杂度与上文中简单bitmap方法是一样的（但是有个常数项级别的降低），都是O($N_{max}$)，因此目前很少单独使用LC。不过作为Adaptive Counting等算法的基础，研究一下LC还是比较有价值的。</p>
+<h2 id="基本算法"><a href="#基本算法" class="headerlink" title="基本算法"></a>基本算法</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>LC的基本思路是：设有一哈希函数H，其哈希结果空间有m个值（最小值0，最大值m-1），并且哈希结果服从均匀分布。使用一个长度为m的bitmap，每个bit为一个桶，均初始化为0，设一个集合的基数为n，此集合所有元素通过H哈希到bitmap中，如果某一个元素被哈希到第k个比特并且第k个比特为0，则将其置为1。当集合所有元素哈希完成后，设bitmap中还有u个bit为0。则：<br>$$\hat{x} = -mlog\frac{u}{m}$$<br>为n的一个估计，且为最大似然估计（MLE）。</p>
+<p>示意图如下：<br><img src="1.png" alt="xxxx"></p>
+<h3 id="推导及证明"><a href="#推导及证明" class="headerlink" title="推导及证明"></a>推导及证明</h3><p>（对数学推导不感兴趣的读者可以跳过本节）</p>
+<p>由上文对H的定义已知n个不同元素的哈希值服从独立均匀分布。设Aj为事件“经过n个不同元素哈希后，第j个桶值为0”，则：<br>$$P(A_j)=(1−\frac{1}{m})^n$$<br>又每个桶是独立的，则u的期望为：<br>$$E(u)=\sum_{j=1}^{m}P(A_j)=m(1−\frac{1}{m})^n=m((1+\frac{1}{−m})^{−m})^{-\frac{n}{m}}$$<br>当n和m趋于无穷大时，其值约为$me^{−\frac{n}{m}}$<br>由：$$E(u)=me^{−\frac{n}{m}}$$ 得：$$n=−mlog\frac{E(u)}{m}$$<br>显然每个桶的值服从参数相同0-1分布，因此u服从二项分布。由概率论知识可知，当n很大时，可以用正态分布逼近二项分布，因此可以认为当n和m趋于无穷大时u渐进服从正态分布。</p>
+<p>因此u的概率密度函数为：$$f(x)=\frac{1}{\sigma\sqrt{2\pi}}e^{−\frac{(x−\mu)^2}{2\sigma^2}}$$</p>
+<p>由于我们观察到的空桶数u是从正态分布中随机抽取的一个样本，因此它就是μ的最大似然估计（正态分布的期望的最大似然估计是样本均值）。</p>
+<p>又由如下定理：</p>
+<p>设$f(x)$是可逆函数, $\hat{x}$是x的最大似然估计，则$f(\hat{x})$是$f(x)$的最大似然估计。</p>
+<p>又$−mlog\frac{x}{m}$是可逆函数，则$\hat{n}=−mlog\frac{u}{m}$是$n=−mlog\frac{E(u)}{m}$的最大似然估计。</p>
+<p>偏差分析<br>下面不加证明给出如下结论：</p>
+<p>$$Bias(\frac{\hat{n}}{n})=E(\frac{\hat{n}}{n})−1=\frac{e^t−t−1}{2n}$$<br>$$StdError(\frac{\hat{n}}{n})=\frac{\sqrt{m}(e^t−t−1)^{1/2}}{n}$$<br>其中t=n/m<br>以上结论的推导在“A linear-time probabilistic counting algorithm for database applications”可以找到。</p>
+<h2 id="算法应用"><a href="#算法应用" class="headerlink" title="算法应用"></a>算法应用</h2><p>在应用LC算法时，主要需要考虑的是bitmap长度m的选择。这个选择主要受两个因素的影响：基数n的量级以及容许的误差。这里假设估计基数n的量级大约为N，允许的误差为ϵ，则m的选择需要遵循如下约束。</p>
+<h3 id="误差控制"><a href="#误差控制" class="headerlink" title="误差控制"></a>误差控制</h3><p>这里以标准差作为误差。由上面标准差公式可以推出，当基数的量级为N，容许误差为$\epsilon$时，有如下限制：</p>
+<p>$$m&gt;\frac{e^t−t−1}{(\epsilon{t})^2}$$<br>将量级和容许误差带入上式，就可以得出m的最小值。</p>
+<h3 id="满桶控制"><a href="#满桶控制" class="headerlink" title="满桶控制"></a>满桶控制</h3><p>由LC的描述可以看到，如果m比n小太多，则很有可能所有桶都被哈希到了，此时u的值为0，LC的估计公式就不起作用了（变成无穷大）。因此m的选择除了要满足上面误差控制的需求外，还要保证满桶的概率非常小。</p>
+<p>上面已经说过，u满足二项分布，而当n非常大，p非常小时，可以用泊松分布近似逼近二项分布。因此这里我们可以认为u服从泊松分布（注意，上面我们说u也可以近似服从正态分布，这并不矛盾，实际上泊松分布和正态分布分别是二项分布的离散型和连续型概率逼近，且泊松分布以正态分布为极限）：</p>
+<p>当n、m趋于无穷大时：<br>$$Pr(u=k)=(\frac{\lambda{k}}{k!})e^{−\lambda}$$<br>因此：</p>
+<p>$$Pr(u=0)&lt;e^{−5}=0.007$$<br>由于泊松分布的方差为λ，因此只要保证u的期望偏离0点$\sqrt{5}$的标准差就可以保证满桶的概率不大约0.7%。因此可得：</p>
+<p>$$m&gt;5(e^t−t−1)$$<br>综上所述，当基数量级为N，可接受误差为$\epsilon$，则m的选取应该遵从</p>
+<p>$$m&gt;\beta{(e^t−t−1)}$$<br>其中$β=max(5,1/(\epsilon{t})^2)$<br>下图是论文作者预先计算出的关于不同基数量级和误差情况下，m的选择表：<br><img src="2.png" alt="xxxx"><br>可以看出精度要求越高，则bitmap的长度越大。随着m和n的增大，m大约为n的十分之一。因此LC所需要的空间只有传统的bitmap直接映射方法的1/10，但是从渐进复杂性的角度看，空间复杂度仍为$O(N_{max})$。</p>
+<h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>LC非常方便于合并，合并方案与传统bitmap映射方法无异，都是通过按位或的方式。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇文章主要介绍了Linear Counting。LC算法虽然由于空间复杂度不够理想已经很少被单独使用，但是由于其在元素数量较少时表现非常优秀，因此常被用于弥补LogLog Counting在元素较少时误差较大的缺陷，实际上LC及其思想是组成HyperLogLog Counting和Adaptive Counting的一部分。</p>
+<p>在下一篇文章中，我会介绍空间复杂度仅有$O(log_2(log_2(N_{max})))$的基数估计算法<a href="../algorithms-for-cardinality-estimation-part-iii/index.html">LogLog Counting</a>。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-i/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/09/algorithms-for-cardinality-estimation-part-i/" itemprop="url">(转)解读Cardinality Estimation算法（第一部分：基本概念）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-09T17:04:11+08:00">
+                2018-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/09/algorithms-for-cardinality-estimation-part-i/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/09/algorithms-for-cardinality-estimation-part-i/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>申明</strong>：自己在学Redis的时候，看到了HyperLogLog，想了解一下基数计数，刚好看到<a href="http://blog.codinglabs.org/articles/algorithms-for-cardinality-estimation-part-i.html" target="_blank" rel="noopener">CodingLabs（张洋）</a>对这部分有详细介绍，觉得确实写得不错，所以看完之后，直接转了。推导部分看的不是很明白[其实很多不懂]，最大似然，无偏估计，中心极限定理等概念都比较模糊了，只能抽空去看看大学教材《概率论与数理统计》了。</p>
+<p>基数计数（cardinality counting）是实际应用中一种常见的计算场景，在数据分析、网络监控及数据库优化等领域都有相关需求。精确的基数计数算法由于种种原因，在面对大数据场景时往往力不从心，因此如何在误差可控的情况下对基数进行估计就显得十分重要。目前常见的基数估计算法有Linear Counting、LogLog Counting、HyperLogLog Counting及Adaptive Counting等。这几种算法都是基于概率统计理论所设计的概率算法，它们克服了精确基数计数算法的诸多弊端（如内存需求过大或难以合并等），同时可以通过一定手段将误差控制在所要求的范围内。</p>
+<p>作为“解读Cardinality Estimation算法”系列文章的第一部分，本文将首先介绍基数的概念，然后通过一个电商数据分析的例子说明基数如何在具体业务场景中发挥作用以及为什么在大数据面前基数的计算是困难的，在这一部分也同时会详述传统基数计数的解决方案及遇到的难题。</p>
+<p>后面在第二部分-第四部分会分别详细介绍Linear Counting、LogLog Counting、HyperLogLog Counting及Adaptive Counting四个算法，会涉及算法的基本思路、概率分析及论文关键部分的解读。</p>
+<p>文章索引：<br>第一部分：<a href="index.html">基本概念</a></p>
+<p>第二部分：<a href="../algorithms-for-cardinality-estimation-part-ii/index.html">Linear Counting</a></p>
+<p>第三部分：<a href="../algorithms-for-cardinality-estimation-part-iii/index.html">LogLog Counting</a></p>
+<p>第四部分：<a href="../algorithms-for-cardinality-estimation-part-iv/index.html">HyperLogLog Counting及Adaptive Counting</a></p>
+<h2 id="基数的定义"><a href="#基数的定义" class="headerlink" title="基数的定义"></a>基数的定义</h2><p>简单来说，基数（cardinality，也译作势），是指一个集合（这里的集合允许存在重复元素，与集合论对集合严格的定义略有不同，如不做特殊说明，本文中提到的集合均允许存在重复元素）中不同元素的个数。例如看下面的集合：<br>{1,2,3,4,5,2,3,9,7}<br>这个集合有9个元素，但是2和3各出现了两次，因此不重复的元素为1,2,3,4,5,9,7，所以这个集合的基数是7。</p>
+<p>如果两个集合具有相同的基数，我们说这两个集合等势。基数和等势的概念在有限集范畴内比较直观，但是如果扩展到无限集则会比较复杂，一个无限集可能会与其真子集等势（例如整数集和偶数集是等势的）。不过在这个系列文章中，我们仅讨论有限集的情况，关于无限集合基数的讨论，有兴趣的同学可以参考实变分析相关内容。</p>
+<p>容易证明，如果一个集合是有限集，则其基数是一个自然数。</p>
+<h2 id="基数的应用实例"><a href="#基数的应用实例" class="headerlink" title="基数的应用实例"></a>基数的应用实例</h2><p>下面通过一个实例说明基数在电商数据分析中的应用。</p>
+<p>假设一个淘宝网店在其店铺首页放置了10个宝贝链接，分别从Item01到Item10为这十个链接编号。店主希望可以在一天中随时查看从今天零点开始到目前这十个宝贝链接分别被多少个独立访客点击过。所谓独立访客（Unique Visitor，简称UV）是指有多少个自然人，例如，即使我今天点了五次Item01，我对Item01的UV贡献也是1，而不是5。</p>
+<p>用术语说这实际是一个实时数据流统计分析问题。</p>
+<p>要实现这个统计需求。需要做到如下三点：</p>
+<ol>
+<li><p>对独立访客做标识</p>
+</li>
+<li><p>在访客点击链接时记录下链接编号及访客标记</p>
+</li>
+<li><p>对每一个要统计的链接维护一个数据结构和一个当前UV值，当某个链接发生一次点击时，能迅速定位此用户在今天是否已经点过此链接，如果没有则此链接的UV增加1</p>
+</li>
+</ol>
+<p>下面分别介绍三个步骤的实现方案</p>
+<h3 id="对独立访客做标识"><a href="#对独立访客做标识" class="headerlink" title="对独立访客做标识"></a>对独立访客做标识</h3><p>客观来说，目前还没有能在互联网上准确对一个自然人进行标识的方法，通常采用的是近似方案。例如通过登录用户+cookie跟踪的方式：当某个用户已经登录，则采用会员ID标识；对于未登录用户，则采用跟踪cookie的方式进行标识。为了简单起见，我们假设完全采用跟踪cookie的方式对独立访客进行标识。</p>
+<h3 id="记录链接编号及访客标记"><a href="#记录链接编号及访客标记" class="headerlink" title="记录链接编号及访客标记"></a>记录链接编号及访客标记</h3><p>这一步可以通过javascript埋点及记录accesslog完成，具体原理和实现方案可以参考我之前的一篇文章：网站统计中的数据收集原理及实现。</p>
+<h3 id="实时UV计算"><a href="#实时UV计算" class="headerlink" title="实时UV计算"></a>实时UV计算</h3><p>可以看到，如果将每个链接被点击的日志中访客标识字段看成一个集合，那么此链接当前的UV也就是这个集合的基数，因此UV计算本质上就是一个基数计数问题。</p>
+<p>在实时计算流中，我们可以认为任何一次链接点击均触发如下逻辑（伪代码描述）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cand_counting(item_no, user_id) &#123;</span><br><span class="line">    <span class="keyword">if</span> (user_id <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">in</span> the item_no visitor set) &#123;</span><br><span class="line">        add user_id to item_no visitor set;</span><br><span class="line">        cand[item_no]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>逻辑非常简单，每当有一个点击事件发生，就去相应的链接被访集合中寻找此访客是否已经在里面，如果没有则将此用户标识加入集合，并将此链接的UV加1。</p>
+<p>虽然逻辑非常简单，但是在实际实现中尤其面临大数据场景时还是会遇到诸多困难，下面一节我会介绍两种目前被业界普遍使用的精确算法实现方案，并通过分析说明当数据量增大时它们面临的问题。</p>
+<h2 id="传统的基数计数实现"><a href="#传统的基数计数实现" class="headerlink" title="传统的基数计数实现"></a>传统的基数计数实现</h2><p>接着上面的例子，我们看一下目前常用的基数计数的实现方法。</p>
+<h3 id="基于B树的基数计数"><a href="#基于B树的基数计数" class="headerlink" title="基于B树的基数计数"></a>基于B树的基数计数</h3><p>对上面的伪代码做一个简单分析，会发现关键操作有两个：查找-迅速定位当前访客是否已经在集合中，插入-将新的访客标识插入到访客集合中。因此，需要为每一个需要统计UV的点（此处就是十个宝贝链接）维护一个查找效率较高的数据结构，又因为实时数据流的关系，这个数据结构需要尽量在内存中维护，因此这个数据结构在空间复杂度上也要比较适中。综合考虑一种传统的做法是在实时计算引擎采用了B树来组织这个集合。下图是一个示意图：<br><img src="1.png" alt="xxx"><br>之所以选用B树是因为B树的查找和插入相关高效，同时空间复杂度也可以接受（关于B树具体的性能分析请参考<a href="http://en.wikipedia.org/wiki/B-tree" target="_blank" rel="noopener">这里</a>)。</p>
+<p>这种实现方案为一个基数计数器维护一棵B树，由于B树在查找效率、插入效率和内存使用之间非常平衡，所以算是一种可以接受的解决方案。但是当数据量特别巨大时，例如要同时统计几万个链接的UV，如果要将几万个链接一天的访问记录全部维护在内存中，这个内存使用量也是相当可观的（假设每个B树占用1M内存，10万个B树就是100G！）。一种方案是在某个时间点将内存数据结构写入磁盘（双十一和双十二大促时一淘数据部的效果平台是每分钟将数据写入HBase）然后将内存中的计数器和数据结构清零，但是B树并不能高效的进行合并，这就使得内存数据落地成了非常大的难题。</p>
+<p>另一个需要数据结构合并的场景是查看并集的基数，例如在上面的例子中，如果我想查看Item1和Item2的总UV，是没有办法通过这种B树的结构快速得到的。当然可以为每一种可能的组合维护一棵B树。不过通过简单的分析就可以知道这个方案基本不可行。N个元素集合的非空幂集数量为$2^N−1$，因此要为10个链接维护1023棵B树，而随着链接的增加这个数量会以幂指级别增长。</p>
+<h3 id="基于bitmap的基数计数"><a href="#基于bitmap的基数计数" class="headerlink" title="基于bitmap的基数计数"></a>基于bitmap的基数计数</h3><p>为了克服B树不能高效合并的问题，一种替代方案是使用bitmap表示集合。也就是使用一个很长的bit数组表示集合，将bit位顺序编号，bit为1表示此编号在集合中，为0表示不在集合中。例如“00100110”表示集合 {2，5，6}。bitmap中1的数量就是这个集合的基数。</p>
+<p>显然，与B树不同bitmap可以高效的进行合并，只需进行按位或（or）运算就可以，而位运算在计算机中的运算效率是很高的。但是bitmap方式也有自己的问题，就是内存使用问题。</p>
+<p>很容易发现，bitmap的长度与集合中元素个数无关，而是与基数的上限有关。例如在上面的例子中，假如要计算上限为1亿的基数，则需要12.5M字节的bitmap，十个链接就需要125M。关键在于，这个内存使用与集合元素数量无关，即使一个链接仅仅有一个1UV，也要为其分配12.5M字节。</p>
+<p>由此可见，虽然bitmap方式易于合并，却由于内存使用问题而无法广泛用于大数据场景。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文重点在于通过电商数据分析中UV计算的例子，说明基数的应用、传统的基数计数算法及这些算法在大数据面前遇到的问题。实际上目前还没有发现更好的在大数据场景中准确计算基数的高效算法，因此在不追求绝对准确的情况下，使用概率算法算是一个不错的解决方案。在后续文章中，我将逐一解读常用的基数估计概率算法。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-iv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/09/algorithms-for-cardinality-estimation-part-iv/" itemprop="url">(转)解读Cardinality Estimation算法（第四部分：HyperLogLog Counting及Adaptive Counting）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-09T17:04:11+08:00">
+                2018-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/09/algorithms-for-cardinality-estimation-part-iv/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/09/algorithms-for-cardinality-estimation-part-iv/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在<a href="../algorithms-for-cardinality-estimation-part-iii/index.html">前一篇文章</a>中，我们了解了LogLog Counting。LLC算法的空间复杂度为$O(log_2(log_2(N_{max})))$，并且具有较高的精度，因此非常适合用于大数据场景的基数估计。不过LLC也有自己的问题，就是当基数不太大时，估计值的误差会比较大。这主要是因为当基数不太大时，可能存在一些空桶，这些空桶的ρmax为0。由于LLC的估计值依赖于各桶ρmax的几何平均数，而几何平均数对于特殊值（这里就是指0）非常敏感，因此当存在一些空桶时，LLC的估计效果就变得较差。</p>
+<p>这一篇文章中将要介绍的HyperLogLog Counting及Adaptive Counting算法均是对LLC算法的改进，可以有效克服LLC对于较小基数估计效果差的缺点。</p>
+<h2 id="评价基数估计算法的精度"><a href="#评价基数估计算法的精度" class="headerlink" title="评价基数估计算法的精度"></a>评价基数估计算法的精度</h2><p>首先我们来分析一下LLC的问题。一般来说LLC最大问题在于当基数不太大时，估计效果比较差。上文说过，LLC的渐近标准误差为$1.30/\sqrt{m}$，看起来貌似只和分桶数m有关，那么为什么基数的大小也会导致效果变差呢？这就需要重点研究一下如何评价基数估计算法的精度，以及“渐近标准误差”的意义是什么。</p>
+<h3 id="标准误差"><a href="#标准误差" class="headerlink" title="标准误差"></a>标准误差</h3><p>首先需要明确标准误差的意义。例如标准误差为0.02，到底表示什么意义。</p>
+<p>标准误差是针对一个统计量（或估计量）而言。在分析基数估计算法的精度时，我们关心的统计量是$\hat{n}/n$。注意这个量分子分母均为一组抽样的统计量。下面正式描述一下这个问题。</p>
+<p>设S是我们要估计基数的可重复有限集合。S中每个元素都是来自值服从均匀分布的样本空间的一个独立随机抽样样本。这个集合共有C个元素，但其基数不一定是C，因为其中可能存在重复元素。<br>设$f_n$为定义在S上的函数：<br>$$f_n(S) = Cardinality\;of\;S$$<br>同时定义$f_\hat{n}$ 也是定义在S上的函数：<br>$$f_\hat{n}(S)=LogLog\;estimate\;value\;of\;S$$<br>我们想得到的第一个函数值，但是由于第一个函数值不好计算，所以我们计算同样集合的第二个函数值来作为第一个函数值得估计。因此最理想的情况是对于任意一个集合两个函数值是相等的，如果这样估计就是100%准确了。不过显然没有这么好的事，因此我们退而求其次，只希望$f_\hat{n}(S)$是一个无偏估计，即：<br>$$E(\frac{f_\hat{n}(S)}{f_n(S)})=1$$<br>这个在上一篇文章中已经说明了。同时也可以看到，$\frac{f_\hat{n}(S)}{f_n(S)}$实际上是一个随机变量，并且服从正态分布。对于正态分布随机变量，一般可以通过标准差$\sigma$度量其稳定性，直观来看，标准差越小，则整体分布越趋近于均值，所以估计效果就越好。这是定性的，那么定量来看标准误差$\sigma$到底表达了什么意思呢。它的意义是这样的：</p>
+<p>对于无偏正态分布而言，随机变量的一次随机取值落在均值一个标准差范围内的概率是68.2%，而落在两个和三个标准差范围内的概率分别为95.4%和99.6%，如下图所示（图片来自维基百科）：<br><img src="1.png" alt="xxx"><br>因此，假设标准误差是0.02（2%），它实际的意义是：假设真实基数为n，n与估计值之比落入(0.98, 1.02)的概率是68.2%，落入(0.96, 1.04)的概率是95.4%，落入(0.94, 1.06)的概率是99.6%。显然这个比值越大则估计值越不准，因此对于0.02的标准误差，这个比值大于1.06或小于0.94的概率不到0.004。</p>
+<p>再直观一点，假设真实基数为10000，则一次估计值有99.6%的可能不大于10600且不小于9400。</p>
+<h3 id="组合计数与渐近分析"><a href="#组合计数与渐近分析" class="headerlink" title="组合计数与渐近分析"></a>组合计数与渐近分析</h3><p>如果LLC能够做到绝对服从1.30/m−−√，那么也算很好了，因为我们只要通过控制分桶数m就可以得到一个一致的标准误差。这里的一致是指标准误差与基数无关。不幸的是并不是这样，上面已经说过，这是一个“渐近”标注误差。下面解释一下什么叫渐近。</p>
+<p>在计算数学中，有一个非常有用的分支就是组合计数。组合计数简单来说就是分析自然数的组合函数随着自然数的增长而增长的量级。可能很多人已经意识到这个听起来很像算法复杂度分析。没错，算法复杂度分析就是组合计数在算法领域的应用。</p>
+<p>举个例子，设A是一个有n个元素的集合（这里A是严格的集合，不存在重复元素），则A的幂集（即由A的所有子集组成的集合）有2n个元素。</p>
+<p>上述关于幂集的组合计数是一个非常整齐一致的组合计数，也就是不管n多大，A的幂集总有2n个元素。</p>
+<p>可惜的是现实中一般的组合计数都不存在如此干净一致的解。LLC的偏差和标准差其实都是组合函数，但是论文中已经分析出，LLC的偏差和标准差都是渐近组合计数，也就是说，随着n趋向于无穷大，标准差趋向于1.30/m−−√，而不是说n多大时其值都一致为1.30/m−−√。另外，其无偏性也是渐近的，只有当n远远大于m时，其估计值才近似无偏。因此当n不太大时，LLC的效果并不好。</p>
+<p>庆幸的是，同样通过统计分析方法，我们可以得到n具体小到什么程度我们就不可忍受了，另外就是当n太小时可不可以用别的估计方法替代LLC来弥补LLC这个缺陷。HyperLogLog Counting及Adaptive Counting都是基于这个思想实现的。</p>
+<h2 id="Adaptive-Counting"><a href="#Adaptive-Counting" class="headerlink" title="Adaptive Counting"></a>Adaptive Counting</h2><p>Adaptive Counting（简称AC）在“Fast and accurate traffic matrix measurement using adaptive cardinality counting”一文中被提出。其思想也非常简单直观：实际上AC只是简单将LC和LLC组合使用，根据基数量级决定是使用LC还是LLC。具体是通过分析两者的标准差，给出一个阈值，根据阈值选择使用哪种估计。</p>
+<h3 id="基本算法"><a href="#基本算法" class="headerlink" title="基本算法"></a>基本算法</h3><p>如果分析一下LC和LLC的存储结构，可以发现两者是兼容的，区别仅仅在于LLC关心每个桶的ρmax，而LC仅关心此桶是否为空。因此只要简单认为ρmax值不为0的桶为非空，0为空就可以使用LLC的数据结构做LC估计了。</p>
+<p>而我们已经知道，LC在基数不太大时效果好，基数太大时会失效；LLC恰好相反，因此两者有很好的互补性。</p>
+<p>回顾一下，LC的标准误差为：</p>
+<p>SElc(n^/n)=et−t−1−−−−−−−−√/(tm−−√)<br>LLC的标准误差为：</p>
+<p>SEllc(n^/n)=1.30/m−−√<br>将两个公式联立：</p>
+<p>et−t−1−−−−−−−−√/(tm−−√)=1.30/m−−√<br>解得t≈2.89。注意m被消掉了，说明这个阈值与m无关。其中t=n/m。</p>
+<p>设β为空桶率，根据LC的估算公式，带入上式可得：</p>
+<p>β=e−t≈0.051<br>因此可以知道，当空桶率大于0.051时，LC的标准误差较小，而当小于0.051时，LLC的标准误差较小。</p>
+<p>完整的AC算法如下：</p>
+<p>n^={αmm21m∑M−mlog(β)ifif0≤β&lt;0.0510.051≤β≤1</p>
+<h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><p>因为AC只是LC和LLC的简单组合，所以误差分析可以依照LC和LLC进行。值得注意的是，当β&lt;0.051时，LLC最大的偏差不超过0.17%，因此可以近似认为是无偏的。</p>
+<h2 id="HyperLogLog-Counting"><a href="#HyperLogLog-Counting" class="headerlink" title="HyperLogLog Counting"></a>HyperLogLog Counting</h2><p>HyperLogLog Counting（以下简称HLLC）的基本思想也是在LLC的基础上做改进，不过相对于AC来说改进的比较多，所以相对也要复杂一些。本文不做具体细节分析，具体细节请参考“HyperLogLog: the analysis of a near-optimal cardinality estimation algorithm”这篇论文。</p>
+<h3 id="基本算法-1"><a href="#基本算法-1" class="headerlink" title="基本算法"></a>基本算法</h3><p>HLLC的第一个改进是使用调和平均数替代几何平均数。注意LLC是对各个桶取算数平均数，而算数平均数最终被应用到2的指数上，所以总体来看LLC取得是几何平均数。由于几何平均数对于离群值（例如这里的0）特别敏感，因此当存在离群值时，LLC的偏差就会很大，这也从另一个角度解释了为什么n不太大时LLC的效果不太好。这是因为n较小时，可能存在较多空桶，而这些特殊的离群值强烈干扰了几何平均数的稳定性。</p>
+<p>因此，HLLC使用调和平均数来代替几何平均数，调和平均数的定义如下：</p>
+<p>H=n1x1+1x2+…+1xn=n∑ni=11xi<br>调和平均数可以有效抵抗离群值的扰动。使用调和平均数代替几何平均数后，估计公式变为如下：</p>
+<p>n^=αmm2∑2−M<br>其中：</p>
+<p>αm=(m∫∞0(log2(2+u1+u))mdu)−1</p>
+<h3 id="偏差分析"><a href="#偏差分析" class="headerlink" title="偏差分析"></a>偏差分析</h3><p>根据论文中的分析结论，与LLC一样HLLC是渐近无偏估计，且其渐近标准差为：</p>
+<p>SEhllc(n^/n)=1.04/m−−√<br>因此在存储空间相同的情况下，HLLC比LLC具有更高的精度。例如，对于分桶数m为2^13（8k字节）时，LLC的标准误差为1.4%，而HLLC为1.1%。</p>
+<h3 id="分段偏差修正"><a href="#分段偏差修正" class="headerlink" title="分段偏差修正"></a>分段偏差修正</h3><p>在HLLC的论文中，作者在实现建议部分还给出了在n相对于m较小或较大时的偏差修正方案。具体来说，设E为估计值：</p>
+<p>当E≤52m时，使用LC进行估计。</p>
+<p>当52m&lt;E≤130232是，使用上面给出的HLLC公式进行估计。</p>
+<p>当E&gt;130232时，估计公式如为n^=−232log(1−E/232)。</p>
+<p>关于分段偏差修正效果分析也可以在原论文中找到。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文首先介绍了基数估计算法标准误差的意义，并据此说明了为什么LLC在基数较小时效果不好。然后，以此介绍了两种对LLC的改进算法：HyperLogLog Counting及Adaptive Counting。到此为止，常见的四种基数估计算法就介绍完了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-iii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/09/algorithms-for-cardinality-estimation-part-iii/" itemprop="url">(转)解读Cardinality Estimation算法（第三部分：LogLog Counting）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-09T17:04:11+08:00">
+                2018-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构与算法/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/09/algorithms-for-cardinality-estimation-part-iii/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/09/algorithms-for-cardinality-estimation-part-iii/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="../algorithms-for-cardinality-estimation-part-ii/index.html">上一篇文章</a>介绍的Linear Counting算法相较于直接映射bitmap的方法能大大节省内存（大约只需后者1/10的内存），但毕竟只是一个常系数级的降低，空间复杂度仍然为$O(N_{max})$。而本文要介绍的LogLog Counting却只有$O(log_2(log_2(N_{max})))$。例如，假设基数的上限为1亿，原始bitmap方法需要12.5M内存，而LogLog Counting只需不到1K内存（640字节）就可以在标准误差不超过4%的精度下对基数进行估计，效果可谓十分惊人。</p>
+<p>本文将介绍LogLog Counting。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>LogLog Counting（以下简称LLC）出自论文“Loglog Counting of Large Cardinalities”。LLC的空间复杂度仅有$O(log_2(log_2(N_{max})))$，使得通过KB级内存估计数亿级别的基数成为可能，因此目前在处理大数据的基数计算问题时，所采用算法基本为LLC或其几个变种。下面来具体看一下这个算法。</p>
+<h2 id="基本算法"><a href="#基本算法" class="headerlink" title="基本算法"></a>基本算法</h2><h3 id="均匀随机化"><a href="#均匀随机化" class="headerlink" title="均匀随机化"></a>均匀随机化</h3><p>与LC一样，在使用LLC之前需要选取一个哈希函数H应用于所有元素，然后对哈希值进行基数估计。H必须满足如下条件（定性的）：</p>
+<ol>
+<li><p>H的结果具有很好的均匀性，也就是说无论原始集合元素的值分布如何，其哈希结果的值几乎服从均匀分布（完全服从均匀分布是不可能的，D. Knuth已经证明不可能通过一个哈希函数将一组不服从均匀分布的数据映射为绝对均匀分布，但是很多哈希函数可以生成几乎服从均匀分布的结果，这里我们忽略这种理论上的差异，认为哈希结果就是服从均匀分布）。</p>
+</li>
+<li><p>H的碰撞几乎可以忽略不计。也就是说我们认为对于不同的原始值，其哈希结果相同的概率非常小以至于可以忽略不计。</p>
+</li>
+<li><p>H的哈希结果是固定长度的。</p>
+</li>
+</ol>
+<p>以上对哈希函数的要求是随机化和后续概率分析的基础。后面的分析均认为是针对哈希后的均匀分布数据进行。</p>
+<h3 id="思想来源"><a href="#思想来源" class="headerlink" title="思想来源"></a>思想来源</h3><p>下面非正式的从直观角度描述LLC算法的思想来源。</p>
+<p>设a为待估集合（哈希后）中的一个元素，由上面对H的定义可知，a可以看做一个长度固定的比特串（也就是a的二进制表示），设H哈希后的结果长度为L比特，我们将这L个比特位从左到右分别编号为1、2、…、L：<br><img src="1.png" alt="xxx"></p>
+<p>又因为a是从服从均与分布的样本空间中随机抽取的一个样本，因此a每个比特位服从如下分布且相互独立。</p>
+<p>$$P(x=k)=\begin{cases}<br>0.5 &amp; (k=0)\\<br>0.5 &amp; (k=1)<br>\end{cases}$$</p>
+<p>通俗说就是a的每个比特位为0和1的概率各为0.5，且相互之间是独立的。</p>
+<p>设$\rho(a)$为a的比特串中第一个“1”出现的位置，显然$1\le\rho(a)\le{L}$，这里我们忽略比特串全为0的情况（概率为1/2L）。如果我们遍历集合中所有元素的比特串，取$\rho_{max}$为所有$\rho(a)$的最大值。</p>
+<p>此时我们可以将 $2^{\rho_{max}}$ 作为基数的一个粗糙估计，即：$$\hat{n}=2^{\rho_{max}}$$下面解释为什么可以这样估计。注意如下事实：</p>
+<p>由于比特串每个比特都独立且服从0-1分布，因此从左到右扫描上述某个比特串寻找第一个“1”的过程从统计学角度看是一个伯努利过程，例如，可以等价看作不断投掷一个硬币（每次投掷正反面概率皆为0.5），直到得到一个正面的过程。在一次这样的过程中，投掷一次就得到正面的概率为1/2，投掷两次得到正面的概率是$1/2^2$，…，投掷k次才得到第一个正面的概率为$1/2^k$。</p>
+<p>现在考虑如下两个问题：</p>
+<p>1、进行n次伯努利过程，所有投掷次数都不大于k的概率是多少？</p>
+<p>2、进行n次伯努利过程，至少有一次投掷次数等于k的概率是多少？</p>
+<p>首先看第一个问题，在一次伯努利过程中，投掷次数大于k的概率为$1/2^k$，即连续掷出k个反面的概率。因此，在一次过程中投掷次数不大于k的概率为$1−1/2^k$。因此，n次伯努利过程投掷次数均不大于k的概率为：$$P_n(X\le{k})=(1−1/2^k)^n$$显然第二个问题的答案是：$$P_n(X\ge{k})=1−(1−1/2^{k−1})^n$$从以上分析可以看出，当$n≪2^k$时，$P_n(X\ge{k})$的概率几乎为0，同时，当$n≫2^k$时，$P_n(X\le{k})$的概率也几乎为0。用自然语言概括上述结论就是：当伯努利过程次数远远小于$2^k$时，至少有一次过程投掷次数等于k的概率几乎为0；当伯努利过程次数远远大于$2^k$时，没有一次过程投掷次数大于k的概率也几乎为0。</p>
+<p>如果将上面描述做一个对应：一次伯努利过程对应一个元素的比特串，反面对应0，正面对应1，投掷次数k对应第一个“1”出现的位置，我们就得到了下面结论：</p>
+<p>设一个集合的基数为n，$\rho_{max}$为所有元素中首个“1”的位置最大的那个元素的“1”的位置，如果n远远小于$2^{\rho_{max}}$，则我们得到$\rho_{max}$为当前值的概率几乎为0（它应该更小），同样的，如果n远远大于$2^{\rho_{max}}$，则我们得到$\rho_{max}$为当前值的概率也几乎为0（它应该更大），因此$2^{ρ_{max}}$可以作为基数n的一个粗糙估计。</p>
+<h3 id="分桶平均"><a href="#分桶平均" class="headerlink" title="分桶平均"></a>分桶平均</h3><p>上述分析给出了LLC的基本思想，不过如果直接使用上面的单一估计量进行基数估计会由于偶然性而存在较大误差。因此，LLC采用了分桶平均的思想来消减误差。具体来说，就是将哈希空间平均分成m份，每份称之为一个桶（bucket）。对于每一个元素，其哈希值的前k比特作为桶编号，其中$2^k=m$，而后L-k个比特作为真正用于基数估计的比特串。桶编号相同的元素被分配到同一个桶，在进行基数估计时，首先计算每个桶内元素最大的第一个“1”的位置，设为M[i]，然后对这m个值取平均后再进行估计，即：$$\hat{n}=2^{\frac{1}{m}\Sigma{M[i]}}$$ 这相当于物理试验中经常使用的多次试验取平均的做法，可以有效消减因偶然性带来的误差。</p>
+<p>下面举一个例子说明分桶平均怎么做。</p>
+<p>假设H的哈希长度为16bit，分桶数m定为32。设一个元素哈希值的比特串为“0001001010001010”，由于m为32，因此前5个bit为桶编号，所以这个元素应该归入“00010”即2号桶（桶编号从0开始，最大编号为m-1），而剩下部分是“01010001010”且显然$\rho{(01010001010)=2}$，所以桶编号为“00010”的元素最大的$\rho$即为M[2]的值。</p>
+<h3 id="偏差修正"><a href="#偏差修正" class="headerlink" title="偏差修正"></a>偏差修正</h3><p>上述经过分桶平均后的估计量看似已经很不错了，不过通过数学分析可以知道这并不是基数n的无偏估计。因此需要修正成无偏估计。这部分的具体数学分析在“Loglog Counting of Large Cardinalities”中，过程过于艰涩这里不再具体详述，有兴趣的朋友可以参考原论文。这里只简要提一下分析框架：</p>
+<p>首先上文已经得出：$$P_n(X\le{k})=(1−1/2^k)^n$$因此：$$P_n(X=k)=(1−1/2^k)^n−(1−1/2^{k−1})^n$$这是一个未知通项公式的递推数列，研究这种问题的常用方法是使用生成函数（generating function）。通过运用指数生成函数和poissonization得到上述估计量的Poisson期望和方差为：<br>$$\varepsilon _n\sim [(\Gamma (-1/m)\frac{1-2^{1/m}}{log2})^m+\epsilon _n]n$$ $$\nu _n\sim [(\Gamma (-2/m)\frac{1-2^{2/m}}{log2})^m - (\Gamma (-1/m)\frac{1-2^{1/m}}{log2})^{2m}+\eta _n]n^2$$ 其中$|\epsilon _n|$和$|\eta _n|$不超过$10^{−6}$。</p>
+<p>最后通过depoissonization得到一个渐进无偏估计量：$$\hat{n}=\alpha _m 2^{\frac{1}{m}\sum{M[i]}}$$其中：<br>$\alpha_m = (\Gamma (-1/m)\frac{1-2^{1/m}}{log2})^{-m}$<br>$\Gamma(s)=\frac{1}{s}\int_{0}^{\infty }e^{-t}t^sdt$<br>其中m是分桶数。这就是LLC最终使用的估计量。</p>
+<h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><p>不加证明给出如下结论：<br>$E_n(\hat{n})/n = 1 + \theta_{1,n} + o(1)$<br>$\sqrt{Var_n(E)}/n = \beta_m / \sqrt{m} + \theta_{2,n} + o(1)$<br>其中$|\theta_{1,n}|$和$|\theta_{2,n}|$不超过$10^{−6}$。</p>
+<p>当m不太小（不小于64）时，$\beta$大约为1.30。因此：<br>$StdError(\hat{n}/n) \approx \frac{1.30}{\sqrt{m}}$</p>
+<h2 id="算法应用"><a href="#算法应用" class="headerlink" title="算法应用"></a>算法应用</h2><h3 id="误差控制"><a href="#误差控制" class="headerlink" title="误差控制"></a>误差控制</h3><p>在应用LLC时，主要需要考虑的是分桶数m，而这个m主要取决于误差。根据上面的误差分析，如果要将误差控制在$\epsilon$之内，则：<br>$m &gt; (\frac{1.30}{\epsilon})^2$</p>
+<h3 id="内存使用分析"><a href="#内存使用分析" class="headerlink" title="内存使用分析"></a>内存使用分析</h3><p>内存使用与m的大小及哈希值得长度（或说基数上限）有关。假设H的值为32bit，由于$\rho_{max}\le{32}$，因此每个桶需要5bit空间存储这个桶的$\rho_{max}$，m个桶就是5×m/8字节。例如基数上限为一亿（约2^27），当分桶数m为1024时，每个桶的基数上限约为$2^{27}/2^{10}=2^{17}$，而$log_2(log_2(2^{17}))$=4.09，因此每个桶需要5bit，需要字节数就是5×1024/8=640，误差为$1.30 / \sqrt{1024} = 0.040625$，也就是约为4%。</p>
+<h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>与LC不同，LLC的合并是以桶为单位而不是bit为单位，由于LLC只需记录桶的$\rho_{max}$，因此合并时取相同桶编号数值最大者为合并后此桶的数值即可。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文主要介绍了LogLog Counting算法，相比LC其最大的优势就是内存使用极少。不过LLC也有自己的问题，就是当n不是特别大时，其估计误差过大，因此目前实际使用的基数估计算法都是基于LLC改进的算法，这些改进算法通过一定手段抑制原始LLC在n较小时偏差过大的问题。后面要介绍的<a href="../algorithms-for-cardinality-estimation-part-iv/index.html">HyperLogLog Counting和Adaptive Counting</a>就是这类改进算法。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2016/05/14/基于PageRank算法的自动封号策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/14/基于PageRank算法的自动封号策略/" itemprop="url">基于PageRank算法的自动封号策略</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-14T08:48:56+08:00">
+                2016-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工作总结/" itemprop="url" rel="index">
+                    <span itemprop="name">工作总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/05/14/基于PageRank算法的自动封号策略/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/05/14/基于PageRank算法的自动封号策略/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>　　PageRank算法即网页排名，是由Google创始人拉里·佩奇和谢盖尔·布林构建搜索引擎原型时提出的链接分析算法。Google的成功，使得该算法在搜索引擎界和学术界受到空前关注，后来的许多链接分析算法都是基于PageRank算法衍生出来的。搜索引擎先根据相关性算法，找出与关键词最相关的网页，然后使用PageRank算法调整排名，能大大提高搜索的质量。PagePank算法除了在网页排名中有重要的应用之外，也可以用于学术论文重要程度排名、个人社交影响力排名等类似场景。</p>
+<h2 id="应用背景"><a href="#应用背景" class="headerlink" title="应用背景"></a>应用背景</h2><p>　　为了“粘”住用户，游戏设计者通常会在游戏中设置各种道具奖励，玩家可以通过登录、保持在线等方式领取游戏道具，对于道具可以在各个玩家之间流通的棋牌类手游而言，会存在这样一个“刷道具”的问题：一个玩家创建许多账号（俗称“小号”），然后使用打牌等方式把“小号”的道具汇聚到若干几个账号（俗称“大号”），当汇聚到一定的量之后，然后低价兜售账号，获取收益。“刷道具”现象会极大影响游戏的经济系统平衡，导致道具贬值，严重情况下甚至会弄垮整个游戏。手动封号，不够全面且反应慢，往往道具已经转出，再手动封号已经无济于事。自动封号就是定时执行一组封号规则过滤用户，然后封号，但是简单的条件组合很容易被“刷道具专业户”攻破，例如：</p>
+<blockquote>
+<p>玩家打牌局数超过50局，胜率在90%以上，且赢的人中90%是新注册的账号，封号</p>
+</blockquote>
+<p>该规则上线不足半天，“刷道具专业户” 就想出了多级 “中号” 的策略，即将5到10个“小号”的道具汇聚到一级“中号”，5到10个一级“中号”汇聚到二级“中号”。。。，最终再汇聚到若干“大号”，每个层级看起来都正常，轻松绕过封号规则。当然可以定义更加复杂的规则，但是实现起来会相当困难，且难以维护，在这种情况下，基于PageRank思想的自动封号策略就应运而生了。</p>
+<h2 id="PageRank算法的基本原理"><a href="#PageRank算法的基本原理" class="headerlink" title="PageRank算法的基本原理"></a>PageRank算法的基本原理</h2><p>　　PageRank提出之前，有的研究者将链入数量当做唯一指标来评价网页重要性，即链入越多，网页的重要性越高，PageRank算法在此基础之上，还考虑了网页的质量，两者相结合以获取更好的网页重要性评价标准。所以对于一个网页重要的表示，是基于以下两个假设：</p>
+<ul>
+<li>数量假设： 如果一个网页，被其他网页引用（指向）的越多，该网页越重要；</li>
+<li>质量假设： 其他条件相同，越是重要的网页，它指向的网页也越重要。</li>
+</ul>
+<p>PageRank算法首先给每个网页节点赋予相同的PR值，通过一轮轮迭代，直至稳定，PR值越大的网页越重要。由于PR值只与网页之间相互引用的链接结构有关，与用户输入无关，所以可以离线计算PR值，用于用户实时查询。<br>PageRank的计算公式如下：<br><img src="3.png" alt="PageRank计算公式"><br>其中PR(A)为本轮迭代A网页的PR值，PR(B),PR(C),PR(D)…为上一轮B、C、D…的PR值，L(X）表示X的出度，q表示阻尼系数，表示上网者到达一个页面后，继续向后浏览的概率，1-q表示上网者停止浏览随机跳转到新网页的概率，大量统计的结果表明q一般取0.85左右。以下图为例:<br><img src="1.jpg" alt="网页链接关系"><br>下面是该网页链接关系的前两次迭代结果<br><img src="2.jpg" alt="PageRank迭代"><br>经过多次迭代，直至结果收敛，收敛条件与设定的精度有关。</p>
+<h2 id="自动封号PageRank算法的应用及调整"><a href="#自动封号PageRank算法的应用及调整" class="headerlink" title="自动封号PageRank算法的应用及调整"></a>自动封号PageRank算法的应用及调整</h2><p>　　棋牌游戏中，各个玩家之间的道具输赢关系就是一张巨大的有向图，图中节点表示各个玩家，边表示输赢结果，对应于PageRank的两个假设，“刷道具”玩家的可疑度也满足以下两个假设：</p>
+<ul>
+<li>数量假设：一个玩家，他赢新注册玩家的数量越多，该玩家的可疑度越大；</li>
+<li>质量假设：其他条件相同，一个玩家的可疑度越大，赢他的玩家的可疑度也会越大。</li>
+</ul>
+<p>考虑到实际情况，自动封号在使用PageRank算法时，做了以下3个方面的调整：</p>
+<ul>
+<li>初值设定<br>初值并不是都是设置为1，只对新注册的玩家设置为1，老玩家设置为0。因为参与刷道具的小号都是最近注册的，所以只考虑新注册玩家的贡献值，老玩家只有传递贡献值的作用。另外，在迭代过程中，需要保证没有入度节点PR永远为初值（0或1）；</li>
+<li>PageRank值的分配<br>对于PageRank算法而言，PR值的分配是平均的，对于A-&gt;B, A-&gt;C链接关系而言，PR值分配情况是：贡献给B、C的PR值都是PR（A)/2。如果A输给B 3000单位道具，A输给C 6000单位道具， 则调整后的PageRank值分配情况是：贡献给B的PR值为PR(A)/3, 贡献给C的PR值为2*PR(A)/3。</li>
+<li>PageRank值的有效传播<br>PageRank算法对于PR值的传播都是100%的，即传递给所有指向节点的PR值之和等于该节点的PR值。但是，在我们的应用中，需要考虑一种情况：玩家输的道具远小于赢的道具，例如玩家A赢了1000单位道具，输了10单位道具，这时候把A的PR值全部贡献出去显然不合理，一种可选方案就是将 PR值*（输的道具量/赢的道具量） 作为传递的有效值，然后再按照比例分配。</li>
+</ul>
+<p>按照如上三个方面调整之后，我们可以按照10min一次频率，跑过去12h的数据的方式来执行该策略，然后把PR值大于给定阈值的玩家作为可疑用户，交给封号模块。</p>
+<h2 id="封号效果及后续改进"><a href="#封号效果及后续改进" class="headerlink" title="封号效果及后续改进"></a>封号效果及后续改进</h2><p>　　基于PageRank思想的自动封号策略上线大约一周之后，游戏的激活终于回稳，期间“刷道具专业户”也经历过多次尝试，但是辛辛苦苦刷的道具总是能在某个时刻被截住，所以最终放弃抵抗。后续改进主要有两个方面：实时性和结果评估。实时性方面，10min一次的频率还是有可能让“刷道具专业户”钻空子，可以考虑使用流式计算，使用滑动窗口的方式；结果评估，目前该策略效果的评估是通过手动查询来完成的，这只能核对查准率，无法验证查全率，是不是会有“漏网之鱼”呢，所以需要一套机制，从总体上评价封号的效果。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="https://zh.wikipedia.org/wiki/PageRank" target="_blank" rel="noopener">PageRank 简介</a></li>
+<li><a href="http://blog.csdn.net/hguisu/article/details/7996185" target="_blank" rel="noopener">PageRank 算法概述</a></li>
+<li><a href="http://www.cqvip.com/qk/82430x/200918/30808874.html" target="_blank" rel="noopener">PageRank 算法的分析及实现</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2016/04/28/Java并发机制的底层实现原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/28/Java并发机制的底层实现原理/" itemprop="url">Java并发机制的底层实现原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-28T08:48:56+08:00">
+                2016-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java并发编程艺术系列笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Java并发编程艺术系列笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/28/Java并发机制的底层实现原理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/04/28/Java并发机制的底层实现原理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Volatile-的应用"><a href="#Volatile-的应用" class="headerlink" title="Volatile 的应用"></a>Volatile 的应用</h2><p>　　在Java多线程并发编程中，synchronized 和 volatile 都极为重要，volatile 可以看做是轻量级sychronized, 在使用得当的情况下，volatile的使用与执行成本会更低，因为它不会引起线程的上下文切换和调度。</p>
+<h3 id="Volatile-的定义和实现原理"><a href="#Volatile-的定义和实现原理" class="headerlink" title="Volatile 的定义和实现原理"></a>Volatile 的定义和实现原理</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>　　<a href="https://docs.oracle.com/javase/specs/jls/se6/html/classes.html#8.3.1.4" target="_blank" rel="noopener">JLS3</a>中对volatile定义如下：如果一个字段被申明为volatile, Java线程的内存模型确保所有线程看到这个变量是一致的。简而言之，volatile变量具有如下两个特点：</p>
+<ul>
+<li>可见性： 对于一个volatile变量的读，总能看到该变量最后一次（被任何线程）写入的值。</li>
+<li>原子性： 对于任意单个volatile变量的读/写都是原子的，但是类似于++这种复合操作是不具有原子性的。</li>
+</ul>
+<h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p>　　CPU相关术语：<br>  <img src="1.jpg" alt="CPU的术语定义"><br>　　与普通变量相比，对volatile修饰的变量写入，会在对应的汇编指令中多一条Lock前缀指令，该指令在多核处理器中产生如下两种结果：</p>
+<ul>
+<li>将当前处理器的缓存行的数据写回系统内存；</li>
+<li>写回内存的操作会导致其他CPU缓存了该内存的数据无效；</li>
+</ul>
+<p>关于缓存一致性原理及相关技术可以参考<a href="http://blog.csdn.net/muxiqingyang/article/details/6615199" target="_blank" rel="noopener">《大话处理器》Cache一致性协议之MESI</a>、<a href="http://m.blog.csdn.net/article/details?id=50450136" target="_blank" rel="noopener">CPU cache结构和缓存一致性（MESI协议）</a>和<a href="http://www.infoq.com/cn/articles/cache-coherency-primer" target="_blank" rel="noopener">缓存一致性（Cache Coherency）入门</a>。</p>
+<h3 id="正确使用-volatile-变量"><a href="#正确使用-volatile-变量" class="headerlink" title="正确使用 volatile 变量"></a>正确使用 volatile 变量</h3><p>　　参考Brian Goetz的<a href="http://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="noopener">Java 理论与实践: 正确使用 Volatile 变量</a></p>
+<h2 id="Synchronized-的实现原理与应用"><a href="#Synchronized-的实现原理与应用" class="headerlink" title="Synchronized 的实现原理与应用"></a>Synchronized 的实现原理与应用</h2><h3 id="Java-对象头"><a href="#Java-对象头" class="headerlink" title="Java 对象头"></a>Java 对象头</h3><h3 id="锁升级与比较"><a href="#锁升级与比较" class="headerlink" title="锁升级与比较"></a>锁升级与比较</h3><h2 id="原子操作的实现原理"><a href="#原子操作的实现原理" class="headerlink" title="原子操作的实现原理"></a>原子操作的实现原理</h2><h3 id="术语定义"><a href="#术语定义" class="headerlink" title="术语定义"></a>术语定义</h3><h3 id="处理器如何实现原子操作"><a href="#处理器如何实现原子操作" class="headerlink" title="处理器如何实现原子操作"></a>处理器如何实现原子操作</h3><h3 id="Java-如何实现原子操作"><a href="#Java-如何实现原子操作" class="headerlink" title="Java 如何实现原子操作"></a>Java 如何实现原子操作</h3><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="http://www.zhihu.com/question/28092666" target="_blank" rel="noopener">一条汇编指令是原子操作么？</a></li>
+<li><a href="http://blog.csdn.net/muxiqingyang/article/details/6615199" target="_blank" rel="noopener">《大话处理器》Cache一致性协议之MESI</a></li>
+<li><a href="http://m.blog.csdn.net/article/details?id=50450136" target="_blank" rel="noopener">CPU cache结构和缓存一致性（MESI协议）</a></li>
+<li><a href="http://www.infoq.com/cn/articles/cache-coherency-primer" target="_blank" rel="noopener">缓存一致性（Cache Coherency）入门</a></li>
+<li><a href="http://ifeve.com/java-transfer-queue/" target="_blank" rel="noopener">Java 7中的TransferQueue</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="noopener">Java 理论与实践: 正确使用 Volatile 变量</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2016/04/23/深入理解WeakHashMap实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/23/深入理解WeakHashMap实现/" itemprop="url">深入理解WeakHashMap实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-23T08:48:56+08:00">
+                2016-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深入理解JVM系列笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">深入理解JVM系列笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/23/深入理解WeakHashMap实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/04/23/深入理解WeakHashMap实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>　　在学习WeakReference的时候，自然想去看看JDK自带的WeakHashMap原理，于是在网上看到了这样一篇文章《<a href="http://mikab.iteye.com/blog/587995" target="_blank" rel="noopener">WeakHashMap的神话</a>》,这个题目很有噱头，也激起了广大码农的积极讨论，但是意见不统一，我当然也不甘寂寞，所以决定一探究竟。</p>
+<h2 id="代码与内存数据分布图"><a href="#代码与内存数据分布图" class="headerlink" title="代码与内存数据分布图"></a>代码与内存数据分布图</h2><p>　　下面是一个小demo和数据的大致内存分布（当然只是关键数据，主要方便描述）</p>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WeakHashMapTest</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</span><br><span class="line">    WeakHashMap&lt;String, Interger&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="keyword">new</span> String(<span class="string">"abc"</span>), <span class="keyword">new</span> Integer(<span class="number">256</span>));</span><br><span class="line">    Thread.sleep(<span class="number">500</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数据的内存分布"><a href="#数据的内存分布" class="headerlink" title="数据的内存分布"></a>数据的内存分布</h3><p>  <img src="1.jpg" alt="内存分布图"></p>
+<h3 id="核心类与代码"><a href="#核心类与代码" class="headerlink" title="核心类与代码"></a>核心类与代码</h3><ul>
+<li>WeakHashMap<br>与HashMap有两点不一样：1）WeakHashMap的Entry&lt;K,V&gt;除了实现了Map.Entry&lt;K,V&gt;接口，还继承了WeakReference&lt;Object&gt;类； 2）WeakHashMap包含了一个引用队列ReferenceQueue, 主要用来填充Reference,即WeakHashMap的Entry&lt;K,V&gt;。</li>
+<li><p>Entry&lt;K,V&gt;<br>Entry&lt;K,V&gt;继承自父类的父类Reference的几个成员变量和类变量：K referent, Reference next, ReferenceQueue queue, Reference pengding, ReferenceHandler thread,以及本身的 int hash,V value和Entry&lt;K,V&gt; next；</p>
+<ul>
+<li>K referent 即WeakHashMap中的key，虽然是一个强引用，但是会被JVM特殊处理，即如果该字段的所属类是WeakReference，且它指向的实例没有别被其他GC Roots引用, 则referent会被JVM GC时置NULL，且对应指向的实例内存空间将被回收，然后将所对应的引用Entry&lt;K,V&gt;加入到pengding链表。<blockquote>
+<p>private T referent;         /<em> Treated specially by GC </em>/</p>
+</blockquote>
+</li>
+<li>Reference next 指向下一个Reference,主要用于pengding链表的构建</li>
+<li>Reference queue 在同一个WeakHashMap实例中，所有的Entry中的queue都是一样，即WeakHashMap的成员变量queue</li>
+<li>Reference pending 是一个类变量，也是一个单向链表，JVM将key对应的实例GC后，会将对应的Entry(Reference)加到pending链表, 然后等待ReferenceHandler线程的处理，由于还有有GC线程的添加操作，所以需要加锁处理。<blockquote>
+<p>List of References waiting to be enqueued.  The collector addsReferences to this list, while the Reference-handler thread removes them.  This list is protected by the above lock object.</p>
+<p>private static Reference pending = null;</p>
+</blockquote>
+</li>
+<li><p>ReferenceHandler thread 是一个类变量， 是一个优先级最大的守护线程，当JVM添加一个Entry(Reference)到pending链表时，会唤醒该线程，然后根据该Reference的状态，来决定是不是进入队列或者其他操作，对于WeakHashMap而言，当然是全部进入queue中（enqueue方法)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceHandler</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ReferenceHandler(ThreadGroup g, String name) &#123;</span><br><span class="line">        <span class="keyword">super</span>(g, name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line"></span><br><span class="line">            Reference r;</span><br><span class="line">            <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                <span class="keyword">if</span> (pending != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    r = pending;</span><br><span class="line">                    Reference rn = r.next;</span><br><span class="line">                    pending = (rn == r) ? <span class="keyword">null</span> : rn;</span><br><span class="line">                    r.next = r;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        lock.wait();<span class="comment">//等待JVM其他线程唤醒</span></span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException x) &#123; &#125;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Fast path for cleaners</span></span><br><span class="line">            <span class="keyword">if</span> (r <span class="keyword">instanceof</span> Cleaner) &#123;</span><br><span class="line">                ((Cleaner)r).clean();</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            ReferenceQueue q = r.queue;</span><br><span class="line">            <span class="keyword">if</span> (q != ReferenceQueue.NULL) q.enqueue(r);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>int hash 用来保存key对象的hash值（非常有必要保存，后面代码中会讲到）</p>
+</li>
+<li>V value WeakHashMap对应的Value值，是一个强引用，但是不会被JVM特殊处理，这是与referent不一样的地方</li>
+<li>Entry&lt;K,V&gt; next 与HashMap中的作用一样，主要用来解决hash冲突的</li>
+</ul>
+</li>
+</ul>
+<h2 id="回收流程分析"><a href="#回收流程分析" class="headerlink" title="回收流程分析"></a>回收流程分析</h2><p>　　如果一个WeakHashMap构建好，并且put一些key,value进去以后，如果这些key没有被其他地方引用，下一次GC来临时，将会发生什么呢，看看下面的流程:</p>
+<ul>
+<li>JVM GC时，发现Entry&lt;K,V&gt;对象的是WeakReference对象时，会对key(即referent）做特殊处理，切断key的引用（key=null),回收key所指向的实例，并把Entry&lt;K,V&gt;加入到类变量的pengding列表， 唤醒ReferenceHandler线程；</li>
+<li>ReferenceHandler线程，根据逻辑判断，会把Entry&lt;K,V&gt;对象，加入到Entry&lt;K,V&gt;对象成员变量queue所指向的引用队列（enqueue)；</li>
+<li>如果接下来还有该WeakHashMap实例对应的方法调用， 就会触发 expungeStaleEntries()的执行(每个对外方法都有直接或间接调用)，该方法会把value的引用置NULL，并将Entry&lt;K,V&gt;移出WeakHashMap，这时才有机会回收Value所指向的实例的内存空间。  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">expungeStaleEntries</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (Object x; (x = queue.poll()) != <span class="keyword">null</span>; ) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (queue) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">                Entry&lt;K,V&gt; e = (Entry&lt;K,V&gt;) x;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             计算散列到槽的位置，其实就是e.hash % table.length的位运算</span></span><br><span class="line"><span class="comment">            （e.hash &amp; (table.length -1)，这也是为啥Entry[] talbes </span></span><br><span class="line"><span class="comment">             大小必须是2的指数次方的原因), e.hash是根据key的实例计算出来的，</span></span><br><span class="line"><span class="comment">             但是此时，key所指向的实例已被回收，所以，这也是为啥要保存hash值的</span></span><br><span class="line"><span class="comment">             原因。</span></span><br><span class="line"><span class="comment">            **/</span></span><br><span class="line">            <span class="keyword">int</span> i = indexFor(e.hash, table.length); </span><br><span class="line"></span><br><span class="line">            Entry&lt;K,V&gt; prev = table[i];</span><br><span class="line">            Entry&lt;K,V&gt; p = prev;</span><br><span class="line">            <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">                Entry&lt;K,V&gt; next = p.next;</span><br><span class="line">                <span class="keyword">if</span> (p == e) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (prev == e)</span><br><span class="line">                        table[i] = next;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                        prev.next = next;</span><br><span class="line">                    <span class="comment">// Must not null out e.next;</span></span><br><span class="line">                    <span class="comment">// stale entries may be in use by a HashIterator</span></span><br><span class="line">                    e.value = <span class="keyword">null</span>; <span class="comment">// Help GC 这个时候才有可能回收value</span></span><br><span class="line">                    size--; <span class="comment">//Entry&lt;K,V&gt;移出链表，size--, 但是table长度不变</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                prev = p;</span><br><span class="line">                p = next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="有趣实验"><a href="#有趣实验" class="headerlink" title="有趣实验"></a>有趣实验</h2><h3 id="代码：JVM"><a href="#代码：JVM" class="headerlink" title="代码：JVM"></a>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.gc;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.WeakHashMap;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -Xms20m -Xmx20m</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeakHashMapGC</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> _1M = <span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.out.println(i);</span><br><span class="line">            System.gc();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testTwo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.out.print(i + <span class="string">":"</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                System.out.print(list.get(j).size() + <span class="string">" "</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">            System.gc();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testThree</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.out.println(i + <span class="string">":"</span> + map.size());</span><br><span class="line">            System.gc();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testFour</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.gc();</span><br><span class="line">            System.out.println(i + <span class="string">":"</span> + map.size());</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testFive</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.gc();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(i + <span class="string">":"</span> + map.size());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(args.length == <span class="number">0</span>)&#123;</span><br><span class="line">            System.err.println(<span class="string">"Usage: Java WeakHashMapGC &lt;[0,4]&gt;"</span>);</span><br><span class="line">            System.exit(-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Integer i = <span class="number">0</span>; <span class="comment">//默认0</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            i = Integer.parseInt(args[<span class="number">0</span>]);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(NumberFormatException e)&#123;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">switch</span> (i)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>: testOne();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>: testTwo();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>: testThree();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>: testFour();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>: testFive();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                System.err.println(<span class="string">"param is not a Integer in [0,4]"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="结果估计"><a href="#结果估计" class="headerlink" title="结果估计"></a>结果估计</h3><p>可以根据自己的理解估计一下实验结果，我是事后孔明哈，结果毕竟我都验证过了，注意System.gc()是由一个优先级极低的线程执行的，所以需要在代码中主线程sleep(500), 以尽量（比如99.9%）保证gc()执行。</p>
+<ul>
+<li><p>实验一估计<br>堆的大小是20m, 每个map只有一个Entry, key为1M, value 2M， 由于在put之后，再也没该map的方法调用（第一次put中，expungeStaleEntries方法其实是无用功），所以估计key值空间能回收，value值空间不会，考虑到而外开销，所以循环次数应大于6.67（20/3）次, 小于10次20/2，就会OOM</p>
+</li>
+<li><p>实验二估计<br>实验二与实验一不同的地方是，除了最后一个map，每个map都至少碰到两次gc, 在调用put方法后， 第一轮gc，释放key对象空间，Entry入队列， 下一轮又调用了size（）方法，所以到第二轮gc，除了释放本轮的key对象空间，还是释放了上轮的value对象空间，所以堆大小不会超过2M+附加空间，从而不会溢出。</p>
+</li>
+<li><p>实验三估计<br>实验三与实验二不同的地方是，在map调用put方法之后，马上调用size方法，中间没有gc, 在size执行前，key值并没被回收，所以Entry也不会入队，所以size（）大小还是1，value也不会置空，第一轮gc<br>只是回收key对象空间，第二轮gc时由于上轮value没有被置空，所以value并不会被回收，所以结果和实验1一样，在（6.67,10）次循环就会溢出</p>
+</li>
+<li><p>实验四估计<br>实验四与实验三不同的地方是，size()方法放到了system.gc()后执行， 但是由于system.gc()执行优先级低，所以结果不确定，也有溢出的可能。</p>
+</li>
+<li><p>实验五估计<br>实验五与实验四不用的地方是，size()方法放到了System.gc()后执行，并且能尽量保证在gc后执行size（）, 所以实验五的结果和实验二一样，不会产生溢出。</p>
+</li>
+</ul>
+<h3 id="实际运行结果"><a href="#实际运行结果" class="headerlink" title="实际运行结果"></a>实际运行结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">//实验一： 前8次正常，第9次OOM</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at com.sbwei.gc.WeakHashMapGC.testOne(WeakHashMapGC.java:16)</span><br><span class="line">	at com.sbwei.gc.WeakHashMapGC.main(WeakHashMapGC.java:104)</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">//实验二： 20次都正常，没有OOM</span><br><span class="line">0:</span><br><span class="line">1:0 </span><br><span class="line">2:0 0 </span><br><span class="line">3:0 0 0 </span><br><span class="line">4:0 0 0 0 </span><br><span class="line">5:0 0 0 0 0 </span><br><span class="line">6:0 0 0 0 0 0 </span><br><span class="line">7:0 0 0 0 0 0 0 </span><br><span class="line">8:0 0 0 0 0 0 0 0 </span><br><span class="line">9:0 0 0 0 0 0 0 0 0 </span><br><span class="line">10:0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">11:0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">12:0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">13:0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">14:0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">15:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">16:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">17:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">18:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">19:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line"></span><br><span class="line">//实验三： 前8次正常，第9次OOM</span><br><span class="line">0:1</span><br><span class="line">1:1</span><br><span class="line">2:1</span><br><span class="line">3:1</span><br><span class="line">4:1</span><br><span class="line">5:1</span><br><span class="line">6:1</span><br><span class="line">7:1</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at com.sbwei.gc.WeakHashMapGC.testThree(WeakHashMapGC.java:50)</span><br><span class="line">	at com.sbwei.gc.WeakHashMapGC.main(WeakHashMapGC.java:106)</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">//实验四： 多次执行结果不一样，下面是参考结果，如果循环稍大一点，溢出概率就大大增加了。</span><br><span class="line">0:0</span><br><span class="line">1:0</span><br><span class="line">2:0</span><br><span class="line">3:0</span><br><span class="line">4:1</span><br><span class="line">5:0</span><br><span class="line">6:1</span><br><span class="line">7:0</span><br><span class="line">8:0</span><br><span class="line">9:0</span><br><span class="line">10:0</span><br><span class="line">11:1</span><br><span class="line">12:1</span><br><span class="line">13:0</span><br><span class="line">14:1</span><br><span class="line">15:0</span><br><span class="line">16:0</span><br><span class="line">17:0</span><br><span class="line">18:1</span><br><span class="line">19:1</span><br><span class="line"></span><br><span class="line">//实验五： 20次都正常，没有OOM</span><br><span class="line">0:0</span><br><span class="line">1:0</span><br><span class="line">2:0</span><br><span class="line">3:0</span><br><span class="line">4:0</span><br><span class="line">5:0</span><br><span class="line">6:0</span><br><span class="line">7:0</span><br><span class="line">8:0</span><br><span class="line">9:0</span><br><span class="line">10:0</span><br><span class="line">11:0</span><br><span class="line">12:0</span><br><span class="line">13:0</span><br><span class="line">14:0</span><br><span class="line">15:0</span><br><span class="line">16:0</span><br><span class="line">17:0</span><br><span class="line">18:0</span><br><span class="line">19:0</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>WeakHashMap只有key值会在JVM GC时Treated specially， value并不会;</li>
+<li>WeakHashMap对外提供的方法，都直接或者间接调用了expungeStaleEntries()， 该方法会将value对应的引用置空（help GC)，实验是一些极端的例子，主要是帮助理解WeakHashMap，正常情况下是不太会出现OOM的。</li>
+</ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="http://mikab.iteye.com/blog/587995" target="_blank" rel="noopener">WeakHashMap的神话</a></li>
+<li><a href="http://www.cnblogs.com/fsjohnhuang/p/4268411.html" target="_blank" rel="noopener">Java魔法堂：四种引用类型、ReferenceQueue和WeakHashMap</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/15/垃圾收集器与内存分配策略/" itemprop="url">垃圾收集器与内存分配策略</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-15T08:48:56+08:00">
+                2016-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深入理解JVM系列笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">深入理解JVM系列笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/15/垃圾收集器与内存分配策略/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/04/15/垃圾收集器与内存分配策略/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>　　GC需要考虑的三件事情：哪些内存需要回收、何时回收、怎么回收。了解GC是为了更加熟练地排查内存溢出、内存泄漏等问题，根据应用特点，选择合适的JVM参数，调优JVM。在Java各个运行时数据区域，线程私有的虚拟机栈、本地方法栈、程序计数器的内存分配和回收都具有确定性，随线程生而生，随线程死而死。Java堆和方法区是多线程共享的，对象的分配和回收都是动态的，后续讲到的GC也主要针对这两个区域。</p>
+<h2 id="收集对象的判断"><a href="#收集对象的判断" class="headerlink" title="收集对象的判断"></a>收集对象的判断</h2><p>　　对于GC而言，首先需要关注的问题就是哪些对象可以回收，目前有两种主流做法：引用计数算法（<a href="http://hbprotoss.github.io/posts/pythonla-ji-hui-shou-ji-zhi.html" target="_blank" rel="noopener">python</a>)和可达性分析算法（java)。</p>
+<h3 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h3><ul>
+<li>定义：每个对象都有一个引用计数器，当被引用时，计数器加1，当解除引用时，计数减1，当计数器为0时，表示该对象可以回收。</li>
+<li>优点：实现简单、判断效率高</li>
+<li>缺点：无法解决循环引用的问题，需要其他算法辅助</li>
+</ul>
+<h3 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h3><ul>
+<li>定义：定义一些GC Roots对象作为起点，凡是可以通过GC Roots对象直接或间接引用到的对象，就认为是可达的，对于不可达对象，就是需要回收的对象。</li>
+<li>优点：解决了循环引用问题，不需要其他算法辅助</li>
+<li>缺点：实现相对复杂，而且存在运行时卡顿的问题<br><img src="2.png" alt="可达性分析算法"><br>在Java中，可作为GC Roots对象包括如下几种：</li>
+<li>Java虚拟机栈局部变量表引用的对象</li>
+<li>方法区静态类属性引用的对象</li>
+<li>方法区常量引用的对象</li>
+<li>本地方法栈JNI引用的对象</li>
+</ul>
+<h3 id="可达性与引用分类"><a href="#可达性与引用分类" class="headerlink" title="可达性与引用分类"></a>可达性与引用分类</h3><p>　　在Java1.2版本之前，对象一共有3种状态：可达、可复活、不可达。GC Roots对象可以直接或间接引用到的对象，则该对象是可达的。一旦引用链断裂，就变成可复活的了,可复活对象在finalize方法中有且只有一次复活机会，复活就变成可达，否则就变成了不可达，等待被回收。Java1.2把可达性细分为：强可达、软可达、弱可达和幽灵可达，以描述一些“食之无味，弃之可惜”的对象（比如内存资源受限的缓存系统），对应四种引用强引用、软引用、弱引用、幽灵引用，四种引用强度依次减弱。</p>
+<ul>
+<li>强引用(Strong Reference)与强可达（Strong Reachable)<br>强引用：代码中出现最多的引用，比如<code>String s = new String(&quot;abc&quot;)</code>。<br>强可达：只要至少存在一条GC Roots到该对象的引用链全是强引用的，就是强可达的；只要该对象是强可达的，该对象就永远不会被回收，内存不足，JVM宁愿报OOM异常。</li>
+<li>软引用(Soft Reference)与软可达（Soft Reachable)<br>软引用：如<code>SoftReference&lt;Object&gt; softReference = new SoftReference&lt;&gt;(new Object())</code>, 用来描述一些有用但是非必要的对象，比如内存资源紧张的缓存系统。<br>软可达：对象不是强可达的，且至少存在一条GC Roots到该对象的引用链，所有引用强度大于等于软引用，且其中至少有一个引用是软引用的，就是软可达的；一个对象是软可达的，当Jave Heap空间充足时，它不会被回收，反之，就会被回收（当然也有复活的机会）。</li>
+<li>弱引用(Week Reference)与弱可达（Weak Reachable)<br>弱引用：如<code>WeakReference&lt;Object&gt; weakReference = new WeakReference&lt;&gt;(new Object())</code>, 用来描述一中规范映射，当映射中的key还被其他对象引用时，就继续保留，否则，下次GC就会被清除，例如WeakHashMap。<br>弱可达：对象不是强可达，也不是软可达，且至少存在一条GC Roots到该对象的引用链，所有引用强度大于等于弱引用， 且其中至少有一个引用是弱引用，则该对象是弱可达的。弱可达的对象，只能活到下一次系统GC（当然也有复活的机会）</li>
+<li>可复活：对象不是强、软、弱可达的，但是可以通过某些对象的终结方法（Finalize)恢复到上述某种状态。</li>
+<li>幽灵引用(Phantom Reference)与幽灵可达（Plantom Reachable)<br>幽灵引用：如<code>PhantomReference&lt;Object&gt; weakReference = new PhantomReference&lt;&gt;(new Object()， new ReferenceQueue())</code>, 主要用来实现除Finalize方法的以外更加复杂的资源回收机制, 因为Finalize方法执行时间不确定（gc线程优先级低，且该对象被复活过之后，就不会再执行该方法），而幽灵引用在对象被回收前会添加到引用队列中，使得资源回收线程可以得到一个通知（对于内存回收机制有严重依赖时，比如一定要该对象空间回收之后，JVM才能分配新对象，可以使用幽灵引用）<br>幽灵可达：对象不是强、软、弱可达的，也不是可复活的，且至少存在一条GC Roots到该对象的引用链，其中至少有一个引用是幽灵引用，则该对象是幽灵可达的，幽灵可达的对象是不可复活的。</li>
+<li>不可达：对象不是强、软、弱、幽灵可达的，也不是可复活的，不可达对象就是要被回收的对象。</li>
+</ul>
+<p><strong>判断原则</strong>: 引用<a href="http://www.cnblogs.com/fsjohnhuang/p/4268411.html" target="_blank" rel="noopener">Java魔法堂：四种引用类型、ReferenceQueue和WeakHashMap</a></p>
+<blockquote>
+<p>单条引用链的可达性以最弱的一个引用类型来决定；<br>多条引用链的可达性以最强的一个引用类型来决定；</p>
+</blockquote>
+<p><strong>注意几点</strong>：</p>
+<ul>
+<li>软引用和弱引用在还没有被清除前（clear方法），可以使用get方法得对象的强引用，被清除后，则得到null，而幽灵引用的get方法一直为null</li>
+<li>软引用、弱引用、幽灵引用在构建时，可以添加ReferenceQueue(幽灵引用必须添加）, 当被垃圾回收时，GC线程会将他们加入到对应的引用队列之中(enqueue)，对于软引用和弱引用，GC会调用他们的clear方法，而幽灵引用必须手动clear。</li>
+<li>关于WeakHashMap的详细介绍请参考我的一篇文章《<a href="http://sbwei.github.io/2016/04/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WeakHashMap%E5%AE%9E%E7%8E%B0/" target="_blank" rel="noopener">深入理解WeakHashMap实现</a>》</li>
+<li>关于引用队列ReferenceQueue 有各个方法enqueue(一个引用只能最多入队一次）、remove(移出队列中的对象，如果没有就一直等，或者等timeout时间），poll(也是移出队列中的对象，如果没有，就直接返回null)，具体可以看源码。</li>
+<li><p>可复活对象在回收前，有一次拯救自己的机会，就是<strong>该对象覆盖了finalize方法，并且没有执行过</strong>，这样就可以有机会在fianalize方法中重新复活该对象，fianalize()方法是由低优先级线程Finalizer执行的，所以不保证能执行完，且最多执行一次。由于finalize()方法具有太多不确定性，所以强烈建议不要使用，可以使用try…catch…finally或者幽灵引用的方式。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.gc;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeEscapeGC</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> FinalizeEscapeGC SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">isAlive</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"yes,i am still alive!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.finalize();</span><br><span class="line">        System.out.println(<span class="string">"finalize method executed!"</span>);</span><br><span class="line">        SAVE_HOOK = <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        SAVE_HOOK = <span class="keyword">new</span> FinalizeEscapeGC();</span><br><span class="line"></span><br><span class="line">        SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">        System.gc();</span><br><span class="line">        Thread.sleep(<span class="number">500</span>);</span><br><span class="line">        <span class="keyword">if</span>(SAVE_HOOK !=<span class="keyword">null</span>)&#123;</span><br><span class="line">            SAVE_HOOK.isAlive();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"no,i am dead!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">        System.gc();</span><br><span class="line">        Thread.sleep(<span class="number">500</span>);</span><br><span class="line">        <span class="keyword">if</span>(SAVE_HOOK !=<span class="keyword">null</span>)&#123;</span><br><span class="line">            SAVE_HOOK.isAlive();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"no,i am dead!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  运行结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">finalize method executed!</span><br><span class="line">yes,i am still alive!</span><br><span class="line">no,i am dead!</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h2><h3 id="标记-清除算法（Mark-Sweep"><a href="#标记-清除算法（Mark-Sweep" class="headerlink" title="标记-清除算法（Mark-Sweep)"></a>标记-清除算法（Mark-Sweep)</h3><ul>
+<li>描述：标记-清除算法是最基础的算法，后续算法都是在这个算法的基础上，针对其不足的改进，一共分为两个过程：标记（不可达对象）和清除。</li>
+<li>缺点：<br>  1） 标记和清除两个过程效率不高<br>  2） 会产生内存碎片问题<br><img src="1.jpg" alt="标记-清除算法"></li>
+</ul>
+<h3 id="复制算法-Copying"><a href="#复制算法-Copying" class="headerlink" title="复制算法(Copying)"></a>复制算法(Copying)</h3><p>初级版</p>
+<ul>
+<li>描述：将可用内存对半分开，每次使用其中的一半，当这一半使用完了，就把存活对象复制到另一半，并集中回收这一半。</li>
+<li>优点: 不会产生内存碎片问题，内存分配只需移动栈顶指针，连续分配，实现简单，运行高效。</li>
+<li>缺点: 每次只能利用一半的内存，利用率太低。<br><img src="4.jpg" alt="复制算法"><br>高级版</li>
+<li>描述：由于Java中绝大多数（98%）对象是短命的，在下一次GC前就没用了，所以不需要对半开，可以划分成一个Eden空间和两个Survivor空间（From、To), 每次使用其中的一个Eden空间和Survivor空间（比如大小8:1:1，则利用率是90%）， 将存活对象复制到另一个Survivor空间，并清除Eden空间和刚用过的Suvivor空间。</li>
+<li>优点：除了有初级版的优点外，内存利用率也大大提高。</li>
+<li>缺点：由于不能保证每次存活的对象大小都小于10%的内存大小，所以需要其他内存做担保（Handle Promotion), 比如老年代， 当另一个Survivor容纳不下时，直接分配到老年代。</li>
+</ul>
+<h3 id="标记-整理算法-Mark-Compact"><a href="#标记-整理算法-Mark-Compact" class="headerlink" title="标记-整理算法(Mark-Compact)"></a>标记-整理算法(Mark-Compact)</h3><ul>
+<li>描述：复制算法适合短命对象比例特别高的情况，如果每次存活过多，复制太多对象将严重影响效率，而且不想浪费空间，还行需要其他内存担保。标记-整理算法标记过程标记-清除算法一样，整理的时候，是把所以对象移到一端，然后清理掉边界外的内存空间。</li>
+<li>优点：内存利用率高（100%），整理后不存在内存碎片。</li>
+<li>缺点：效率不高，需要整理和清除<br><img src="3.jpg" alt="标记-整理算法"></li>
+</ul>
+<h3 id="分代收集思想"><a href="#分代收集思想" class="headerlink" title="分代收集思想"></a>分代收集思想</h3><blockquote>
+<p>90%以上的Java对象都是短命的<br>90%以上的Java程序都会有长命对象</p>
+</blockquote>
+<p>　　根据以上想法，将Java堆空间分为年轻代（Young Gerneration） 和 老年代（Old Gerneration）， 其中年轻代大多数对象都是短命的，可以使用高级版复制算法， 并由老年代担保，老年代由于对象存活率较高，且没有其他空间为他担保，可以使用标记整理或者标记清除算法。</p>
+<h2 id="个人观点区"><a href="#个人观点区" class="headerlink" title="个人观点区"></a>个人观点区</h2><p>　　个人认为可达性和引用分类部分，《Inside the Java Virtual Machine》比 《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》描述的更准确。后书中提到各种引用区别时，提到了垃圾回收方面区别，不能单纯说，只要一个对象强引用还在，就不能被回收（循环强引用呢,见下面的例子），必须和可达性结合起来，比如说强可达的对象，一定不能被回收更为准确。当然相信作者自己肯定明白，表述的瑕疵或者说表达清楚感觉很啰嗦，希望读者明白就好。<br>   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.gc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.ref.WeakReference;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 弱可达中的循环强引用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeakReferenceGC</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        A a =  <span class="keyword">new</span> A();</span><br><span class="line">        a.setB(<span class="keyword">new</span> B(<span class="keyword">new</span> C(a)));</span><br><span class="line">        WeakReference&lt;A&gt; weakReference = <span class="keyword">new</span> WeakReference&lt;&gt;(a);</span><br><span class="line">        a = <span class="keyword">null</span>;  <span class="comment">//消除强可达，变成弱可达</span></span><br><span class="line">        System.gc();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">500</span>);  <span class="comment">//GC线程优先级低，等500ms</span></span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(weakReference.get() != <span class="keyword">null</span>)&#123; <span class="comment">//还有C指向A的强引用，但弱可达，还是会被GC</span></span><br><span class="line">            System.out.println(<span class="string">"instance a is alive!"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"instance a is dead!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> B b;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setB</span><span class="params">(B b)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.b = b;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> C c;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">B</span><span class="params">(C c)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.c = c;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> A a;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">C</span><span class="params">(A a)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.a = a;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>   结果：<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">instance a is dead!</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>周志明.《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》[M]</li>
+<li>Bill Venners.《Inside the Java Virtual Machine, Second Edition》[M]</li>
+<li><a href="http://hbprotoss.github.io/posts/pythonla-ji-hui-shou-ji-zhi.html" target="_blank" rel="noopener">Python垃圾回收机制</a></li>
+<li><a href="https://www.zhihu.com/question/21663879" target="_blank" rel="noopener">Java 等语言的 GC 为什么不实时释放内存？</a></li>
+<li><a href="http://www.cnblogs.com/fsjohnhuang/p/4268411.html" target="_blank" rel="noopener">Java魔法堂：四种引用类型、ReferenceQueue和WeakHashMap</a></li>
+<li><a href="http://sbwei.github.io/2016/04/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WeakHashMap%E5%AE%9E%E7%8E%B0/" target="_blank" rel="noopener">深入理解WeakHashMap实现</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/04/08/Java内存区域与内存溢出异常/" itemprop="url">Java内存区域与内存溢出异常</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-08T08:48:56+08:00">
+                2016-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深入理解JVM系列笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">深入理解JVM系列笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/08/Java内存区域与内存溢出异常/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/04/08/Java内存区域与内存溢出异常/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Java内存区域"><a href="#Java内存区域" class="headerlink" title="Java内存区域"></a>Java内存区域</h2><p>　　Java虚拟机在执行Java程序过程中，会把它所管理的内存划分为若干个区域，每个区域有各自的用途，以及创建销毁时间，有线程私有区域，也有线程共享的区域，具体如下图所示：</p>
+<p><img src="8.png" alt="Java运行时数据区域图"></p>
+<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>　　是当前线程执行的下一条字节码的行号指示器（对于native方法，则为不确定），类似于汇编指令PC寄存器，使用它来控制程序跳转、分支、循环、异常、方法返回等流程。此区域为一个字长，是线程私有的，也是Java虚拟机规范中唯一没有定OOM情况的区域。</p>
+<h3 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h3><p>　　Java虚拟机栈描述的是Java方法执行的内存模型，每个方法的执行，都会创建一个栈帧，用于存储局部变量表、操作数栈、动态链接、方法出口信息，方法的一次执行对应一次栈帧的入栈与出栈。同程序计数器一样，Java虚拟机栈也是线程私有的。</p>
+<ul>
+<li><p>局部变量表<br>  局部变量表是一个以字长为单位的数组，里面存放的局部变量包基本类型（boolean, byte,short, char,int, float, double,long)、reference、returnAddress(虚拟机内部使用类型)，其中boolean、byte、short、char在操作数栈和局部变量表中都会转换为int类型处理，同int,float,refernce, returnAddress一样，占用一个字长，double和long占用两个字长（也就是说，对于字长为64bit的JVM, double与long占用128bit,其中高字为0）。<br>  示例代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LocalVarbiesTable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">classMethod</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">byte</span> b, <span class="keyword">boolean</span> c, <span class="keyword">double</span> e, <span class="keyword">long</span> f)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">instanceMethod</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">boolean</span> b, <span class="keyword">double</span> e)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> f = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">long</span> g = <span class="number">0L</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  对应的局部变量表：<br>  <img src="7.jpg" alt="局部变量表"></p>
+<p>  注意项：<br>  1） 对于实例方法，对一个参数永远是隐藏的this引用；<br>  2） 参数在局部变量表中必须按申明的顺序存放，而内部变量可以不按申明顺序存放，甚至可以共用一个区域，例如下面的i,j变量(作用域不叠加)：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">10</span>; i++)&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j &lt;<span class="number">2</span>; j++)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  3） JVM是不支持boolean类型的，在虚拟机栈中被当做int处理，在heap和方法区中当做byte， boolean类型数组当成byte数组处理或者位域处理，但是对byte,short, char是支持的，只是在虚拟机栈中是当成int处理，在方法区或者堆中还是会当着原来的类型存储的。</p>
+</li>
+<li><p>操作数栈<br>  与局部变量表一样，操作数栈也是一个以字长为单位的数组，只是以栈的方式获取数据，而不是以索引的方式。以下面字节码为例，演示两个局部变量相加的流程：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iload_0   //将局部变量表中索引为0的int入栈</span><br><span class="line">iload_1   //将局部变量表中索引为1的int入栈</span><br><span class="line">iadd      //弹出栈顶两个int，并相加，把结果入栈</span><br><span class="line">istore_2  //弹出栈顶int,存到局部变量表索引为2的位置</span><br></pre></td></tr></table></figure>
+<p>  对应的过程如下：<br>  <img src="1.jpg" alt="两个局部变量相加的过程"></p>
+</li>
+<li>帧数据区<br>  主要包括常量池解析、方法返回、异常派发等信息。<br>  注意项：<br>  1）Java虚拟机栈的实现方式并不一样，有从堆中分配栈帧的，有的从连续的栈中分配，有的是这两种方式的结合，与具体实现相关。<br>  2）Java虚拟机规范中，规定这个区域有两种有两种异常状况：如果线程请求的栈深度超过所允许的深度，抛SOF异常；如果虚拟机栈动态扩展无法申请足够内存，就会抛出OOM异常。</li>
+</ul>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>　　本地方法栈（Native Method Stack)与Java虚拟机栈类似，只是Java虚拟机栈为Java方法服务，本地方法栈为本地方法服务。Java虚拟机规范没有对这一块的实现做具体限制，由设计者自由发挥(sun HotSpot VM 将Java虚拟机栈和本地方法栈合二为一）。同Java虚拟机栈一样，本区域也有SOF和OOM。</p>
+<h3 id="方法区-TODO-需要看到后续章节更新"><a href="#方法区-TODO-需要看到后续章节更新" class="headerlink" title="方法区[TODO:需要看到后续章节更新]"></a>方法区[TODO:需要看到后续章节更新]</h3><p>　　方法区是一个线程共享的内存区域，用来保存已加载类的类信息、常量、静态变量、字节码等信息，由于是多线程共享的，所以需要考虑到线程安全问题。Sun 的HotSpot虚拟机中，方法区被描述为“永久代”（Permanent Generation),但两者并不是等价的，对于其他虚拟机而言，没有永久代的概念，而且HotSpot虚拟机也在考虑放弃使用“永久代”（-XX:MaxPermSize的内存上限，更内容遇到内存溢出，而且GC效率不高），更多信息参考<a href="http://www.infoq.com/cn/articles/Java-PERMGEN-Removed" target="_blank" rel="noopener">Java永久代去哪儿了</a>。</p>
+<ul>
+<li>类信息<ul>
+<li>类的全限定名（例如：java.lang.Object)</li>
+<li>类的直接超类全限定名（java.lang.Object没有超类）</li>
+<li>类是类类型还是接口类型</li>
+<li>类的访问修饰符(public、abstract、final)</li>
+<li>实现的接口列表</li>
+</ul>
+</li>
+<li>类的常量池<ul>
+<li>字面常量</li>
+<li>符号常量 </li>
+</ul>
+</li>
+<li>字段信息<ul>
+<li>字段名（public、private、protected、static、final、volatile、transient)</li>
+<li>字段类型</li>
+<li>字段修饰符 </li>
+</ul>
+</li>
+<li>方法信息<ul>
+<li>方法名</li>
+<li>方法返回值类型</li>
+<li>方法参数数量、类型（按声明顺序）</li>
+<li>方法修饰符（public、private、protected、static、final、synchronized、native、abstract）</li>
+</ul>
+<hr>
+  （抽象方法和本地方法不包含下面的项）<ul>
+<li>方法字节码</li>
+<li>操作数栈和局部变量表的大小</li>
+<li>异常表</li>
+</ul>
+</li>
+<li>除常量外的静态（类）变量</li>
+<li>一个到ClassLoader的引用</li>
+<li>一个到Class类的引用</li>
+</ul>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>　　运行时常量池是（Runtime Constant Pool)是方法区的一部分，Java虚拟机规范没有明确规定这部分的实现，一般用于存放符号引用以及解析过后的直接引用。相对于类常量池，运行时常量池具备动态性，Java语言中的常量并不是只有编译时才产生，也可以动态生成， 例如 String.intern()方法。</p>
+<h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>　　Java堆（Heap)是JVM管理的一块最大的内存区域，也是线程共享的。Java虚拟机规范规定，所有的对象实例及数组都要在堆上分配，但是随着JIT技术的发展，栈上分配、标量替换等优化技术的出现，使得该规范并不是那么绝对。按照目前的主流的分代GC算法，Java堆可以划分为老年代和新生代（包括一个Eden空间、一个From Survivor、一个To SurVivor），甚至可以划分线程私有的分配缓冲区（Thread Local Allocation Buffer, TLAB)，划分是为了更加有效地GC或者分配内存。可以通过-Xmx和-Xms来设置堆的大小，当内存不够时，会报OOM。<br>    <img src="9.gif" alt="Java堆空间"><br>    Java堆中对象是如何创建、内存布局以及访问定位都与具体的虚拟机实现有关，本文以常用的HostSpot虚拟机为例，讲解这三个过程。</p>
+<ul>
+<li>对象的创建<br>  对象的创建（包括new，clone,反序列化）都是通过new指令来完成的， JVM在遇到一条new指令时，检查指令参数能否找到运行时常量池中找到符号引用，并查看此符号引用对应的类是否被加载、解析、和初始化。如果一切完成，虚拟机就会为该实例分配固定大小的空间（大小如何确定，参考对象的内存布局），书中描述的主要分配算法分为如下两种：<br>  1) 指针碰撞<br>  指针碰撞分配算法要求内存是规整的，即内存的一半是空闲的，一半是已使用的，中间一个指针作为分界点的指示器，分配时，将指针往空闲端移动与对象大小相等的距离。<br>  <img src="3.jpg" alt="指针碰撞"><br>  2) 空闲链表<br>  虚拟机维护一个空闲链表，记录哪些内存块是空闲的，每次分配内存时，找一个足够大的块分配给该实例（ps:学操作系统时，查找有首次适用、循环首次适用、最佳适用、最差适用等策略，暂时不明白HotSpot虚拟机使用哪种策略），并且更新空闲链表。<br>  注意项：<br>  1） 内存分配算法与垃圾回收算法需要配套使用，例如第一种分配算法需要带有Compact过程的垃圾收集器（Serial, ParNew等），而基于标记-清除算法的收集器（CMS)通常采用第二种分配算法。<br>  2） 由于堆内存是线程共享的，所以在分配内存时需要保证线程安全的，有两种解决方案：(a)使用CAS指令做同步处理，保证更新操作的原子性; (b)为每个线程在堆中预先分配一小块内存，即本地线程分配缓存TLAB, 线程需要创建对象，优先在这块区域分配，当这部分内存用完，才使用前面的(a)办法。<br>  当内存分配好之后，需要将本块内存清零，保证实例基本可以，然后设置对象的头信息（具体见对象的内存布局），最后按照程序的构造方法，按要求初始化实例变量（init方法）。</li>
+<li><p>对象的内存布局<br>  在HotSpot虚拟机中，对象在内存中的布局分为三个区域：对象头（header)、实例数据（instance data)和对齐填充（padding)。<br>  <img src="2.png" alt="对象的内存布局"><br>  对象头包括两个部分：标记字（Mark Word)和类型指针(Klass Pointer)，各占一个字（32位机器4字节/64位机器8字节）,对于数组而言，还需要一个额外的字来表示数组的长度。标记字包含对象自身运行时数据,根据不同的状态（下面括号中）复用这个字，具体包含hash码，分代年龄，偏向锁等信息，具体如下(TODO: 暂时没弄明白各个标志的具体作用，后面回过来详细介绍)：</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  32 bits:</span></span><br><span class="line"><span class="comment">//  --------</span></span><br><span class="line"><span class="comment">//  hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)</span></span><br><span class="line"><span class="comment">//  JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)</span></span><br><span class="line"><span class="comment">//  size:32 ------------------------------------------&gt;| (CMS free block)</span></span><br><span class="line"><span class="comment">//  PromotedObject*:29 ----------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  64 bits:</span></span><br><span class="line"><span class="comment">//  --------</span></span><br><span class="line"><span class="comment">//  unused:25 hash:31 --&gt;| unused:1   age:4    biased_lock:1 lock:2 (normal object)</span></span><br><span class="line"><span class="comment">//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)</span></span><br><span class="line"><span class="comment">//  PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)</span></span><br><span class="line"><span class="comment">//  size:64 -----------------------------------------------------&gt;| (CMS free block)</span></span><br><span class="line"><span class="comment">//  </span></span><br><span class="line"><span class="comment">//  64 bits use Compressed Ordinary Object Pointers</span></span><br><span class="line"><span class="comment">//  unused:25 hash:31 --&gt;| cms_free:1 age:4    biased_lock:1 lock:2 (COOPs &amp;&amp; normal object)</span></span><br><span class="line"><span class="comment">//  JavaThread*:54 epoch:2 cms_free:1 age:4    biased_lock:1 lock:2 (COOPs &amp;&amp; biased object)</span></span><br><span class="line"><span class="comment">//  narrowOop:32 unused:24 cms_free:1 unused:4 promo_bits:3 -----&gt;| (COOPs &amp;&amp; CMS promoted object)</span></span><br><span class="line"><span class="comment">//  unused:21 size:35 --&gt;| cms_free:1 unused:7 ------------------&gt;| (COOPs &amp;&amp; CMS free block)</span></span><br></pre></td></tr></table></figure>
+<p>  类型指针指向的是方法区该类的元数据，并不是所有虚拟机都有改字，有些虚拟机会采用其他的方式访问类的元数据，具体参考对象的访问定位。接下来就是实例数据区域，具体大小由虚拟机的分配策略以及对象的申明顺序有关，HotSpot虚拟机默认的分配策略为longs/doubles, ints, shorts/chars, bytes/booleans, oops（Ordinary Object Pointers），相同宽度的字段总是被分配到一起，父类中定义的变量会，出现在子类之前， 如果ComparctFields为true，子类中的变量也可能会插入到父类的空隙之中，具体参考<a href="http://blog.csdn.net/wenniuwuren/article/details/50958892" target="_blank" rel="noopener">对象大小布局</a>。第三部分padding主要目的是为了让空间是字长的整数倍，用来补全，没有实际意义。</p>
+</li>
+<li>对象的访问定位<br>  Java程序是通过引用来访问对象，访问方式取决于虚拟机的实现，目前主流的访问方式有两种：句柄访问方式和直接指针访问方式，而HotSpot采用的是后者。<br>  1）句柄访问方式<br>  如果采用句柄访问方式，堆上需要划分一块区域作为句柄池，栈上的引用存放的是句柄池中句柄的地址，而句柄中存放着指向堆中的实例地址和指向方法区的元数据地址，如下图。<br>  <img src="6.jpg" alt="句柄访问对象"><br>  2) 直接指针访问方式<br>  如果采用直接指针访问方式，栈上存放的是实例的地址，而在实例中存放了指向对于类元信息的地址。<br>  <img src="4.jpg" alt="直接指针访问对象"><br>  下图展示了一种基于直接指针访问二维数组的方式。<br>  <img src="5.png" alt="基于直接指针访问数组的方式"><br>  两种访问方式都各有优势，对于句柄访问方式而言，栈中存放的引用是稳定值，在移动实例时（GC),只需要改变句柄值；直接指针访问方式节省了一次指针定位的时间开销，定位更快，目前两种方式都比较常用。</li>
+</ul>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>　　直接内存(Direct Memory)并不是虚拟机运行时数据区域的，也不是Java虚拟机规范定义的内存区域，只是经常被使用，而且可能导致OOM。典型应用就是NIO中的DirectByteBuffer，就是直接使用的堆外内存，可以避免Java堆与Native内存来回复制数据，提高性能。直接内存不受堆内存大小限制（-Xmx)，但受本机物理内存限制，所以在设置堆内存大小时，需要保留余地，否则容易报OOM。Java8以及之后的版本中，方法区已经从原来的JVM运行时数据区中被移到了一个称作元空间的直接内存区域<a href="http://www.infoq.com/cn/articles/Java-PERMGEN-Removed" target="_blank" rel="noopener">Java永久代去哪儿了</a>。</p>
+<h2 id="内存溢出异常"><a href="#内存溢出异常" class="headerlink" title="内存溢出异常"></a>内存溢出异常</h2><p>　　Java虚拟机规范规定了除程序计数器外，各个内存区域可能出现的OOM异常，下面以Sun公司HotSpot虚拟机为例，试验一些OOM和SOF的场景。</p>
+<h3 id="Java堆溢出"><a href="#Java堆溢出" class="headerlink" title="Java堆溢出"></a>Java堆溢出</h3><ul>
+<li>思想：不停创建Java对象，同时保证这些对象是GC Roots可达的，以保证不会被回收，从而超出堆的最大限制（-Xmx）。</li>
+<li><p>示例代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM Args: -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapOOM</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        List&lt;Double&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            list.add(Double.valueOf(<span class="number">1.0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java.lang.OutOfMemoryError: GC overhead limit exceeded</span><br><span class="line">Dumping heap to java_pid7544.hprof ...</span><br><span class="line">Heap dump file created [30336288 bytes in 0.839 secs]</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded</span><br><span class="line">	at java.lang.Double.valueOf(Double.java:521)</span><br><span class="line">	at com.sbwei.oom.HeapOOM.main(HeapOOM.java:14)</span><br><span class="line">    ......</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分析方法：<br>  添加-XX:+HeapDumpOnOutOfMemoryError会让Java堆在OOM时打印内存快照文件（java_pid7544.hprof），然后确定是内存泄漏和还是内存溢出（Java堆中的对象是否是必要的），如果是内存泄漏，查找到GC Root的引用链，确定内存泄漏代码的位置；如果是内存溢出，就查看是否可以调整-Xmx的大小和本机内存大小，或者优化代码，减少内存消耗。</p>
+</li>
+</ul>
+<h3 id="虚拟机栈和本地方法栈溢出"><a href="#虚拟机栈和本地方法栈溢出" class="headerlink" title="虚拟机栈和本地方法栈溢出"></a>虚拟机栈和本地方法栈溢出</h3><p>　　HotSpot的Java虚拟机栈和本地方法栈是合二为一的，可以同-Xss来设置栈的大小。Java虚拟机规范，规定该区域的两种异常，一种是栈深度超过最大深度报SOF,一种是栈帧无法请求到足够多的栈空间报OOM。事实上在单线程环境下，当-Xss固定为某个大小时，都报的SOF异常，在多线程的情况下，由于JVM进程的最大内存受操作系统限制（比如32windows系统为2G),在方法区（MaxPermSize）、堆（Xmx）以及所有的线程的栈空间之和大于最大进程最大限制时，就会报OOM异常（严格说还有其他部分的内存开销），所以在并发规模一定的情况下，增加堆内存（-Xmx）和增加堆栈大小（-Xss)反而会更容易OOM</p>
+<ul>
+<li>思想：无限循环递归调用，直到超出了栈的最大容量（-Xss)</li>
+<li><p>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -Xss128k</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaVMStackSOF</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> stackLength = <span class="number">1</span>;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">stackLeakOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">        stackLength ++;</span><br><span class="line">        stackLeakOne();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">stackLeakTwo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">double</span> a = <span class="number">1.0</span>;</span><br><span class="line">        <span class="keyword">double</span> b = <span class="number">1.0</span>;</span><br><span class="line">        <span class="keyword">long</span> c = <span class="number">0L</span>;</span><br><span class="line">        stackLength ++;</span><br><span class="line">        stackLeakTwo();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        JavaVMStackSOF oom = <span class="keyword">new</span> JavaVMStackSOF();</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            oom.stackLeakOne();</span><br><span class="line">            <span class="comment">//oom.stackLeakTwo();</span></span><br><span class="line">        &#125;<span class="keyword">catch</span> (Throwable e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            System.out.println(<span class="string">"stackLength -----&gt;"</span> + oom.stackLength);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//stackLeakOne</span><br><span class="line">java.lang.StackOverflowError</span><br><span class="line">	at com.sbwei.oom.JavaVMStackSOF.stackLeakOne(JavaVMStackSOF.java:10)</span><br><span class="line">	at com.sbwei.oom.JavaVMStackSOF.stackLeakOne(JavaVMStackSOF.java:11)</span><br><span class="line">    ......</span><br><span class="line">stackLength -----&gt;964</span><br><span class="line">----------</span><br><span class="line">//stackLeakTwo</span><br><span class="line">java.lang.StackOverflowError</span><br><span class="line">	at com.sbwei.oom.JavaVMStackSOF.stackLeakOne(JavaVMStackSOF.java:10)</span><br><span class="line">	at com.sbwei.oom.JavaVMStackSOF.stackLeakOne(JavaVMStackSOF.java:11)</span><br><span class="line">    ......</span><br><span class="line">stackLength -----&gt;624</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上面是单独调用stackLeakOne和stackLeakTwo的结果表明，对于同样大小的栈容量，栈帧较大的stackLeakTwo更早SOF</p>
+</li>
+</ul>
+<h3 id="运行时常量池溢出"><a href="#运行时常量池溢出" class="headerlink" title="运行时常量池溢出"></a>运行时常量池溢出</h3><p>　　Java7及之后版本的JVM已经将运行时常量池从方法区中移了出来，在Java 堆（Heap）中开辟了一块区域存放运行时常量池，可以验证是否正确。</p>
+<ul>
+<li>思想：<br>  设置永久代的初始值和最大值-XX:PermSize=10m -XX:MaxPermSize=10m，使用String.intern方法填充，对比Java6/Java7上运行结果；在Java7设置-Xms10m -Xmx10m, 查看运行结果,下面代码相同，运行的jdk版本和参数不一样。</li>
+<li><p>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -XX:PermSize=10M -XX:MaxPermSize=10M (对比Java6和Java7)</span></span><br><span class="line"><span class="comment"> * VM args: -Xms10m -Xmx10m (Java7是否将运行时常量池移到heap)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>  sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RuntimeConstantPoolOOM</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            list.add(String.valueOf(i++).intern());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//Java6 -XX:PermSize=10M -XX:MaxPermSize=10M</span><br><span class="line">Exception in thread&quot;main&quot;java.lang.OutOfMemoryError：PermGen space</span><br><span class="line">   at java.lang.String.intern（Native Method）</span><br><span class="line">   at org.fenixsoft.oom.RuntimeConstantPoolOOM.main（RuntimeConstantPoolOOM.java：15）</span><br><span class="line"></span><br><span class="line">//Java7 -XX:PermSize=10M -XX:MaxPermSize=10M</span><br><span class="line">一直运行，直到电脑死机</span><br><span class="line"></span><br><span class="line">//JDK7 -Xms10m -Xmx10m</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded</span><br><span class="line">at java.lang.Integer.toString(Integer.java:333)</span><br><span class="line">at java.lang.String.valueOf(String.java:2959)</span><br><span class="line">at com.sbwei.oom.RuntimeConstantPoolOOM.main(RuntimeConstantPoolOOM.java:15)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>总结<br> 在Java7中方法区中的运行时常量池确实已经移到Java Heap中，所以-XX:MaxPermSize参数对运行时常量的大小起不到限定作用了，需要用参数-Xmx来限制。关于常量池以及String.intern()在Java7也有一些改变，可以参考<a href="http://www.importnew.com/14142.html" target="_blank" rel="noopener">深入解析String#intern</a>.</p>
+</li>
+</ul>
+<h3 id="方法区溢出"><a href="#方法区溢出" class="headerlink" title="方法区溢出"></a>方法区溢出</h3><ul>
+<li>思想：方法区用于存放类的元信息，可以借助CGLib字节码技术，产生大量的类，来填充方法区。</li>
+<li><p>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.sf.cglib.proxy.Enhancer;</span><br><span class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodInterceptor;</span><br><span class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodProxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -XX:PermSize=10M -XX:MaxPermSize=10M</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaMethodAreaOOM</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            Enhancer enhancer = <span class="keyword">new</span> Enhancer();</span><br><span class="line">            enhancer.setSuperclass(OOMObject.class);</span><br><span class="line">            enhancer.setUseCache(<span class="keyword">false</span>);</span><br><span class="line">            enhancer.setCallback(<span class="keyword">new</span> MethodInterceptor() &#123;</span><br><span class="line">                <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object o, Method method, </span></span></span><br><span class="line"><span class="function"><span class="params">                    Object[] objects, MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> methodProxy.invokeSuper(o, objects);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            enhancer.create();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span>  <span class="class"><span class="keyword">class</span> <span class="title">OOMObject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：<br>Exception in thread “main”<br>Exception: java.lang.OutOfMemoryError thrown from the UncaughtExceptionHandler in thread “main”</p>
+</li>
+<li>总结<br> 方法区内存溢出平常也常见，在许多的Web框架中（Struts,Hibernate,Spring等）都会用到各种字节码技术和自定义的类加载器，从而产生许多类的元信息。</li>
+</ul>
+<h3 id="直接内存溢出"><a href="#直接内存溢出" class="headerlink" title="直接内存溢出"></a>直接内存溢出</h3><ul>
+<li>思想：从Java1.4开始，引入了NIO,可以使用ByteBuffer.allocateDirect(size)来分配本机直接内存。</li>
+<li><p>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -Xmx20M -XX:MaxDirectMemorySize=10M</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DirectMemoryOOM</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1MB = <span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        List&lt;ByteBuffer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            list.add(ByteBuffer.allocateDirect(_1MB));</span><br><span class="line">            count++;</span><br><span class="line">            System.out.println( count + <span class="string">"M is allocated"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">1M is allocated</span><br><span class="line">2M is allocated</span><br><span class="line">3M is allocated</span><br><span class="line">4M is allocated</span><br><span class="line">5M is allocated</span><br><span class="line">6M is allocated</span><br><span class="line">7M is allocated</span><br><span class="line">8M is allocated</span><br><span class="line">9M is allocated</span><br><span class="line">10M is allocated</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Direct buffer memory</span><br><span class="line">    at java.nio.Bits.reserveMemory(Bits.java:658)</span><br><span class="line">    at java.nio.DirectByteBuffer.&lt;init&gt;(DirectByteBuffer.java:123)</span><br><span class="line">    at java.nio.ByteBuffer.allocateDirect(ByteBuffer.java:306)</span><br><span class="line">    at com.sbwei.oom.DirectMemoryOOM.main(DirectMemoryOOM.java:16)</span><br><span class="line">    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)</span><br><span class="line">    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">    at java.lang.reflect.Method.invoke(Method.java:606)</span><br><span class="line">    at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>总结： 本机直接内存导致的内存溢出，比较明显的特征：heap dump文件中没有明内存溢出异常，而且dump的文件也比较小。</p>
+</li>
+</ul>
+<h2 id="个人观点"><a href="#个人观点" class="headerlink" title="个人观点"></a>个人观点</h2><p>　　上大学的时候，各种考试总是让我们为编程语言分类，例如C/C++是编译型语言，VB是解析型语言，Java是解析与编译相结合的语言等等。对于Java, 放到BEA公司的JRockit（号称世界上速度最快的JVM,专注服务端，不关注启动速度，所以不包含解析器的实现，全是JIT),我们可以认为Java是编译型语言,同样是C语言，也可以被解析执行。所以，语言属于编译还是解析类型，与语言本身无关，而是看它是放在解释器还是编译器上运行。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>周志明.《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》[M]</li>
+<li>Bill Venners.《Inside the Java Virtual Machine, Second Edition》[M]</li>
+<li><a href="http://stackoverflow.com/questions/1907318/java-boolean-primitive-type-size/" target="_blank" rel="noopener">http://stackoverflow.com/questions/1907318/java-boolean-primitive-type-size/</a></li>
+<li>IBM刘欣. <a href="http://www.yidianzixun.com/home?page=article&amp;id=0CypYCR4&amp;up=3" target="_blank" rel="noopener">我是一个Java class</a></li>
+<li>Monica Beckwith. <a href="http://www.infoq.com/cn/articles/Java-PERMGEN-Removed" target="_blank" rel="noopener">Java永久代去哪儿了</a></li>
+<li><a href="http://stackoverflow.com/questions/26357186/what-is-in-java-object-header" target="_blank" rel="noopener">http://stackoverflow.com/questions/26357186/what-is-in-java-object-header</a></li>
+<li><a href="http://blog.csdn.net/wenniuwuren/article/details/50958892" target="_blank" rel="noopener">Java 对象占用空间大小计算</a></li>
+<li><a href="http://www.importnew.com/14142.html" target="_blank" rel="noopener">深入解析String#intern</a></li>
+<li><a href="http://blog.csdn.net/rainnnbow/article/details/47018241" target="_blank" rel="noopener">String放入运行时常量池的时机与String.intern()方法解惑</a></li>
+<li><a href="http://blog.csdn.net/rainnnbow/article/details/47018241" target="_blank" rel="noopener">JVM常量池和八种基本数据及字符串</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.png"
+               alt="amazing0218" />
+          <p class="site-author-name" itemprop="name">amazing0218</p>
+           
+              <p class="site-description motion-element" itemprop="description">关注NOSQL、分布式、大数据、数据库等技术</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/amazing0218" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ifeve.com/" title="并发编程网" target="_blank">并发编程网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amazing0218</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://amazing.disqus.com/count.js" async></script>
+    
+
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

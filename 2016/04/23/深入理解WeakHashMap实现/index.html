@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="WeakHashMap,WeakReference,弱引用," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="前言　　在学习WeakReference的时候，自然想去看看JDK自带的WeakHashMap原理，于是在网上看到了这样一篇文章《WeakHashMap的神话》,这个题目很有噱头，也激起了广大码农的积极讨论，但是意见不统一，我当然也不甘寂寞，所以决定一探究竟。 代码与内存数据分布图　　下面是一个小demo和数据的大致内存分布（当然只是关键数据，主要方便描述） 示例代码12345public voi">
+<meta name="keywords" content="WeakHashMap,WeakReference,弱引用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解WeakHashMap实现">
+<meta property="og:url" content="http://amazing0218.github.io/2016/04/23/深入理解WeakHashMap实现/index.html">
+<meta property="og:site_name" content="一鸣惊人">
+<meta property="og:description" content="前言　　在学习WeakReference的时候，自然想去看看JDK自带的WeakHashMap原理，于是在网上看到了这样一篇文章《WeakHashMap的神话》,这个题目很有噱头，也激起了广大码农的积极讨论，但是意见不统一，我当然也不甘寂寞，所以决定一探究竟。 代码与内存数据分布图　　下面是一个小demo和数据的大致内存分布（当然只是关键数据，主要方便描述） 示例代码12345public voi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/23/深入理解WeakHashMap实现/1.jpg">
+<meta property="og:updated_time" content="2018-10-14T12:07:16.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解WeakHashMap实现">
+<meta name="twitter:description" content="前言　　在学习WeakReference的时候，自然想去看看JDK自带的WeakHashMap原理，于是在网上看到了这样一篇文章《WeakHashMap的神话》,这个题目很有噱头，也激起了广大码农的积极讨论，但是意见不统一，我当然也不甘寂寞，所以决定一探究竟。 代码与内存数据分布图　　下面是一个小demo和数据的大致内存分布（当然只是关键数据，主要方便描述） 示例代码12345public voi">
+<meta name="twitter:image" content="http://amazing0218.github.io/2016/04/23/深入理解WeakHashMap实现/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://amazing0218.github.io/2016/04/23/深入理解WeakHashMap实现/"/>
+
+
+
+
+
+  <title>深入理解WeakHashMap实现 | 一鸣惊人</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-125477179-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一鸣惊人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">骐骥一跃不能十步，驽马十驾功在不舍</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2016/04/23/深入理解WeakHashMap实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入理解WeakHashMap实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-23T08:48:56+08:00">
+                2016-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深入理解JVM系列笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">深入理解JVM系列笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/23/深入理解WeakHashMap实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/04/23/深入理解WeakHashMap实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>　　在学习WeakReference的时候，自然想去看看JDK自带的WeakHashMap原理，于是在网上看到了这样一篇文章《<a href="http://mikab.iteye.com/blog/587995" target="_blank" rel="noopener">WeakHashMap的神话</a>》,这个题目很有噱头，也激起了广大码农的积极讨论，但是意见不统一，我当然也不甘寂寞，所以决定一探究竟。</p>
+<h2 id="代码与内存数据分布图"><a href="#代码与内存数据分布图" class="headerlink" title="代码与内存数据分布图"></a>代码与内存数据分布图</h2><p>　　下面是一个小demo和数据的大致内存分布（当然只是关键数据，主要方便描述）</p>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WeakHashMapTest</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</span><br><span class="line">    WeakHashMap&lt;String, Interger&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">    map.put(<span class="keyword">new</span> String(<span class="string">"abc"</span>), <span class="keyword">new</span> Integer(<span class="number">256</span>));</span><br><span class="line">    Thread.sleep(<span class="number">500</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数据的内存分布"><a href="#数据的内存分布" class="headerlink" title="数据的内存分布"></a>数据的内存分布</h3><p>  <img src="1.jpg" alt="内存分布图"></p>
+<h3 id="核心类与代码"><a href="#核心类与代码" class="headerlink" title="核心类与代码"></a>核心类与代码</h3><ul>
+<li>WeakHashMap<br>与HashMap有两点不一样：1）WeakHashMap的Entry&lt;K,V&gt;除了实现了Map.Entry&lt;K,V&gt;接口，还继承了WeakReference&lt;Object&gt;类； 2）WeakHashMap包含了一个引用队列ReferenceQueue, 主要用来填充Reference,即WeakHashMap的Entry&lt;K,V&gt;。</li>
+<li><p>Entry&lt;K,V&gt;<br>Entry&lt;K,V&gt;继承自父类的父类Reference的几个成员变量和类变量：K referent, Reference next, ReferenceQueue queue, Reference pengding, ReferenceHandler thread,以及本身的 int hash,V value和Entry&lt;K,V&gt; next；</p>
+<ul>
+<li>K referent 即WeakHashMap中的key，虽然是一个强引用，但是会被JVM特殊处理，即如果该字段的所属类是WeakReference，且它指向的实例没有别被其他GC Roots引用, 则referent会被JVM GC时置NULL，且对应指向的实例内存空间将被回收，然后将所对应的引用Entry&lt;K,V&gt;加入到pengding链表。<blockquote>
+<p>private T referent;         /<em> Treated specially by GC </em>/</p>
+</blockquote>
+</li>
+<li>Reference next 指向下一个Reference,主要用于pengding链表的构建</li>
+<li>Reference queue 在同一个WeakHashMap实例中，所有的Entry中的queue都是一样，即WeakHashMap的成员变量queue</li>
+<li>Reference pending 是一个类变量，也是一个单向链表，JVM将key对应的实例GC后，会将对应的Entry(Reference)加到pending链表, 然后等待ReferenceHandler线程的处理，由于还有有GC线程的添加操作，所以需要加锁处理。<blockquote>
+<p>List of References waiting to be enqueued.  The collector addsReferences to this list, while the Reference-handler thread removes them.  This list is protected by the above lock object.</p>
+<p>private static Reference pending = null;</p>
+</blockquote>
+</li>
+<li><p>ReferenceHandler thread 是一个类变量， 是一个优先级最大的守护线程，当JVM添加一个Entry(Reference)到pending链表时，会唤醒该线程，然后根据该Reference的状态，来决定是不是进入队列或者其他操作，对于WeakHashMap而言，当然是全部进入queue中（enqueue方法)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceHandler</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    ReferenceHandler(ThreadGroup g, String name) &#123;</span><br><span class="line">        <span class="keyword">super</span>(g, name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line"></span><br><span class="line">            Reference r;</span><br><span class="line">            <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line">                <span class="keyword">if</span> (pending != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    r = pending;</span><br><span class="line">                    Reference rn = r.next;</span><br><span class="line">                    pending = (rn == r) ? <span class="keyword">null</span> : rn;</span><br><span class="line">                    r.next = r;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        lock.wait();<span class="comment">//等待JVM其他线程唤醒</span></span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException x) &#123; &#125;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Fast path for cleaners</span></span><br><span class="line">            <span class="keyword">if</span> (r <span class="keyword">instanceof</span> Cleaner) &#123;</span><br><span class="line">                ((Cleaner)r).clean();</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            ReferenceQueue q = r.queue;</span><br><span class="line">            <span class="keyword">if</span> (q != ReferenceQueue.NULL) q.enqueue(r);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>int hash 用来保存key对象的hash值（非常有必要保存，后面代码中会讲到）</p>
+</li>
+<li>V value WeakHashMap对应的Value值，是一个强引用，但是不会被JVM特殊处理，这是与referent不一样的地方</li>
+<li>Entry&lt;K,V&gt; next 与HashMap中的作用一样，主要用来解决hash冲突的</li>
+</ul>
+</li>
+</ul>
+<h2 id="回收流程分析"><a href="#回收流程分析" class="headerlink" title="回收流程分析"></a>回收流程分析</h2><p>　　如果一个WeakHashMap构建好，并且put一些key,value进去以后，如果这些key没有被其他地方引用，下一次GC来临时，将会发生什么呢，看看下面的流程:</p>
+<ul>
+<li>JVM GC时，发现Entry&lt;K,V&gt;对象的是WeakReference对象时，会对key(即referent）做特殊处理，切断key的引用（key=null),回收key所指向的实例，并把Entry&lt;K,V&gt;加入到类变量的pengding列表， 唤醒ReferenceHandler线程；</li>
+<li>ReferenceHandler线程，根据逻辑判断，会把Entry&lt;K,V&gt;对象，加入到Entry&lt;K,V&gt;对象成员变量queue所指向的引用队列（enqueue)；</li>
+<li>如果接下来还有该WeakHashMap实例对应的方法调用， 就会触发 expungeStaleEntries()的执行(每个对外方法都有直接或间接调用)，该方法会把value的引用置NULL，并将Entry&lt;K,V&gt;移出WeakHashMap，这时才有机会回收Value所指向的实例的内存空间。  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">expungeStaleEntries</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (Object x; (x = queue.poll()) != <span class="keyword">null</span>; ) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (queue) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">                Entry&lt;K,V&gt; e = (Entry&lt;K,V&gt;) x;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             计算散列到槽的位置，其实就是e.hash % table.length的位运算</span></span><br><span class="line"><span class="comment">            （e.hash &amp; (table.length -1)，这也是为啥Entry[] talbes </span></span><br><span class="line"><span class="comment">             大小必须是2的指数次方的原因), e.hash是根据key的实例计算出来的，</span></span><br><span class="line"><span class="comment">             但是此时，key所指向的实例已被回收，所以，这也是为啥要保存hash值的</span></span><br><span class="line"><span class="comment">             原因。</span></span><br><span class="line"><span class="comment">            **/</span></span><br><span class="line">            <span class="keyword">int</span> i = indexFor(e.hash, table.length); </span><br><span class="line"></span><br><span class="line">            Entry&lt;K,V&gt; prev = table[i];</span><br><span class="line">            Entry&lt;K,V&gt; p = prev;</span><br><span class="line">            <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">                Entry&lt;K,V&gt; next = p.next;</span><br><span class="line">                <span class="keyword">if</span> (p == e) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (prev == e)</span><br><span class="line">                        table[i] = next;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                        prev.next = next;</span><br><span class="line">                    <span class="comment">// Must not null out e.next;</span></span><br><span class="line">                    <span class="comment">// stale entries may be in use by a HashIterator</span></span><br><span class="line">                    e.value = <span class="keyword">null</span>; <span class="comment">// Help GC 这个时候才有可能回收value</span></span><br><span class="line">                    size--; <span class="comment">//Entry&lt;K,V&gt;移出链表，size--, 但是table长度不变</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                prev = p;</span><br><span class="line">                p = next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="有趣实验"><a href="#有趣实验" class="headerlink" title="有趣实验"></a>有趣实验</h2><h3 id="代码：JVM"><a href="#代码：JVM" class="headerlink" title="代码：JVM"></a>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></h3><pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.gc;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.WeakHashMap;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -Xms20m -Xmx20m</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeakHashMapGC</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> _1M = <span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.out.println(i);</span><br><span class="line">            System.gc();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testTwo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.out.print(i + <span class="string">":"</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                System.out.print(list.get(j).size() + <span class="string">" "</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">            System.gc();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testThree</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.out.println(i + <span class="string">":"</span> + map.size());</span><br><span class="line">            System.gc();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testFour</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.gc();</span><br><span class="line">            System.out.println(i + <span class="string">":"</span> + map.size());</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testFive</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            WeakHashMap&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="keyword">new</span> <span class="keyword">byte</span>[_1M], <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1M]);</span><br><span class="line">            list.add(map);</span><br><span class="line">            System.gc();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(i + <span class="string">":"</span> + map.size());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(args.length == <span class="number">0</span>)&#123;</span><br><span class="line">            System.err.println(<span class="string">"Usage: Java WeakHashMapGC &lt;[0,4]&gt;"</span>);</span><br><span class="line">            System.exit(-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Integer i = <span class="number">0</span>; <span class="comment">//默认0</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            i = Integer.parseInt(args[<span class="number">0</span>]);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(NumberFormatException e)&#123;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">switch</span> (i)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>: testOne();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>: testTwo();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>: testThree();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>: testFour();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">4</span>: testFive();<span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                System.err.println(<span class="string">"param is not a Integer in [0,4]"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="结果估计"><a href="#结果估计" class="headerlink" title="结果估计"></a>结果估计</h3><p>可以根据自己的理解估计一下实验结果，我是事后孔明哈，结果毕竟我都验证过了，注意System.gc()是由一个优先级极低的线程执行的，所以需要在代码中主线程sleep(500), 以尽量（比如99.9%）保证gc()执行。</p>
+<ul>
+<li><p>实验一估计<br>堆的大小是20m, 每个map只有一个Entry, key为1M, value 2M， 由于在put之后，再也没该map的方法调用（第一次put中，expungeStaleEntries方法其实是无用功），所以估计key值空间能回收，value值空间不会，考虑到而外开销，所以循环次数应大于6.67（20/3）次, 小于10次20/2，就会OOM</p>
+</li>
+<li><p>实验二估计<br>实验二与实验一不同的地方是，除了最后一个map，每个map都至少碰到两次gc, 在调用put方法后， 第一轮gc，释放key对象空间，Entry入队列， 下一轮又调用了size（）方法，所以到第二轮gc，除了释放本轮的key对象空间，还是释放了上轮的value对象空间，所以堆大小不会超过2M+附加空间，从而不会溢出。</p>
+</li>
+<li><p>实验三估计<br>实验三与实验二不同的地方是，在map调用put方法之后，马上调用size方法，中间没有gc, 在size执行前，key值并没被回收，所以Entry也不会入队，所以size（）大小还是1，value也不会置空，第一轮gc<br>只是回收key对象空间，第二轮gc时由于上轮value没有被置空，所以value并不会被回收，所以结果和实验1一样，在（6.67,10）次循环就会溢出</p>
+</li>
+<li><p>实验四估计<br>实验四与实验三不同的地方是，size()方法放到了system.gc()后执行， 但是由于system.gc()执行优先级低，所以结果不确定，也有溢出的可能。</p>
+</li>
+<li><p>实验五估计<br>实验五与实验四不用的地方是，size()方法放到了System.gc()后执行，并且能尽量保证在gc后执行size（）, 所以实验五的结果和实验二一样，不会产生溢出。</p>
+</li>
+</ul>
+<h3 id="实际运行结果"><a href="#实际运行结果" class="headerlink" title="实际运行结果"></a>实际运行结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">//实验一： 前8次正常，第9次OOM</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at com.sbwei.gc.WeakHashMapGC.testOne(WeakHashMapGC.java:16)</span><br><span class="line">	at com.sbwei.gc.WeakHashMapGC.main(WeakHashMapGC.java:104)</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">//实验二： 20次都正常，没有OOM</span><br><span class="line">0:</span><br><span class="line">1:0 </span><br><span class="line">2:0 0 </span><br><span class="line">3:0 0 0 </span><br><span class="line">4:0 0 0 0 </span><br><span class="line">5:0 0 0 0 0 </span><br><span class="line">6:0 0 0 0 0 0 </span><br><span class="line">7:0 0 0 0 0 0 0 </span><br><span class="line">8:0 0 0 0 0 0 0 0 </span><br><span class="line">9:0 0 0 0 0 0 0 0 0 </span><br><span class="line">10:0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">11:0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">12:0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">13:0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">14:0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">15:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">16:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">17:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">18:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line">19:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 </span><br><span class="line"></span><br><span class="line">//实验三： 前8次正常，第9次OOM</span><br><span class="line">0:1</span><br><span class="line">1:1</span><br><span class="line">2:1</span><br><span class="line">3:1</span><br><span class="line">4:1</span><br><span class="line">5:1</span><br><span class="line">6:1</span><br><span class="line">7:1</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at com.sbwei.gc.WeakHashMapGC.testThree(WeakHashMapGC.java:50)</span><br><span class="line">	at com.sbwei.gc.WeakHashMapGC.main(WeakHashMapGC.java:106)</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">//实验四： 多次执行结果不一样，下面是参考结果，如果循环稍大一点，溢出概率就大大增加了。</span><br><span class="line">0:0</span><br><span class="line">1:0</span><br><span class="line">2:0</span><br><span class="line">3:0</span><br><span class="line">4:1</span><br><span class="line">5:0</span><br><span class="line">6:1</span><br><span class="line">7:0</span><br><span class="line">8:0</span><br><span class="line">9:0</span><br><span class="line">10:0</span><br><span class="line">11:1</span><br><span class="line">12:1</span><br><span class="line">13:0</span><br><span class="line">14:1</span><br><span class="line">15:0</span><br><span class="line">16:0</span><br><span class="line">17:0</span><br><span class="line">18:1</span><br><span class="line">19:1</span><br><span class="line"></span><br><span class="line">//实验五： 20次都正常，没有OOM</span><br><span class="line">0:0</span><br><span class="line">1:0</span><br><span class="line">2:0</span><br><span class="line">3:0</span><br><span class="line">4:0</span><br><span class="line">5:0</span><br><span class="line">6:0</span><br><span class="line">7:0</span><br><span class="line">8:0</span><br><span class="line">9:0</span><br><span class="line">10:0</span><br><span class="line">11:0</span><br><span class="line">12:0</span><br><span class="line">13:0</span><br><span class="line">14:0</span><br><span class="line">15:0</span><br><span class="line">16:0</span><br><span class="line">17:0</span><br><span class="line">18:0</span><br><span class="line">19:0</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>WeakHashMap只有key值会在JVM GC时Treated specially， value并不会;</li>
+<li>WeakHashMap对外提供的方法，都直接或者间接调用了expungeStaleEntries()， 该方法会将value对应的引用置空（help GC)，实验是一些极端的例子，主要是帮助理解WeakHashMap，正常情况下是不太会出现OOM的。</li>
+</ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="http://mikab.iteye.com/blog/587995" target="_blank" rel="noopener">WeakHashMap的神话</a></li>
+<li><a href="http://www.cnblogs.com/fsjohnhuang/p/4268411.html" target="_blank" rel="noopener">Java魔法堂：四种引用类型、ReferenceQueue和WeakHashMap</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/public.jpg" alt="amazing0218 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="amazing0218 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="amazing0218 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/WeakHashMap/" rel="tag"># WeakHashMap</a>
+          
+            <a href="/tags/WeakReference/" rel="tag"># WeakReference</a>
+          
+            <a href="/tags/弱引用/" rel="tag"># 弱引用</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/15/垃圾收集器与内存分配策略/" rel="next" title="垃圾收集器与内存分配策略">
+                <i class="fa fa-chevron-left"></i> 垃圾收集器与内存分配策略
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/28/Java并发机制的底层实现原理/" rel="prev" title="Java并发机制的底层实现原理">
+                Java并发机制的底层实现原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.png"
+               alt="amazing0218" />
+          <p class="site-author-name" itemprop="name">amazing0218</p>
+           
+              <p class="site-description motion-element" itemprop="description">关注NOSQL、分布式、大数据、数据库等技术</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/amazing0218" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ifeve.com/" title="并发编程网" target="_blank">并发编程网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码与内存数据分布图"><span class="nav-number">2.</span> <span class="nav-text">代码与内存数据分布图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例代码"><span class="nav-number">2.1.</span> <span class="nav-text">示例代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据的内存分布"><span class="nav-number">2.2.</span> <span class="nav-text">数据的内存分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心类与代码"><span class="nav-number">2.3.</span> <span class="nav-text">核心类与代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回收流程分析"><span class="nav-number">3.</span> <span class="nav-text">回收流程分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有趣实验"><span class="nav-number">4.</span> <span class="nav-text">有趣实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码：JVM"><span class="nav-number">4.1.</span> <span class="nav-text">代码：JVM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果估计"><span class="nav-number">4.2.</span> <span class="nav-text">结果估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际运行结果"><span class="nav-number">4.3.</span> <span class="nav-text">实际运行结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amazing0218</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://amazing.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://amazing0218.github.io/2016/04/23/深入理解WeakHashMap实现/';
+          this.page.identifier = '2016/04/23/深入理解WeakHashMap实现/';
+          this.page.title = '深入理解WeakHashMap实现';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://amazing.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OOM,内存管理," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Java内存区域　　Java虚拟机在执行Java程序过程中，会把它所管理的内存划分为若干个区域，每个区域有各自的用途，以及创建销毁时间，有线程私有区域，也有线程共享的区域，具体如下图所示：  程序计数器　　是当前线程执行的下一条字节码的行号指示器（对于native方法，则为不确定），类似于汇编指令PC寄存器，使用它来控制程序跳转、分支、循环、异常、方法返回等流程。此区域为一个字长，是线程私有的，也">
+<meta name="keywords" content="OOM,内存管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java内存区域与内存溢出异常">
+<meta property="og:url" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/index.html">
+<meta property="og:site_name" content="一鸣惊人">
+<meta property="og:description" content="Java内存区域　　Java虚拟机在执行Java程序过程中，会把它所管理的内存划分为若干个区域，每个区域有各自的用途，以及创建销毁时间，有线程私有区域，也有线程共享的区域，具体如下图所示：  程序计数器　　是当前线程执行的下一条字节码的行号指示器（对于native方法，则为不确定），类似于汇编指令PC寄存器，使用它来控制程序跳转、分支、循环、异常、方法返回等流程。此区域为一个字长，是线程私有的，也">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/8.png">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/7.jpg">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/1.jpg">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/9.gif">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/3.jpg">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/2.png">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/6.jpg">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/4.jpg">
+<meta property="og:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/5.png">
+<meta property="og:updated_time" content="2018-10-14T12:04:50.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java内存区域与内存溢出异常">
+<meta name="twitter:description" content="Java内存区域　　Java虚拟机在执行Java程序过程中，会把它所管理的内存划分为若干个区域，每个区域有各自的用途，以及创建销毁时间，有线程私有区域，也有线程共享的区域，具体如下图所示：  程序计数器　　是当前线程执行的下一条字节码的行号指示器（对于native方法，则为不确定），类似于汇编指令PC寄存器，使用它来控制程序跳转、分支、循环、异常、方法返回等流程。此区域为一个字长，是线程私有的，也">
+<meta name="twitter:image" content="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/8.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/"/>
+
+
+
+
+
+  <title>Java内存区域与内存溢出异常 | 一鸣惊人</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-125477179-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一鸣惊人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">骐骥一跃不能十步，驽马十驾功在不舍</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java内存区域与内存溢出异常</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-08T08:48:56+08:00">
+                2016-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深入理解JVM系列笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">深入理解JVM系列笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/04/08/Java内存区域与内存溢出异常/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/04/08/Java内存区域与内存溢出异常/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Java内存区域"><a href="#Java内存区域" class="headerlink" title="Java内存区域"></a>Java内存区域</h2><p>　　Java虚拟机在执行Java程序过程中，会把它所管理的内存划分为若干个区域，每个区域有各自的用途，以及创建销毁时间，有线程私有区域，也有线程共享的区域，具体如下图所示：</p>
+<p><img src="8.png" alt="Java运行时数据区域图"></p>
+<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>　　是当前线程执行的下一条字节码的行号指示器（对于native方法，则为不确定），类似于汇编指令PC寄存器，使用它来控制程序跳转、分支、循环、异常、方法返回等流程。此区域为一个字长，是线程私有的，也是Java虚拟机规范中唯一没有定OOM情况的区域。</p>
+<h3 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h3><p>　　Java虚拟机栈描述的是Java方法执行的内存模型，每个方法的执行，都会创建一个栈帧，用于存储局部变量表、操作数栈、动态链接、方法出口信息，方法的一次执行对应一次栈帧的入栈与出栈。同程序计数器一样，Java虚拟机栈也是线程私有的。</p>
+<ul>
+<li><p>局部变量表<br>  局部变量表是一个以字长为单位的数组，里面存放的局部变量包基本类型（boolean, byte,short, char,int, float, double,long)、reference、returnAddress(虚拟机内部使用类型)，其中boolean、byte、short、char在操作数栈和局部变量表中都会转换为int类型处理，同int,float,refernce, returnAddress一样，占用一个字长，double和long占用两个字长（也就是说，对于字长为64bit的JVM, double与long占用128bit,其中高字为0）。<br>  示例代码：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LocalVarbiesTable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">classMethod</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">byte</span> b, <span class="keyword">boolean</span> c, <span class="keyword">double</span> e, <span class="keyword">long</span> f)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">instanceMethod</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">boolean</span> b, <span class="keyword">double</span> e)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> f = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">long</span> g = <span class="number">0L</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  对应的局部变量表：<br>  <img src="7.jpg" alt="局部变量表"></p>
+<p>  注意项：<br>  1） 对于实例方法，对一个参数永远是隐藏的this引用；<br>  2） 参数在局部变量表中必须按申明的顺序存放，而内部变量可以不按申明顺序存放，甚至可以共用一个区域，例如下面的i,j变量(作用域不叠加)：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; <span class="number">10</span>; i++)&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j &lt;<span class="number">2</span>; j++)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  3） JVM是不支持boolean类型的，在虚拟机栈中被当做int处理，在heap和方法区中当做byte， boolean类型数组当成byte数组处理或者位域处理，但是对byte,short, char是支持的，只是在虚拟机栈中是当成int处理，在方法区或者堆中还是会当着原来的类型存储的。</p>
+</li>
+<li><p>操作数栈<br>  与局部变量表一样，操作数栈也是一个以字长为单位的数组，只是以栈的方式获取数据，而不是以索引的方式。以下面字节码为例，演示两个局部变量相加的流程：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iload_0   //将局部变量表中索引为0的int入栈</span><br><span class="line">iload_1   //将局部变量表中索引为1的int入栈</span><br><span class="line">iadd      //弹出栈顶两个int，并相加，把结果入栈</span><br><span class="line">istore_2  //弹出栈顶int,存到局部变量表索引为2的位置</span><br></pre></td></tr></table></figure>
+<p>  对应的过程如下：<br>  <img src="1.jpg" alt="两个局部变量相加的过程"></p>
+</li>
+<li>帧数据区<br>  主要包括常量池解析、方法返回、异常派发等信息。<br>  注意项：<br>  1）Java虚拟机栈的实现方式并不一样，有从堆中分配栈帧的，有的从连续的栈中分配，有的是这两种方式的结合，与具体实现相关。<br>  2）Java虚拟机规范中，规定这个区域有两种有两种异常状况：如果线程请求的栈深度超过所允许的深度，抛SOF异常；如果虚拟机栈动态扩展无法申请足够内存，就会抛出OOM异常。</li>
+</ul>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>　　本地方法栈（Native Method Stack)与Java虚拟机栈类似，只是Java虚拟机栈为Java方法服务，本地方法栈为本地方法服务。Java虚拟机规范没有对这一块的实现做具体限制，由设计者自由发挥(sun HotSpot VM 将Java虚拟机栈和本地方法栈合二为一）。同Java虚拟机栈一样，本区域也有SOF和OOM。</p>
+<h3 id="方法区-TODO-需要看到后续章节更新"><a href="#方法区-TODO-需要看到后续章节更新" class="headerlink" title="方法区[TODO:需要看到后续章节更新]"></a>方法区[TODO:需要看到后续章节更新]</h3><p>　　方法区是一个线程共享的内存区域，用来保存已加载类的类信息、常量、静态变量、字节码等信息，由于是多线程共享的，所以需要考虑到线程安全问题。Sun 的HotSpot虚拟机中，方法区被描述为“永久代”（Permanent Generation),但两者并不是等价的，对于其他虚拟机而言，没有永久代的概念，而且HotSpot虚拟机也在考虑放弃使用“永久代”（-XX:MaxPermSize的内存上限，更内容遇到内存溢出，而且GC效率不高），更多信息参考<a href="http://www.infoq.com/cn/articles/Java-PERMGEN-Removed" target="_blank" rel="noopener">Java永久代去哪儿了</a>。</p>
+<ul>
+<li>类信息<ul>
+<li>类的全限定名（例如：java.lang.Object)</li>
+<li>类的直接超类全限定名（java.lang.Object没有超类）</li>
+<li>类是类类型还是接口类型</li>
+<li>类的访问修饰符(public、abstract、final)</li>
+<li>实现的接口列表</li>
+</ul>
+</li>
+<li>类的常量池<ul>
+<li>字面常量</li>
+<li>符号常量 </li>
+</ul>
+</li>
+<li>字段信息<ul>
+<li>字段名（public、private、protected、static、final、volatile、transient)</li>
+<li>字段类型</li>
+<li>字段修饰符 </li>
+</ul>
+</li>
+<li>方法信息<ul>
+<li>方法名</li>
+<li>方法返回值类型</li>
+<li>方法参数数量、类型（按声明顺序）</li>
+<li>方法修饰符（public、private、protected、static、final、synchronized、native、abstract）</li>
+</ul>
+<hr>
+  （抽象方法和本地方法不包含下面的项）<ul>
+<li>方法字节码</li>
+<li>操作数栈和局部变量表的大小</li>
+<li>异常表</li>
+</ul>
+</li>
+<li>除常量外的静态（类）变量</li>
+<li>一个到ClassLoader的引用</li>
+<li>一个到Class类的引用</li>
+</ul>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>　　运行时常量池是（Runtime Constant Pool)是方法区的一部分，Java虚拟机规范没有明确规定这部分的实现，一般用于存放符号引用以及解析过后的直接引用。相对于类常量池，运行时常量池具备动态性，Java语言中的常量并不是只有编译时才产生，也可以动态生成， 例如 String.intern()方法。</p>
+<h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>　　Java堆（Heap)是JVM管理的一块最大的内存区域，也是线程共享的。Java虚拟机规范规定，所有的对象实例及数组都要在堆上分配，但是随着JIT技术的发展，栈上分配、标量替换等优化技术的出现，使得该规范并不是那么绝对。按照目前的主流的分代GC算法，Java堆可以划分为老年代和新生代（包括一个Eden空间、一个From Survivor、一个To SurVivor），甚至可以划分线程私有的分配缓冲区（Thread Local Allocation Buffer, TLAB)，划分是为了更加有效地GC或者分配内存。可以通过-Xmx和-Xms来设置堆的大小，当内存不够时，会报OOM。<br>    <img src="9.gif" alt="Java堆空间"><br>    Java堆中对象是如何创建、内存布局以及访问定位都与具体的虚拟机实现有关，本文以常用的HostSpot虚拟机为例，讲解这三个过程。</p>
+<ul>
+<li>对象的创建<br>  对象的创建（包括new，clone,反序列化）都是通过new指令来完成的， JVM在遇到一条new指令时，检查指令参数能否找到运行时常量池中找到符号引用，并查看此符号引用对应的类是否被加载、解析、和初始化。如果一切完成，虚拟机就会为该实例分配固定大小的空间（大小如何确定，参考对象的内存布局），书中描述的主要分配算法分为如下两种：<br>  1) 指针碰撞<br>  指针碰撞分配算法要求内存是规整的，即内存的一半是空闲的，一半是已使用的，中间一个指针作为分界点的指示器，分配时，将指针往空闲端移动与对象大小相等的距离。<br>  <img src="3.jpg" alt="指针碰撞"><br>  2) 空闲链表<br>  虚拟机维护一个空闲链表，记录哪些内存块是空闲的，每次分配内存时，找一个足够大的块分配给该实例（ps:学操作系统时，查找有首次适用、循环首次适用、最佳适用、最差适用等策略，暂时不明白HotSpot虚拟机使用哪种策略），并且更新空闲链表。<br>  注意项：<br>  1） 内存分配算法与垃圾回收算法需要配套使用，例如第一种分配算法需要带有Compact过程的垃圾收集器（Serial, ParNew等），而基于标记-清除算法的收集器（CMS)通常采用第二种分配算法。<br>  2） 由于堆内存是线程共享的，所以在分配内存时需要保证线程安全的，有两种解决方案：(a)使用CAS指令做同步处理，保证更新操作的原子性; (b)为每个线程在堆中预先分配一小块内存，即本地线程分配缓存TLAB, 线程需要创建对象，优先在这块区域分配，当这部分内存用完，才使用前面的(a)办法。<br>  当内存分配好之后，需要将本块内存清零，保证实例基本可以，然后设置对象的头信息（具体见对象的内存布局），最后按照程序的构造方法，按要求初始化实例变量（init方法）。</li>
+<li><p>对象的内存布局<br>  在HotSpot虚拟机中，对象在内存中的布局分为三个区域：对象头（header)、实例数据（instance data)和对齐填充（padding)。<br>  <img src="2.png" alt="对象的内存布局"><br>  对象头包括两个部分：标记字（Mark Word)和类型指针(Klass Pointer)，各占一个字（32位机器4字节/64位机器8字节）,对于数组而言，还需要一个额外的字来表示数组的长度。标记字包含对象自身运行时数据,根据不同的状态（下面括号中）复用这个字，具体包含hash码，分代年龄，偏向锁等信息，具体如下(TODO: 暂时没弄明白各个标志的具体作用，后面回过来详细介绍)：</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  32 bits:</span></span><br><span class="line"><span class="comment">//  --------</span></span><br><span class="line"><span class="comment">//  hash:25 ------------&gt;| age:4    biased_lock:1 lock:2 (normal object)</span></span><br><span class="line"><span class="comment">//  JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)</span></span><br><span class="line"><span class="comment">//  size:32 ------------------------------------------&gt;| (CMS free block)</span></span><br><span class="line"><span class="comment">//  PromotedObject*:29 ----------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  64 bits:</span></span><br><span class="line"><span class="comment">//  --------</span></span><br><span class="line"><span class="comment">//  unused:25 hash:31 --&gt;| unused:1   age:4    biased_lock:1 lock:2 (normal object)</span></span><br><span class="line"><span class="comment">//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)</span></span><br><span class="line"><span class="comment">//  PromotedObject*:61 ---------------------&gt;| promo_bits:3 -----&gt;| (CMS promoted object)</span></span><br><span class="line"><span class="comment">//  size:64 -----------------------------------------------------&gt;| (CMS free block)</span></span><br><span class="line"><span class="comment">//  </span></span><br><span class="line"><span class="comment">//  64 bits use Compressed Ordinary Object Pointers</span></span><br><span class="line"><span class="comment">//  unused:25 hash:31 --&gt;| cms_free:1 age:4    biased_lock:1 lock:2 (COOPs &amp;&amp; normal object)</span></span><br><span class="line"><span class="comment">//  JavaThread*:54 epoch:2 cms_free:1 age:4    biased_lock:1 lock:2 (COOPs &amp;&amp; biased object)</span></span><br><span class="line"><span class="comment">//  narrowOop:32 unused:24 cms_free:1 unused:4 promo_bits:3 -----&gt;| (COOPs &amp;&amp; CMS promoted object)</span></span><br><span class="line"><span class="comment">//  unused:21 size:35 --&gt;| cms_free:1 unused:7 ------------------&gt;| (COOPs &amp;&amp; CMS free block)</span></span><br></pre></td></tr></table></figure>
+<p>  类型指针指向的是方法区该类的元数据，并不是所有虚拟机都有改字，有些虚拟机会采用其他的方式访问类的元数据，具体参考对象的访问定位。接下来就是实例数据区域，具体大小由虚拟机的分配策略以及对象的申明顺序有关，HotSpot虚拟机默认的分配策略为longs/doubles, ints, shorts/chars, bytes/booleans, oops（Ordinary Object Pointers），相同宽度的字段总是被分配到一起，父类中定义的变量会，出现在子类之前， 如果ComparctFields为true，子类中的变量也可能会插入到父类的空隙之中，具体参考<a href="http://blog.csdn.net/wenniuwuren/article/details/50958892" target="_blank" rel="noopener">对象大小布局</a>。第三部分padding主要目的是为了让空间是字长的整数倍，用来补全，没有实际意义。</p>
+</li>
+<li>对象的访问定位<br>  Java程序是通过引用来访问对象，访问方式取决于虚拟机的实现，目前主流的访问方式有两种：句柄访问方式和直接指针访问方式，而HotSpot采用的是后者。<br>  1）句柄访问方式<br>  如果采用句柄访问方式，堆上需要划分一块区域作为句柄池，栈上的引用存放的是句柄池中句柄的地址，而句柄中存放着指向堆中的实例地址和指向方法区的元数据地址，如下图。<br>  <img src="6.jpg" alt="句柄访问对象"><br>  2) 直接指针访问方式<br>  如果采用直接指针访问方式，栈上存放的是实例的地址，而在实例中存放了指向对于类元信息的地址。<br>  <img src="4.jpg" alt="直接指针访问对象"><br>  下图展示了一种基于直接指针访问二维数组的方式。<br>  <img src="5.png" alt="基于直接指针访问数组的方式"><br>  两种访问方式都各有优势，对于句柄访问方式而言，栈中存放的引用是稳定值，在移动实例时（GC),只需要改变句柄值；直接指针访问方式节省了一次指针定位的时间开销，定位更快，目前两种方式都比较常用。</li>
+</ul>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>　　直接内存(Direct Memory)并不是虚拟机运行时数据区域的，也不是Java虚拟机规范定义的内存区域，只是经常被使用，而且可能导致OOM。典型应用就是NIO中的DirectByteBuffer，就是直接使用的堆外内存，可以避免Java堆与Native内存来回复制数据，提高性能。直接内存不受堆内存大小限制（-Xmx)，但受本机物理内存限制，所以在设置堆内存大小时，需要保留余地，否则容易报OOM。Java8以及之后的版本中，方法区已经从原来的JVM运行时数据区中被移到了一个称作元空间的直接内存区域<a href="http://www.infoq.com/cn/articles/Java-PERMGEN-Removed" target="_blank" rel="noopener">Java永久代去哪儿了</a>。</p>
+<h2 id="内存溢出异常"><a href="#内存溢出异常" class="headerlink" title="内存溢出异常"></a>内存溢出异常</h2><p>　　Java虚拟机规范规定了除程序计数器外，各个内存区域可能出现的OOM异常，下面以Sun公司HotSpot虚拟机为例，试验一些OOM和SOF的场景。</p>
+<h3 id="Java堆溢出"><a href="#Java堆溢出" class="headerlink" title="Java堆溢出"></a>Java堆溢出</h3><ul>
+<li>思想：不停创建Java对象，同时保证这些对象是GC Roots可达的，以保证不会被回收，从而超出堆的最大限制（-Xmx）。</li>
+<li><p>示例代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM Args: -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapOOM</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        List&lt;Double&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            list.add(Double.valueOf(<span class="number">1.0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">java.lang.OutOfMemoryError: GC overhead limit exceeded</span><br><span class="line">Dumping heap to java_pid7544.hprof ...</span><br><span class="line">Heap dump file created [30336288 bytes in 0.839 secs]</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded</span><br><span class="line">	at java.lang.Double.valueOf(Double.java:521)</span><br><span class="line">	at com.sbwei.oom.HeapOOM.main(HeapOOM.java:14)</span><br><span class="line">    ......</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分析方法：<br>  添加-XX:+HeapDumpOnOutOfMemoryError会让Java堆在OOM时打印内存快照文件（java_pid7544.hprof），然后确定是内存泄漏和还是内存溢出（Java堆中的对象是否是必要的），如果是内存泄漏，查找到GC Root的引用链，确定内存泄漏代码的位置；如果是内存溢出，就查看是否可以调整-Xmx的大小和本机内存大小，或者优化代码，减少内存消耗。</p>
+</li>
+</ul>
+<h3 id="虚拟机栈和本地方法栈溢出"><a href="#虚拟机栈和本地方法栈溢出" class="headerlink" title="虚拟机栈和本地方法栈溢出"></a>虚拟机栈和本地方法栈溢出</h3><p>　　HotSpot的Java虚拟机栈和本地方法栈是合二为一的，可以同-Xss来设置栈的大小。Java虚拟机规范，规定该区域的两种异常，一种是栈深度超过最大深度报SOF,一种是栈帧无法请求到足够多的栈空间报OOM。事实上在单线程环境下，当-Xss固定为某个大小时，都报的SOF异常，在多线程的情况下，由于JVM进程的最大内存受操作系统限制（比如32windows系统为2G),在方法区（MaxPermSize）、堆（Xmx）以及所有的线程的栈空间之和大于最大进程最大限制时，就会报OOM异常（严格说还有其他部分的内存开销），所以在并发规模一定的情况下，增加堆内存（-Xmx）和增加堆栈大小（-Xss)反而会更容易OOM</p>
+<ul>
+<li>思想：无限循环递归调用，直到超出了栈的最大容量（-Xss)</li>
+<li><p>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -Xss128k</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaVMStackSOF</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> stackLength = <span class="number">1</span>;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">stackLeakOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">        stackLength ++;</span><br><span class="line">        stackLeakOne();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">stackLeakTwo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">double</span> a = <span class="number">1.0</span>;</span><br><span class="line">        <span class="keyword">double</span> b = <span class="number">1.0</span>;</span><br><span class="line">        <span class="keyword">long</span> c = <span class="number">0L</span>;</span><br><span class="line">        stackLength ++;</span><br><span class="line">        stackLeakTwo();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        JavaVMStackSOF oom = <span class="keyword">new</span> JavaVMStackSOF();</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            oom.stackLeakOne();</span><br><span class="line">            <span class="comment">//oom.stackLeakTwo();</span></span><br><span class="line">        &#125;<span class="keyword">catch</span> (Throwable e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            System.out.println(<span class="string">"stackLength -----&gt;"</span> + oom.stackLength);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//stackLeakOne</span><br><span class="line">java.lang.StackOverflowError</span><br><span class="line">	at com.sbwei.oom.JavaVMStackSOF.stackLeakOne(JavaVMStackSOF.java:10)</span><br><span class="line">	at com.sbwei.oom.JavaVMStackSOF.stackLeakOne(JavaVMStackSOF.java:11)</span><br><span class="line">    ......</span><br><span class="line">stackLength -----&gt;964</span><br><span class="line">----------</span><br><span class="line">//stackLeakTwo</span><br><span class="line">java.lang.StackOverflowError</span><br><span class="line">	at com.sbwei.oom.JavaVMStackSOF.stackLeakOne(JavaVMStackSOF.java:10)</span><br><span class="line">	at com.sbwei.oom.JavaVMStackSOF.stackLeakOne(JavaVMStackSOF.java:11)</span><br><span class="line">    ......</span><br><span class="line">stackLength -----&gt;624</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上面是单独调用stackLeakOne和stackLeakTwo的结果表明，对于同样大小的栈容量，栈帧较大的stackLeakTwo更早SOF</p>
+</li>
+</ul>
+<h3 id="运行时常量池溢出"><a href="#运行时常量池溢出" class="headerlink" title="运行时常量池溢出"></a>运行时常量池溢出</h3><p>　　Java7及之后版本的JVM已经将运行时常量池从方法区中移了出来，在Java 堆（Heap）中开辟了一块区域存放运行时常量池，可以验证是否正确。</p>
+<ul>
+<li>思想：<br>  设置永久代的初始值和最大值-XX:PermSize=10m -XX:MaxPermSize=10m，使用String.intern方法填充，对比Java6/Java7上运行结果；在Java7设置-Xms10m -Xmx10m, 查看运行结果,下面代码相同，运行的jdk版本和参数不一样。</li>
+<li><p>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -XX:PermSize=10M -XX:MaxPermSize=10M (对比Java6和Java7)</span></span><br><span class="line"><span class="comment"> * VM args: -Xms10m -Xmx10m (Java7是否将运行时常量池移到heap)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>  sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RuntimeConstantPoolOOM</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            list.add(String.valueOf(i++).intern());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//Java6 -XX:PermSize=10M -XX:MaxPermSize=10M</span><br><span class="line">Exception in thread&quot;main&quot;java.lang.OutOfMemoryError：PermGen space</span><br><span class="line">   at java.lang.String.intern（Native Method）</span><br><span class="line">   at org.fenixsoft.oom.RuntimeConstantPoolOOM.main（RuntimeConstantPoolOOM.java：15）</span><br><span class="line"></span><br><span class="line">//Java7 -XX:PermSize=10M -XX:MaxPermSize=10M</span><br><span class="line">一直运行，直到电脑死机</span><br><span class="line"></span><br><span class="line">//JDK7 -Xms10m -Xmx10m</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: GC overhead limit exceeded</span><br><span class="line">at java.lang.Integer.toString(Integer.java:333)</span><br><span class="line">at java.lang.String.valueOf(String.java:2959)</span><br><span class="line">at com.sbwei.oom.RuntimeConstantPoolOOM.main(RuntimeConstantPoolOOM.java:15)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>总结<br> 在Java7中方法区中的运行时常量池确实已经移到Java Heap中，所以-XX:MaxPermSize参数对运行时常量的大小起不到限定作用了，需要用参数-Xmx来限制。关于常量池以及String.intern()在Java7也有一些改变，可以参考<a href="http://www.importnew.com/14142.html" target="_blank" rel="noopener">深入解析String#intern</a>.</p>
+</li>
+</ul>
+<h3 id="方法区溢出"><a href="#方法区溢出" class="headerlink" title="方法区溢出"></a>方法区溢出</h3><ul>
+<li>思想：方法区用于存放类的元信息，可以借助CGLib字节码技术，产生大量的类，来填充方法区。</li>
+<li><p>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.sf.cglib.proxy.Enhancer;</span><br><span class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodInterceptor;</span><br><span class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodProxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -XX:PermSize=10M -XX:MaxPermSize=10M</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaMethodAreaOOM</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            Enhancer enhancer = <span class="keyword">new</span> Enhancer();</span><br><span class="line">            enhancer.setSuperclass(OOMObject.class);</span><br><span class="line">            enhancer.setUseCache(<span class="keyword">false</span>);</span><br><span class="line">            enhancer.setCallback(<span class="keyword">new</span> MethodInterceptor() &#123;</span><br><span class="line">                <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object o, Method method, </span></span></span><br><span class="line"><span class="function"><span class="params">                    Object[] objects, MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> methodProxy.invokeSuper(o, objects);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            enhancer.create();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span>  <span class="class"><span class="keyword">class</span> <span class="title">OOMObject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：<br>Exception in thread “main”<br>Exception: java.lang.OutOfMemoryError thrown from the UncaughtExceptionHandler in thread “main”</p>
+</li>
+<li>总结<br> 方法区内存溢出平常也常见，在许多的Web框架中（Struts,Hibernate,Spring等）都会用到各种字节码技术和自定义的类加载器，从而产生许多类的元信息。</li>
+</ul>
+<h3 id="直接内存溢出"><a href="#直接内存溢出" class="headerlink" title="直接内存溢出"></a>直接内存溢出</h3><ul>
+<li>思想：从Java1.4开始，引入了NIO,可以使用ByteBuffer.allocateDirect(size)来分配本机直接内存。</li>
+<li><p>代码：<a href="https://github.com/sbwei/JVM" target="_blank" rel="noopener">JVM</a></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sbwei.oom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * VM args: -Xmx20M -XX:MaxDirectMemorySize=10M</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> sbwei</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DirectMemoryOOM</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1MB = <span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        List&lt;ByteBuffer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            list.add(ByteBuffer.allocateDirect(_1MB));</span><br><span class="line">            count++;</span><br><span class="line">            System.out.println( count + <span class="string">"M is allocated"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">1M is allocated</span><br><span class="line">2M is allocated</span><br><span class="line">3M is allocated</span><br><span class="line">4M is allocated</span><br><span class="line">5M is allocated</span><br><span class="line">6M is allocated</span><br><span class="line">7M is allocated</span><br><span class="line">8M is allocated</span><br><span class="line">9M is allocated</span><br><span class="line">10M is allocated</span><br><span class="line">Exception in thread &quot;main&quot; java.lang.OutOfMemoryError: Direct buffer memory</span><br><span class="line">    at java.nio.Bits.reserveMemory(Bits.java:658)</span><br><span class="line">    at java.nio.DirectByteBuffer.&lt;init&gt;(DirectByteBuffer.java:123)</span><br><span class="line">    at java.nio.ByteBuffer.allocateDirect(ByteBuffer.java:306)</span><br><span class="line">    at com.sbwei.oom.DirectMemoryOOM.main(DirectMemoryOOM.java:16)</span><br><span class="line">    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)</span><br><span class="line">    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">    at java.lang.reflect.Method.invoke(Method.java:606)</span><br><span class="line">    at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>总结： 本机直接内存导致的内存溢出，比较明显的特征：heap dump文件中没有明内存溢出异常，而且dump的文件也比较小。</p>
+</li>
+</ul>
+<h2 id="个人观点"><a href="#个人观点" class="headerlink" title="个人观点"></a>个人观点</h2><p>　　上大学的时候，各种考试总是让我们为编程语言分类，例如C/C++是编译型语言，VB是解析型语言，Java是解析与编译相结合的语言等等。对于Java, 放到BEA公司的JRockit（号称世界上速度最快的JVM,专注服务端，不关注启动速度，所以不包含解析器的实现，全是JIT),我们可以认为Java是编译型语言,同样是C语言，也可以被解析执行。所以，语言属于编译还是解析类型，与语言本身无关，而是看它是放在解释器还是编译器上运行。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>周志明.《深入理解Java虚拟机：JVM高级特性与最佳实践（第2版）》[M]</li>
+<li>Bill Venners.《Inside the Java Virtual Machine, Second Edition》[M]</li>
+<li><a href="http://stackoverflow.com/questions/1907318/java-boolean-primitive-type-size/" target="_blank" rel="noopener">http://stackoverflow.com/questions/1907318/java-boolean-primitive-type-size/</a></li>
+<li>IBM刘欣. <a href="http://www.yidianzixun.com/home?page=article&amp;id=0CypYCR4&amp;up=3" target="_blank" rel="noopener">我是一个Java class</a></li>
+<li>Monica Beckwith. <a href="http://www.infoq.com/cn/articles/Java-PERMGEN-Removed" target="_blank" rel="noopener">Java永久代去哪儿了</a></li>
+<li><a href="http://stackoverflow.com/questions/26357186/what-is-in-java-object-header" target="_blank" rel="noopener">http://stackoverflow.com/questions/26357186/what-is-in-java-object-header</a></li>
+<li><a href="http://blog.csdn.net/wenniuwuren/article/details/50958892" target="_blank" rel="noopener">Java 对象占用空间大小计算</a></li>
+<li><a href="http://www.importnew.com/14142.html" target="_blank" rel="noopener">深入解析String#intern</a></li>
+<li><a href="http://blog.csdn.net/rainnnbow/article/details/47018241" target="_blank" rel="noopener">String放入运行时常量池的时机与String.intern()方法解惑</a></li>
+<li><a href="http://blog.csdn.net/rainnnbow/article/details/47018241" target="_blank" rel="noopener">JVM常量池和八种基本数据及字符串</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/public.jpg" alt="amazing0218 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="amazing0218 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="amazing0218 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OOM/" rel="tag"># OOM</a>
+          
+            <a href="/tags/内存管理/" rel="tag"># 内存管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/15/垃圾收集器与内存分配策略/" rel="prev" title="垃圾收集器与内存分配策略">
+                垃圾收集器与内存分配策略 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.png"
+               alt="amazing0218" />
+          <p class="site-author-name" itemprop="name">amazing0218</p>
+           
+              <p class="site-description motion-element" itemprop="description">关注NOSQL、分布式、大数据、数据库等技术</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/amazing0218" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ifeve.com/" title="并发编程网" target="_blank">并发编程网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java内存区域"><span class="nav-number">1.</span> <span class="nav-text">Java内存区域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">1.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区-TODO-需要看到后续章节更新"><span class="nav-number">1.4.</span> <span class="nav-text">方法区[TODO:需要看到后续章节更新]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">1.5.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java堆"><span class="nav-number">1.6.</span> <span class="nav-text">Java堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接内存"><span class="nav-number">1.7.</span> <span class="nav-text">直接内存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存溢出异常"><span class="nav-number">2.</span> <span class="nav-text">内存溢出异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java堆溢出"><span class="nav-number">2.1.</span> <span class="nav-text">Java堆溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟机栈和本地方法栈溢出"><span class="nav-number">2.2.</span> <span class="nav-text">虚拟机栈和本地方法栈溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池溢出"><span class="nav-number">2.3.</span> <span class="nav-text">运行时常量池溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区溢出"><span class="nav-number">2.4.</span> <span class="nav-text">方法区溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接内存溢出"><span class="nav-number">2.5.</span> <span class="nav-text">直接内存溢出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个人观点"><span class="nav-number">3.</span> <span class="nav-text">个人观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amazing0218</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://amazing.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://amazing0218.github.io/2016/04/08/Java内存区域与内存溢出异常/';
+          this.page.identifier = '2016/04/08/Java内存区域与内存溢出异常/';
+          this.page.title = 'Java内存区域与内存溢出异常';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://amazing.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
