@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java 基础,浮点数," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="在Java中,整数在內存中都是以补码的形式存在的, 主要目的是统一加减运算，那么浮点数是以什么形式存在的呢？本文结合Java的Float类，来探秘一下浮点数的秘密。 IEEE754标准现在的计算机，大多数都是以IEEE754作为存储和运算浮点数的标准，存储信息大致包括如下三个部分数符[sign]、阶码（含阶符）[exponent]、尾数[fraction], 对于不同长度的浮点数，其阶码和尾数的分">
+<meta name="keywords" content="Java 基础,浮点数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 基础之浮点数">
+<meta property="og:url" content="http://amazing0218.github.io/2014/04/06/java-basis-for-floating-point/index.html">
+<meta property="og:site_name" content="一鸣惊人">
+<meta property="og:description" content="在Java中,整数在內存中都是以补码的形式存在的, 主要目的是统一加减运算，那么浮点数是以什么形式存在的呢？本文结合Java的Float类，来探秘一下浮点数的秘密。 IEEE754标准现在的计算机，大多数都是以IEEE754作为存储和运算浮点数的标准，存储信息大致包括如下三个部分数符[sign]、阶码（含阶符）[exponent]、尾数[fraction], 对于不同长度的浮点数，其阶码和尾数的分">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://amazing0218.github.io/2014/04/06/java-basis-for-floating-point/1.png">
+<meta property="og:image" content="http://amazing0218.github.io/2014/04/06/java-basis-for-floating-point/2.png">
+<meta property="og:updated_time" content="2019-03-16T03:13:15.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 基础之浮点数">
+<meta name="twitter:description" content="在Java中,整数在內存中都是以补码的形式存在的, 主要目的是统一加减运算，那么浮点数是以什么形式存在的呢？本文结合Java的Float类，来探秘一下浮点数的秘密。 IEEE754标准现在的计算机，大多数都是以IEEE754作为存储和运算浮点数的标准，存储信息大致包括如下三个部分数符[sign]、阶码（含阶符）[exponent]、尾数[fraction], 对于不同长度的浮点数，其阶码和尾数的分">
+<meta name="twitter:image" content="http://amazing0218.github.io/2014/04/06/java-basis-for-floating-point/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":5},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://amazing0218.github.io/2014/04/06/java-basis-for-floating-point/"/>
+
+
+
+
+
+  <title>Java 基础之浮点数 | 一鸣惊人</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-125477179-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一鸣惊人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">骐骥一跃不能十步，驽马十驾功在不舍</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2014/04/06/java-basis-for-floating-point/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 基础之浮点数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-04-06T19:59:02+08:00">
+                2014-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-基础系列/" itemprop="url" rel="index">
+                    <span itemprop="name">Java 基础系列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/04/06/java-basis-for-floating-point/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/04/06/java-basis-for-floating-point/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在Java中,<a href="../java-basis-for-integer/index.html">整数</a>在內存中都是以补码的形式存在的, 主要目的是统一加减运算，那么浮点数是以什么形式存在的呢？本文结合Java的Float类，来探秘一下浮点数的秘密。</p>
+<h2 id="IEEE754标准"><a href="#IEEE754标准" class="headerlink" title="IEEE754标准"></a>IEEE754标准</h2><p>现在的计算机，大多数都是以<a href="https://zh.wikipedia.org/wiki/IEEE_754" target="_blank" rel="noopener">IEEE754</a>作为存储和运算浮点数的标准，存储信息大致包括如下三个部分<br>数符[sign]、阶码（含阶符）[exponent]、尾数[fraction], 对于不同长度的浮点数，其阶码和尾数的分配位数不一样，具体如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">浮点数类型</th>
+<th style="text-align:left">数符</th>
+<th style="text-align:left">阶码</th>
+<th style="text-align:left">尾数</th>
+<th style="text-align:left">总位数</th>
+<th style="text-align:left">偏移量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">短浮点数</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">23</td>
+<td style="text-align:left">32</td>
+<td style="text-align:left">127</td>
+</tr>
+<tr>
+<td style="text-align:left">长浮点数</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">52</td>
+<td style="text-align:left">64</td>
+<td style="text-align:left">1023</td>
+</tr>
+<tr>
+<td style="text-align:left">临时浮点数</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">64</td>
+<td style="text-align:left">80</td>
+<td style="text-align:left">16383</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<p>下面以短浮点数（32位）为例，详细说明<br><img src="1.png" alt="短浮点数"></p>
+<h3 id="阶码"><a href="#阶码" class="headerlink" title="阶码"></a>阶码</h3><p>  阶码决定了浮点数的范围，阶码一般用移码表示，即在真值的基础上加上一个偏移量, 方便阶码比较，因为移码越大，真值也越大。短浮点数的范围为-2^127 ~ +2^127，也即-3.40E+38 ~ +3.40E+38；长浮点数的范围为-2^1023 ~ +2^1023，也即-1.79E+308 ~ +1.79E+308。</p>
+<h3 id="尾数"><a href="#尾数" class="headerlink" title="尾数"></a>尾数</h3><p>  尾数决定浮点数的精度，尾数一般采用规格化处理【阶码为最小时例外】，即通过向左移1位尾数阶码减1（左规）或右移1位尾数阶码加1（右规），让尾数的第一位为1，规格化有利于浮点数的比较。IEEE754的规格化采用隐藏尾数的最高位表示法，这样实际尾数的长度比定义尾数多1位，这样能尽可能提高浮点数的精度. 短浮点数尾数是23位,对应10进制6~7位有效数字，长浮点数尾数为52位，对应10进制15~16位有效数字。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 在Integer.toBinaryString(Float.floatToRawIntBits(f))的基础上，格式化输出结果</span></span><br><span class="line"><span class="comment">    * 1.补全前缀0 2.数符与阶码之间用逗号分隔，阶码与尾数用分号分割</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> f float</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toBinaryStringFormat</span><span class="params">(<span class="keyword">float</span> f)</span></span>&#123;</span><br><span class="line">        String s = Integer.toBinaryString(Float.floatToRawIntBits(f));</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">int</span> prefix_size = <span class="number">32</span> - s.length();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prefix_size; i ++)&#123;</span><br><span class="line">            sb.append(<span class="string">'0'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(s);</span><br><span class="line">        sb = sb.insert(<span class="number">1</span>, <span class="string">','</span>).insert(<span class="number">10</span>, <span class="string">';'</span>);</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">float</span> f1 = <span class="number">123.4567890123456789f</span>;</span><br><span class="line">        <span class="keyword">float</span> f2 = <span class="number">999.4567890123456789f</span>;</span><br><span class="line">        <span class="keyword">double</span> d1 = <span class="number">123.4567890123456789</span>;</span><br><span class="line">        <span class="keyword">double</span> d2 = <span class="number">999.4567890123456789</span>;</span><br><span class="line">        </span><br><span class="line">        System.out.println(f1);</span><br><span class="line">        <span class="comment">//out: 123.45679 7位有效数字</span></span><br><span class="line">        System.out.println(f2);</span><br><span class="line">        <span class="comment">//out: 999.4568 6位有效数字</span></span><br><span class="line">        System.out.println(d1);</span><br><span class="line">        <span class="comment">//out: 123.45678901234568 16位有效数字</span></span><br><span class="line">        System.out.println(d2);</span><br><span class="line">        <span class="comment">//out: 999.4567890123457 15位有效数字</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="溢出"><a href="#溢出" class="headerlink" title="溢出"></a>溢出</h3><p>  浮点数的溢出包括上溢和下溢。上溢是指浮点数的阶码超过了最大值的表示范围，IEEE754定义了正无穷和负无穷的数值，所有的浮点数必须大于负无穷，小于正无穷，上溢时CPU需要停止运算，处理溢出中断；<br>  下溢是指浮点数阶码小于最小值的表述范围，即存在最大的负浮点数和最小的正浮点数，如果大于最大的负浮点数且小于0或小于最小正浮点数且大于0，则为下溢，下溢一般把数据清零，直接当0处理，CPU正常运行。<br>  <img src="2.png" alt="溢出"></p>
+<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><ol>
+<li><p>-289.53125f在內存是怎么样保存的？<br>第一步：将整数和小数部分分别转换为二进制， 整数部分采用除2取余办法得到100100001，小数部分采用乘2取整的方法得到0.10001， 合起来尾数为10010000ß1.10001；<br>第二步：规格化。将尾数右移，同时阶码加1（即右规），得到尾数1.0010000110001, 阶码真值+8，注意IEEE754采用隐藏最高位1的表示法，短浮点数尾数为23位，后面补0，所以尾数为00100000110001000000000；<br>第三步：将阶码真值转为移码。短浮点型阶码为8位，偏移量为127，所以最后阶码为：10000111；<br>第四步：加上符号为1，得到最终的二进制1,10000111;00100001100010000000000。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(toBinaryStringFormat(-<span class="number">289.53125f</span>));</span><br><span class="line"><span class="comment">//out: 1,10000111;00100001100010000000000</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IEEE754 把数符放到第一部分，阶码放到第二部分且用移码表示，尾数放到第三部分且规格化的目的？<br>都是为了方便浮点数比较，如果数符不同，比较一位就能区分大小，显然正大负小，如果数符相同，比较阶码，由于尾数都是规格化的且阶码是用移码表示，所以阶码大的，数值越大，如果阶码还相同，再去比较尾数大小，所有过程等价于两个有符号整型的比较。</p>
+</li>
+<li><p>IEEE754 短浮点数总共32bit，最多有区别地表示2^32个数值, 为啥却能表示那么大的浮点数范围（-3.40E+38 ~ +3.40E+38）？<br>由于任意范围的浮点数个数都是无穷的，浮点数不能像整型那样，覆盖表示范围内的所有数值，所以才会有精度问题，通常绝对值越靠近0的，覆盖的越密，越越远的也越稀疏，没有覆盖到的值，与最近的值相等，类似于连续值到离散值的采样。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> f3 = <span class="number">100000.001f</span>;</span><br><span class="line"><span class="keyword">float</span> f4 = <span class="number">100000.0f</span>;</span><br><span class="line"><span class="keyword">float</span> f34 = Float.intBitsToFloat(Float.floatToRawIntBits(f4));</span><br><span class="line"><span class="keyword">float</span> f5 = <span class="number">999992323.0f</span>;</span><br><span class="line"><span class="keyword">float</span> f6 = <span class="number">999992300.0f</span>;</span><br><span class="line"><span class="keyword">float</span> f56 = Float.intBitsToFloat(Float.floatToRawIntBits(f6));</span><br><span class="line"><span class="keyword">float</span> f7 = <span class="number">0.001f</span>;</span><br><span class="line"><span class="keyword">float</span> f8 = <span class="number">100000.0f</span>;</span><br><span class="line">System.out.println(f3==f4);</span><br><span class="line">System.out.println(f34);</span><br><span class="line"><span class="comment">//true  100000.0f f3右规丢失精度, f4可以精确表示, 內存值为100000.0f</span></span><br><span class="line">System.out.println(f5==f6);</span><br><span class="line">System.out.println(f56);</span><br><span class="line"><span class="comment">//true  999992320.0f f5,f6右规均丢失精度，內存值为999992320.0f</span></span><br><span class="line">System.out.println(f7 + f8);</span><br><span class="line"><span class="comment">//100000.0f 浮点数相加过程中，需要对阶，阶数小的向阶数大的对齐， </span></span><br><span class="line"><span class="comment">// f7在对阶过程中精度丢失，变成了0</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Java-Float类"><a href="#Java-Float类" class="headerlink" title="Java Float类"></a>Java Float类</h2><p>Java Float类是对原生数据类型float的包装类，只有一个私有的不可变的(final)成员变量value, Float继承自Number抽象类（主要包含了各种基本数据类型转换方法），实现了comparable接口。</p>
+<h3 id="Float类的几个常量和特殊值"><a href="#Float类的几个常量和特殊值" class="headerlink" title="Float类的几个常量和特殊值"></a>Float类的几个常量和特殊值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(toBinaryStringFormat(Float.POSITIVE_INFINITY));</span><br><span class="line"><span class="comment">//0,11111111;00000000000000000000000 正无穷大, 1.0f/0.0</span></span><br><span class="line">System.out.println(toBinaryStringFormat(Float.NEGATIVE_INFINITY));</span><br><span class="line"><span class="comment">//1,11111111;00000000000000000000000 负无穷大，-1.0f/0.0</span></span><br><span class="line">System.out.println(toBinaryStringFormat(Float.NaN));</span><br><span class="line">System.out.println(Float.NaN != Float.NaN);</span><br><span class="line"><span class="comment">//0,11111111;10000000000000000000000 true 非数字，和自身不相等,[其实阶码真值为128，</span></span><br><span class="line"><span class="comment">// 除了正无穷与负无穷，都是NaN]</span></span><br><span class="line">System.out.println(toBinaryStringFormat(Float.MIN_NORMAL));</span><br><span class="line"><span class="comment">//0,00000001;00000000000000000000000 规格化得最小正数，即2^-126</span></span><br><span class="line">System.out.println(toBinaryStringFormat(Float.MAX_VALUE));</span><br><span class="line"><span class="comment">//0,11111110;11111111111111111111111 最大正数（也是规格化的） 即 (2 - 2^-23）* 2^127</span></span><br><span class="line">System.out.println(toBinaryStringFormat(Float.MIN_VALUE));</span><br><span class="line"><span class="comment">//0,00000000;00000000000000000000001 非规格化最小正数， 即2^-149</span></span><br><span class="line">System.out.println(toBinaryStringFormat(-<span class="number">0.0f</span>));</span><br><span class="line"><span class="comment">//1,00000000;00000000000000000000000 负0</span></span><br><span class="line">System.out.println(toBinaryStringFormat(<span class="number">0.0f</span>));</span><br><span class="line"><span class="comment">//0,00000000;00000000000000000000000 正0</span></span><br><span class="line">System.out.println(-<span class="number">0.0f</span> == <span class="number">0.0f</span>);</span><br><span class="line"><span class="comment">//true 数值比较</span></span><br><span class="line">System.out.println(<span class="keyword">new</span> Float(-<span class="number">0.0f</span>).equals(<span class="keyword">new</span> Float(<span class="number">0.0f</span>)));</span><br><span class="line"><span class="comment">//false 参考hashcode 和 equals的实现，比较的是bits是否相等</span></span><br><span class="line">System.out.println(Math.max(-<span class="number">0.0f</span>, <span class="number">0.0f</span>));</span><br><span class="line">System.out.println(Math.max(Float.POSITIVE_INFINITY,Float.NaN));</span><br><span class="line">System.out.println(Math.min(Float.NEGATIVE_INFINITY,Float.NaN));</span><br><span class="line"></span><br><span class="line"><span class="comment">//0.0 NaN NaN IEEE754规定，正0大于负0, NaN与任何数字比较大小都是NaN</span></span><br><span class="line"></span><br><span class="line">System.out.println(Float.intBitsToFloat(<span class="number">0x7f800001</span>));</span><br><span class="line">System.out.println(Float.intBitsToFloat(<span class="number">0x7f800002</span>));</span><br><span class="line">System.out.println(<span class="keyword">new</span> Float(Float.intBitsToFloat(<span class="number">0x7f800001</span>))</span><br><span class="line">.equals(Float.intBitsToFloat(<span class="number">0x7f800002</span>)));</span><br><span class="line"><span class="comment">//NaN NaN true 0,11111111;00000000000000000000001 阶码为128，尾数不为0，都是NaN,</span></span><br><span class="line"><span class="comment">//虽然NaN != NaN， 但是equals, 具体参考equals的实现</span></span><br><span class="line">System.out.println(Float.intBitsToFloat(<span class="number">0x000000010</span>));</span><br><span class="line"><span class="comment">//2.24E-44 0,00000000;00000000000000000100000, 阶码为-127时，尾数可以不用规格化，</span></span><br><span class="line"><span class="comment">// 如果规格化，值肯定就是0了</span></span><br><span class="line"><span class="keyword">float</span> f9 = <span class="number">0.00000000000000000000000000000000000000000001f</span>;</span><br><span class="line">System.out.println(toBinaryStringFormat(f9));</span><br><span class="line"><span class="comment">//0,00000000;00000000000000000000111, 阶码为-127时，不规格化，可以保证数据精度。</span></span><br></pre></td></tr></table></figure>
+<p>剩下的MAX_EXPONENT=127，MAX_EXPONENT=-126分别表示有穷数的最大阶码真值和规格化的尾数的最小阶码真值，对于-127的阶码，可以是非规格化的尾数</p>
+<h3 id="Float类的方法"><a href="#Float类的方法" class="headerlink" title="Float类的方法"></a>Float类的方法</h3><ol>
+<li>public static native int floatToRawIntBits(float value) 原生方法，把一个浮点数转换为IEEE754规则填充的bits对应的int值；</li>
+<li><p>public static int floatToIntBits(float value) 调用1的方法，把所有的NaN都用Float.NaN对应整数值返回, 因此，所有NaN的返回值都一样的；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">floatToIntBits</span><span class="params">(<span class="keyword">float</span> value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = floatToRawIntBits(value);</span><br><span class="line">    <span class="comment">// Check for NaN based on values of bit fields, maximum</span></span><br><span class="line">    <span class="comment">// exponent and nonzero significand.</span></span><br><span class="line">    <span class="keyword">if</span> ( ((result &amp; FloatConsts.EXP_BIT_MASK) ==</span><br><span class="line">          FloatConsts.EXP_BIT_MASK) &amp;&amp;                <span class="comment">//阶码为最大值 且</span></span><br><span class="line">         (result &amp; FloatConsts.SIGNIF_BIT_MASK) != <span class="number">0</span>) <span class="comment">//尾数非0</span></span><br><span class="line">        result = <span class="number">0x7fc00000</span>;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>hashcode and equals 使用floatToIntBits作为hashcode, equals比较的也是floatToIntBits是否相等， 所以NaN!=NaN，但是equals, -0.0f == 0.0f, 但是 not equals;</p>
+</li>
+<li>public static native float intBitsToFloat(int bits) 原生方法，把int代表的IEEE754规则填充的bits转换为浮点数；</li>
+<li><p>public static int compare(float f1, float f2) 按照f1,f2转换的floatToIntBits对应的有符号int比较大小，所以，compare(NaN,NaN) == 0, compare(-0.0, 0.0) == -1</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(<span class="keyword">float</span> f1, <span class="keyword">float</span> f2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (f1 &lt; f2)             <span class="comment">// 任意一个参数是NaN, 都为false</span></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;           <span class="comment">// Neither val is NaN, thisVal is smaller</span></span><br><span class="line">    <span class="keyword">if</span> (f1 &gt; f2)             <span class="comment">// 任意一个参数是NaN, 都为false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;            <span class="comment">// Neither val is NaN, thisVal is larger</span></span><br><span class="line">    <span class="comment">// Cannot use floatToRawIntBits because of possibility of NaNs.</span></span><br><span class="line">    <span class="keyword">int</span> thisBits    = Float.floatToIntBits(f1);</span><br><span class="line">    <span class="keyword">int</span> anotherBits = Float.floatToIntBits(f2);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (thisBits == anotherBits ?  <span class="number">0</span> : <span class="comment">// Values are equal</span></span><br><span class="line">            (thisBits &lt; anotherBits ? -<span class="number">1</span> : <span class="comment">// (-0.0, 0.0) or (!NaN, NaN)</span></span><br><span class="line">             <span class="number">1</span>));                          <span class="comment">// (0.0, -0.0) or (NaN, !NaN)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>parseFloat 是将字符串转换为浮点数，如果无法转换，抛NumberFormatException, valueOf是一个boxing操作，在数值赋值给一个Float类（如Float a = 2.1f）会默认调用该方法。</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>浮点数在编程中经常用到，如果使用不当，会出现一些意想不到的错误，很难排查，只有明白底层的存储和运算规则，才能做到胸有成竹。关于浮点数的加减乘除的实现，可以参考唐朔飞《计算机组成原理（第2版）》中央处理器一章。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>唐朔飞.《计算机组成原理（第2版）》 高等教育出版社[M]</li>
+<li><a href="https://www.zhihu.com/question/21711083" target="_blank" rel="noopener">IEEE 754格式是什么?</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="amazing0218 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="amazing0218 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java-基础/" rel="tag"># Java 基础</a>
+          
+            <a href="/tags/浮点数/" rel="tag"># 浮点数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/04/05/java-basis-for-integer/" rel="next" title="Java 基础之整型">
+                <i class="fa fa-chevron-left"></i> Java 基础之整型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/04/12/java-basis-for-character/" rel="prev" title="Java 基础之字符">
+                Java 基础之字符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.png"
+               alt="amazing0218" />
+          <p class="site-author-name" itemprop="name">amazing0218</p>
+           
+              <p class="site-description motion-element" itemprop="description">关注NOSQL、分布式、大数据、数据库等技术</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/amazing0218" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ifeve.com/" title="并发编程网" target="_blank">并发编程网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IEEE754标准"><span class="nav-number">1.</span> <span class="nav-text">IEEE754标准</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阶码"><span class="nav-number">1.1.</span> <span class="nav-text">阶码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尾数"><span class="nav-number">1.2.</span> <span class="nav-text">尾数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#溢出"><span class="nav-number">1.3.</span> <span class="nav-text">溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#疑问"><span class="nav-number">1.4.</span> <span class="nav-text">疑问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Float类"><span class="nav-number">2.</span> <span class="nav-text">Java Float类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Float类的几个常量和特殊值"><span class="nav-number">2.1.</span> <span class="nav-text">Float类的几个常量和特殊值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Float类的方法"><span class="nav-number">2.2.</span> <span class="nav-text">Float类的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amazing0218</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://amazing.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://amazing0218.github.io/2014/04/06/java-basis-for-floating-point/';
+          this.page.identifier = '2014/04/06/java-basis-for-floating-point/';
+          this.page.title = 'Java 基础之浮点数';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://amazing.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

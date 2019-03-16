@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/1.jpg">
 <meta property="og:image" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/4.jpg">
 <meta property="og:image" content="http://amazing0218.github.io/2016/04/15/垃圾收集器与内存分配策略/3.jpg">
-<meta property="og:updated_time" content="2018-10-14T11:45:03.402Z">
+<meta property="og:updated_time" content="2019-03-16T03:27:47.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="垃圾收集器与内存分配策略">
 <meta name="twitter:description" content="概述　　GC需要考虑的三件事情：哪些内存需要回收、何时回收、怎么回收。了解GC是为了更加熟练地排查内存溢出、内存泄漏等问题，根据应用特点，选择合适的JVM参数，调优JVM。在Java各个运行时数据区域，线程私有的虚拟机栈、本地方法栈、程序计数器的内存分配和回收都具有确定性，随线程生而生，随线程死而死。Java堆和方法区是多线程共享的，对象的分配和回收都是动态的，后续讲到的GC也主要针对这两个区域。">
@@ -119,7 +119,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: true,
@@ -131,7 +131,7 @@
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
+      hits: {"per_page":5},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
   };
@@ -437,7 +437,7 @@
 
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>　　GC需要考虑的三件事情：哪些内存需要回收、何时回收、怎么回收。了解GC是为了更加熟练地排查内存溢出、内存泄漏等问题，根据应用特点，选择合适的JVM参数，调优JVM。在Java各个运行时数据区域，线程私有的虚拟机栈、本地方法栈、程序计数器的内存分配和回收都具有确定性，随线程生而生，随线程死而死。Java堆和方法区是多线程共享的，对象的分配和回收都是动态的，后续讲到的GC也主要针对这两个区域。</p>
-<h2 id="收集对象的判断"><a href="#收集对象的判断" class="headerlink" title="收集对象的判断"></a>收集对象的判断</h2><p>　　对于GC而言，首先需要关注的问题就是哪些对象可以回收，目前有两种主流做法：引用计数算法（<a href="http://hbprotoss.github.io/posts/pythonla-ji-hui-shou-ji-zhi.html" target="_blank" rel="noopener">python</a>)和可达性分析算法（java)。</p>
+<h2 id="收集对象的判断"><a href="#收集对象的判断" class="headerlink" title="收集对象的判断"></a>收集对象的判断</h2><p>　　对于GC而言，首先需要关注的问题就是哪些对象可以回收，目前有两种主流做法：引用计数算法（<a href="http://hbprotoss.github.io/posts/pythonla-ji-hui-shou-ji-zhi.html" target="_blank" rel="noopener">python</a>)和可达性分析算法（java)。<br><a id="more"></a></p>
 <h3 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h3><ul>
 <li>定义：每个对象都有一个引用计数器，当被引用时，计数器加1，当解除引用时，计数减1，当计数器为0时，表示该对象可以回收。</li>
 <li>优点：实现简单、判断效率高</li>
@@ -516,14 +516,6 @@
     
     
 
-    
-      <div>
-        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/images/public.jpg" alt="amazing0218 wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
-</div>
-
-      </div>
     
 
     
@@ -674,7 +666,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -685,7 +677,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -696,7 +688,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -785,7 +777,7 @@
         <div class="copyright" >
   
   &copy;  2014 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java 基础,字符,Unicode,UTF-8,UTF-16,UTF-32," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="UnicodeUnicode是由Xerox、Apple等软件制造商于1988年组成的统一码联盟发起的非盈利项目，旨在对世界上所有的文字进行统一编码，消除多语言编码不兼容问题，下面是关于Unicode相关术语(引用图说我对Unicode的几点理解)：  代码点(code point):  Unicode希望为每个字符分配唯一的一个整数，这个整数就叫代码点。 代码空间(code space):  所有">
+<meta name="keywords" content="Java 基础,字符,Unicode,UTF-8,UTF-16,UTF-32">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 基础之字符">
+<meta property="og:url" content="http://amazing0218.github.io/2014/04/12/java-basis-for-character/index.html">
+<meta property="og:site_name" content="一鸣惊人">
+<meta property="og:description" content="UnicodeUnicode是由Xerox、Apple等软件制造商于1988年组成的统一码联盟发起的非盈利项目，旨在对世界上所有的文字进行统一编码，消除多语言编码不兼容问题，下面是关于Unicode相关术语(引用图说我对Unicode的几点理解)：  代码点(code point):  Unicode希望为每个字符分配唯一的一个整数，这个整数就叫代码点。 代码空间(code space):  所有">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://amazing0218.github.io/2014/04/12/java-basis-for-character/1.png">
+<meta property="og:image" content="http://amazing0218.github.io/2014/04/12/java-basis-for-character/2.png">
+<meta property="og:updated_time" content="2019-03-16T03:10:07.601Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 基础之字符">
+<meta name="twitter:description" content="UnicodeUnicode是由Xerox、Apple等软件制造商于1988年组成的统一码联盟发起的非盈利项目，旨在对世界上所有的文字进行统一编码，消除多语言编码不兼容问题，下面是关于Unicode相关术语(引用图说我对Unicode的几点理解)：  代码点(code point):  Unicode希望为每个字符分配唯一的一个整数，这个整数就叫代码点。 代码空间(code space):  所有">
+<meta name="twitter:image" content="http://amazing0218.github.io/2014/04/12/java-basis-for-character/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":5},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://amazing0218.github.io/2014/04/12/java-basis-for-character/"/>
+
+
+
+
+
+  <title>Java 基础之字符 | 一鸣惊人</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-125477179-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一鸣惊人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">骐骥一跃不能十步，驽马十驾功在不舍</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2014/04/12/java-basis-for-character/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="amazing0218">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一鸣惊人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 基础之字符</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-04-12T11:31:02+08:00">
+                2014-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-基础系列/" itemprop="url" rel="index">
+                    <span itemprop="name">Java 基础系列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/04/12/java-basis-for-character/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/04/12/java-basis-for-character/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p><a href="https://zh.wikipedia.org/zh-cn/Unicode" target="_blank" rel="noopener">Unicode</a>是由Xerox、Apple等软件制造商于1988年组成的统一码联盟发起的非盈利项目，旨在对世界上所有的文字进行统一编码，消除多语言编码不兼容问题，下面是关于Unicode相关术语(引用<a href="https://blog.csdn.net/zxhoo/article/details/38819517" target="_blank" rel="noopener">图说我对Unicode的几点理解</a>)：</p>
+<ul>
+<li><strong>代码点(code point)</strong>:  Unicode希望为每个字符分配唯一的一个整数，这个整数就叫代码点。</li>
+<li><strong>代码空间(code space)</strong>:  所有的代码点构成的集合就叫代码空间，Unicode的代码空间一共包含1,114,112个代码点，即0x000000 ~ 0x10FFFF, 目前已经分配大约11w个代码点。</li>
+<li><p><strong>代码平面(code plane)</strong>:  Unicode将代码空间分成了17个代码平面， 每个代码平面包含65536个代码点，即#0~#16, #0平面叫基本多语言平面（Basic Multilingual Plane, BMP）,其他平面叫增补平面（Supplementary Planes），目前大部分增补平面都是空着的。</p>
+<a id="more"></a>
+  <img src="/2014/04/12/java-basis-for-character/1.png" title="代码平面">
+<p>  下面是这些平面的名字和用途:</p>
+<ul>
+<li><strong>Plane#0 BMP（Basic Multilingual Plane）</strong> 大部分常用的字符都坐落在这个平面内，比如ASCII字符，汉字等。</li>
+<li><strong>Plane#1 SMP（Supplementary Multilingual Plane）</strong> 这个平面定义了一些古老的文字，不常用。</li>
+<li><strong>Plane#2 SIP（Supplementary Ideographic Plane）</strong> 这个平面主要是一些BMP中没有包含汉字。</li>
+<li><strong>Plane#14 SSP（Supplementary Special-purpose Plane）</strong> 这个平面定义了一些非图形字符。</li>
+<li><strong>Plane#15 SPUA-A（Supplementary Private Use Area A）</strong></li>
+<li><p><strong>Plane#16 SPUA-B（Supplementary Private Use Area B）</strong></p>
+<p>其中BMP是最重要的代码平面，绝大部分常用字符都定义在这个平面内，其结构如下：</p>
+<img src="/2014/04/12/java-basis-for-character/2.png" title="BMP">
+<p>在BMP中定义的代码点包括：</p>
+</li>
+<li><p><strong>ASCII</strong> ASCII总共有128个字符，占据了BMP的前128个代码点(上图绿线)</p>
+</li>
+<li><strong>ISO-8859-1</strong> 共256个字符，占据了BMP的前256个代码点（上图绿线+蓝线）</li>
+<li><strong>CJK Unified Ideographs</strong> 上图的红色区域（占据BMP大约1/3）定义了两万多个汉字，其中前20,902个汉字是按照《康熙字典》里笔画顺序排列的</li>
+<li><strong>Surrogate Code Points</strong> 从0xD800到0xDBFF的1024个代码点是High-surrogate代码点，从0xDC00到0xDFFF的1024个代码点是Low-surrogate代码点。这2048个代码点并不是有效的字符代码点，它们是为UTF编码保留的。一个High-surrogate代码点和一个Low-surrogate代码点组成一个代理对（Surrogate Pair），可以在UTF-16里编码BMP之外的某个代码点（1024^2+65,536=1,114,112）。</li>
+</ul>
+</li>
+<li><p><strong>码元(code unit)</strong>:  是指一个已编码的文本中具有最短的比特组合的单元。对于UTF-8来说，码元是8比特长；对于UTF-16来说，码元是16比特长；对于UTF-32来说，码元是32比特长。</p>
+</li>
+</ul>
+<p>事实上，在统一码盟之前，国际标准化组织（ISO）也在做同一件事，并制定了ISO-10646标准，即UCS(<a href="https://zh.wikipedia.org/zh-cn/%E9%80%9A%E7%94%A8%E5%AD%97%E7%AC%A6%E9%9B%86" target="_blank" rel="noopener">Universal Character Set</a>), UCS和Unicode编码方式类似，都是将字符集映射为一个唯一的整数，属于<a href="https://zh.wikipedia.org/zh-cn/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">现代编码模型</a>第二层概念，即编码字符集。<br>Unicode的实现方式不同于编码方式，一个字符的Unicode编码是确定的，但是在实际传输过程中，由于不同系统平台的设计不一致性，以及出于节省空间的目的，对Unicode编码的实现方式有所不同。Unicode的实现方式称为Unicode转换格式（Unicode Transformation Format，简称为UTF），常见的Unicode实现方式包括UTF-8、UTF-16、UTF-32、GB18030等。</p>
+<h2 id="UTF-8、UTF-16、UTF-32"><a href="#UTF-8、UTF-16、UTF-32" class="headerlink" title="UTF-8、UTF-16、UTF-32"></a>UTF-8、UTF-16、UTF-32</h2><p><strong><a href="https://zh.wikipedia.org/zh-cn/UTF-32" target="_blank" rel="noopener">UTF-32</a></strong> 是Unicode编码32位的实现方式，即对Unicode每个代码点使用4个字节编码， 编码值与代码点的值相等，码元为4字节。优点：定长编码，方便检索第N个字符；缺点：空间浪费较多，尤其是针对英文文档，且不兼容ASCII编码， 所以实际上基本没有使用。<br><strong><a href="https://zh.wikipedia.org/zh-cn/UTF-16" target="_blank" rel="noopener">UTF-16</a></strong> 是Unicode编码16或32位的实现方式，即对Unicode BMP代码平面的每个码点使用2个字节编码，其他增补平面使用4字节编码，属于变长编码， 码元2字节。对于BMP代码平面（0x0000~0xFFFF）的代码点，使用两个字节编码，编码值和码点相等。对于增补平面（0x10000~0x10FFFF）的代码点，需要使用BMP中的代理代码点来表示，其编码算法如下：</p>
+<ol>
+<li>判断代码点值x是否在[0, 0xFFFF]内， 是，使用两个字节编码， 否则第2步；</li>
+<li>代码点值减去0x10000, 得到的值y必定在[0, 0xFFFFF]内， 所以可用20bit编码；</li>
+<li>将y值的高10bit加上0xD800得到高位代理代码点，将y值的低10bit加上0xDC00得低位代理代码点，形成一个代理对，共四个字节。</li>
+</ol>
+<p>由于高位代理代码点、低位代理代码点、BMP有效代码点三者互不重叠，所以解码很简单，同时也意味着UTF-16是 <strong>自同步(self-synchronizing)</strong> 的，即通过检查一个码元，就能断定下一个字符的起始码元位置，而不必重头开始分析，以确定字符码元的边界。UTF-16码元是2字节，有大端（BE）和小端(LE)概念，所以在传输和存储的时候，需要确定字节序，常常会在数据前面加一个BOM(Byte Order Mark), 大端BOM=U+FEFF, 小端BOM=U+FFFE。<br>UCS-2是UTF-16的子集，即BMP中的字符，UCS-2与UTF-16编码完全一样， 但是USC-2不支持Unicode增补平面的字符。Java中的Unicode编码实现方式，也是使用的UTF-16编码， 并且<a href="https://jcp.org/en/jsr/detail?id=204" target="_blank" rel="noopener">JSR 204</a>开始对Unicode增补平面的字符支持。<br>UTF-16优点：大部分常用字符都使用2个字节，相对于UTF-32比较节省空间，而且是自同步，意味传输出错，可以自动恢复，减少信息丢失。缺点：不兼容ASCII编码（老的英文文档用UTF-16解码打不开）, 对于英文字母为主的字符流，还是比较占空间, 还有烦人的字节序问题。<br><strong><a href="https://zh.wikipedia.org/zh-cn/UTF-8" target="_blank" rel="noopener">UTF-8</a></strong> 是Unicode编码变长实现方式，与赫夫曼编码类似，也是一种前缀编码（即任意字符的编码，不可能是其他字符编码的一个子串），所以也具有自同步特性。UTF-8最初可以使用1~6个字节为每个字符编码，2003年RFC 3629重新规定，只能使用最多4个字节，具体如下：</p>
+<ol>
+<li>0x00~0x7F,即ASCII字符使用一个字节编码；</li>
+<li>0x80~0x7FF,即拉丁文，希腊文、阿拉伯文等字符，使用两个字节编码；</li>
+<li>0x800~0xFFFF, 即BMP中的其他字符，包括绝大部分中文，使用三个字节编码；</li>
+<li>0x10000~0x10FFFF, 即增补平面字符，使用四个字节编码。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">代码码点范围</th>
+<th style="text-align:left">二进制</th>
+<th style="text-align:left">UTF-8编码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0x00 ~ 0x7F(128个）</td>
+<td style="text-align:left">0zzzzzzz</td>
+<td style="text-align:left">0zzzzzzz</td>
+</tr>
+<tr>
+<td style="text-align:left">0x80 ~ 0x7FF（1920个）</td>
+<td style="text-align:left">00000yyy yyzzzzzz</td>
+<td style="text-align:left">110yyyyy 10zzzzzz</td>
+</tr>
+<tr>
+<td style="text-align:left">0x800 ~ 0xD7FF 及 0xE000 ~ 0xFFFF(61440个）</td>
+<td style="text-align:left">xxxxyyyy yyzzzzzz</td>
+<td style="text-align:left">1110xxxx 10yyyyyy 10zzzzzz</td>
+</tr>
+<tr>
+<td style="text-align:left">0x1000 ~ 0x10FFFF (1048576个）</td>
+<td style="text-align:left">000wwwxx xxxxyyyy yyzzzzzz</td>
+<td style="text-align:left">11110www 10xxxxxx 10yyyyyy 10zzzzzz</td>
+</tr>
+</tbody>
+</table>
+<p>UTF-8的优点</p>
+<ol>
+<li>兼容ascii编码；</li>
+<li>因为码元为一个字节，所以没有字节序问题；</li>
+<li>对于以英文为主的互联网而言，能大大减少文件大小；</li>
+</ol>
+<p>UTF-8的缺点</p>
+<ol>
+<li>变长编码，检索字符不方便；</li>
+<li>对其他字符，如中文字符而言，比较占空间，因此以中文为主的网页，可以选择Unicode的GB18030实现方式。</li>
+</ol>
+<h2 id="Java-Character"><a href="#Java-Character" class="headerlink" title="Java Character"></a>Java Character</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="noopener">字符编码笔记：ASCII，Unicode 和 UTF-8</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81" target="_blank" rel="noopener">字符编码</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/UTF-8" target="_blank" rel="noopener">UTF-8</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/UTF-16" target="_blank" rel="noopener">UTF-16</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/UTF-16" target="_blank" rel="noopener">UTF-32</a></li>
+<li><a href="https://objccn.io/issue-9-1/" target="_blank" rel="noopener">NString 与 Unicode</a></li>
+<li><a href="https://www.jianshu.com/p/35f5f7d07732" target="_blank" rel="noopener">Unicode和UTF-8、UTF-16、UTF-32</a></li>
+<li><a href="https://blog.csdn.net/thl789/article/details/7506133" target="_blank" rel="noopener">Unicode编码及其实现：UTF-16、UTF-8，and more</a></li>
+<li><a href="https://www.zhihu.com/question/35214880" target="_blank" rel="noopener">编程语言的字符编码选择UTF-8和UTF-16的优缺点？</a></li>
+<li><a href="https://www.unicode.org/charts/" target="_blank" rel="noopener">Unicode Charts</a></li>
+<li><a href="https://blog.whezh.com/encoded/" target="_blank" rel="noopener">彻底弄懂 Unicode 编码</a></li>
+<li><a href="https://blog.csdn.net/zxhoo/article/details/38819517" target="_blank" rel="noopener">图说我对Unicode的几点理解</a></li>
+<li><a href="https://jcp.org/en/jsr/detail?id=204" target="_blank" rel="noopener">JSR 204: Unicode Supplementary Character Support</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="amazing0218 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="amazing0218 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java-基础/" rel="tag"># Java 基础</a>
+          
+            <a href="/tags/字符/" rel="tag"># 字符</a>
+          
+            <a href="/tags/Unicode/" rel="tag"># Unicode</a>
+          
+            <a href="/tags/UTF-8/" rel="tag"># UTF-8</a>
+          
+            <a href="/tags/UTF-16/" rel="tag"># UTF-16</a>
+          
+            <a href="/tags/UTF-32/" rel="tag"># UTF-32</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/04/06/java-basis-for-floating-point/" rel="next" title="Java 基础之浮点数">
+                <i class="fa fa-chevron-left"></i> Java 基础之浮点数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/08/Java内存区域与内存溢出异常/" rel="prev" title="Java内存区域与内存溢出异常">
+                Java内存区域与内存溢出异常 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/head.png"
+               alt="amazing0218" />
+          <p class="site-author-name" itemprop="name">amazing0218</p>
+           
+              <p class="site-description motion-element" itemprop="description">关注NOSQL、分布式、大数据、数据库等技术</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/amazing0218" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ifeve.com/" title="并发编程网" target="_blank">并发编程网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.importnew.com/" title="ImportNew" target="_blank">ImportNew</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode"><span class="nav-number">1.</span> <span class="nav-text">Unicode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UTF-8、UTF-16、UTF-32"><span class="nav-number">2.</span> <span class="nav-text">UTF-8、UTF-16、UTF-32</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-Character"><span class="nav-number">3.</span> <span class="nav-text">Java Character</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2014 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">amazing0218</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://amazing.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://amazing0218.github.io/2014/04/12/java-basis-for-character/';
+          this.page.identifier = '2014/04/12/java-basis-for-character/';
+          this.page.title = 'Java 基础之字符';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://amazing.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

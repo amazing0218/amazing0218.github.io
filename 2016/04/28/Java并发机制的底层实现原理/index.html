@@ -103,7 +103,7 @@
 <meta property="og:description" content="Volatile 的应用　　在Java多线程并发编程中，synchronized 和 volatile 都极为重要，volatile 可以看做是轻量级sychronized, 在使用得当的情况下，volatile的使用与执行成本会更低，因为它不会引起线程的上下文切换和调度。 Volatile 的定义和实现原理定义　　JLS3中对volatile定义如下：如果一个字段被申明为volatile, Ja">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://amazing0218.github.io/2016/04/28/Java并发机制的底层实现原理/1.jpg">
-<meta property="og:updated_time" content="2018-10-14T12:11:58.184Z">
+<meta property="og:updated_time" content="2019-03-16T03:27:47.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发机制的底层实现原理">
 <meta name="twitter:description" content="Volatile 的应用　　在Java多线程并发编程中，synchronized 和 volatile 都极为重要，volatile 可以看做是轻量级sychronized, 在使用得当的情况下，volatile的使用与执行成本会更低，因为它不会引起线程的上下文切换和调度。 Volatile 的定义和实现原理定义　　JLS3中对volatile定义如下：如果一个字段被申明为volatile, Ja">
@@ -116,7 +116,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: true,
@@ -128,7 +128,7 @@
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
+      hits: {"per_page":5},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
   };
@@ -437,7 +437,8 @@
 <h3 id="Volatile-的定义和实现原理"><a href="#Volatile-的定义和实现原理" class="headerlink" title="Volatile 的定义和实现原理"></a>Volatile 的定义和实现原理</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>　　<a href="https://docs.oracle.com/javase/specs/jls/se6/html/classes.html#8.3.1.4" target="_blank" rel="noopener">JLS3</a>中对volatile定义如下：如果一个字段被申明为volatile, Java线程的内存模型确保所有线程看到这个变量是一致的。简而言之，volatile变量具有如下两个特点：</p>
 <ul>
 <li>可见性： 对于一个volatile变量的读，总能看到该变量最后一次（被任何线程）写入的值。</li>
-<li>原子性： 对于任意单个volatile变量的读/写都是原子的，但是类似于++这种复合操作是不具有原子性的。</li>
+<li>原子性： 对于任意单个volatile变量的读/写都是原子的，但是类似于++这种复合操作是不具有原子性的。<a id="more"></a>
+</li>
 </ul>
 <h4 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h4><p>　　CPU相关术语：<br>  <img src="1.jpg" alt="CPU的术语定义"><br>　　与普通变量相比，对volatile修饰的变量写入，会在对应的汇编指令中多一条Lock前缀指令，该指令在多核处理器中产生如下两种结果：</p>
 <ul>
@@ -461,14 +462,6 @@
     
     
 
-    
-      <div>
-        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/images/public.jpg" alt="amazing0218 wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
-</div>
-
-      </div>
     
 
     
@@ -619,7 +612,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -630,7 +623,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -641,7 +634,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -730,7 +723,7 @@
         <div class="copyright" >
   
   &copy;  2014 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
