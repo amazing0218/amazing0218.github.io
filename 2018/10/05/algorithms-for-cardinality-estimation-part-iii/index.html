@@ -98,16 +98,16 @@
 <meta name="keywords" content="算法,基数计数,大数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="(转)解读Cardinality Estimation算法（第三部分：LogLog Counting）">
-<meta property="og:url" content="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-iii/index.html">
+<meta property="og:url" content="http://amazing0218.github.io/2018/10/05/algorithms-for-cardinality-estimation-part-iii/index.html">
 <meta property="og:site_name" content="一鸣惊人">
 <meta property="og:description" content="上一篇文章介绍的Linear Counting算法相较于直接映射bitmap的方法能大大节省内存（大约只需后者1/10的内存），但毕竟只是一个常系数级的降低，空间复杂度仍然为$O(N_{max})$。而本文要介绍的LogLog Counting却只有$O(log_2(log_2(N_{max})))$。例如，假设基数的上限为1亿，原始bitmap方法需要12.5M内存，而LogLog Counti">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-iii/1.png">
-<meta property="og:updated_time" content="2019-03-16T03:21:48.259Z">
+<meta property="og:image" content="http://amazing0218.github.io/2018/10/05/algorithms-for-cardinality-estimation-part-iii/1.png">
+<meta property="og:updated_time" content="2019-03-16T03:46:43.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(转)解读Cardinality Estimation算法（第三部分：LogLog Counting）">
 <meta name="twitter:description" content="上一篇文章介绍的Linear Counting算法相较于直接映射bitmap的方法能大大节省内存（大约只需后者1/10的内存），但毕竟只是一个常系数级的降低，空间复杂度仍然为$O(N_{max})$。而本文要介绍的LogLog Counting却只有$O(log_2(log_2(N_{max})))$。例如，假设基数的上限为1亿，原始bitmap方法需要12.5M内存，而LogLog Counti">
-<meta name="twitter:image" content="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-iii/1.png">
+<meta name="twitter:image" content="http://amazing0218.github.io/2018/10/05/algorithms-for-cardinality-estimation-part-iii/1.png">
 
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-iii/"/>
+  <link rel="canonical" href="http://amazing0218.github.io/2018/10/05/algorithms-for-cardinality-estimation-part-iii/"/>
 
 
 
@@ -328,7 +328,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-iii/">
+    <link itemprop="mainEntityOfPage" href="http://amazing0218.github.io/2018/10/05/algorithms-for-cardinality-estimation-part-iii/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="amazing0218">
@@ -357,8 +357,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-09T13:04:11+08:00">
-                2018-09-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-05T13:04:11+08:00">
+                2018-10-05
               </time>
             
 
@@ -398,9 +398,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/09/09/algorithms-for-cardinality-estimation-part-iii/#comments" itemprop="discussionUrl">
+                <a href="/2018/10/05/algorithms-for-cardinality-estimation-part-iii/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/09/09/algorithms-for-cardinality-estimation-part-iii/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/10/05/algorithms-for-cardinality-estimation-part-iii/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,7 +505,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/09/algorithms-for-cardinality-estimation-part-ii/" rel="next" title="(转)解读Cardinality Estimation算法（第二部分：Linear Counting）">
+              <a href="/2018/10/05/algorithms-for-cardinality-estimation-part-ii/" rel="next" title="(转)解读Cardinality Estimation算法（第二部分：Linear Counting）">
                 <i class="fa fa-chevron-left"></i> (转)解读Cardinality Estimation算法（第二部分：Linear Counting）
               </a>
             
@@ -515,7 +515,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/09/algorithms-for-cardinality-estimation-part-iv/" rel="prev" title="(转)解读Cardinality Estimation算法（第四部分：HyperLogLog Counting及Adaptive Counting）">
+              <a href="/2018/10/06/algorithms-for-cardinality-estimation-part-iv/" rel="prev" title="(转)解读Cardinality Estimation算法（第四部分：HyperLogLog Counting及Adaptive Counting）">
                 (转)解读Cardinality Estimation算法（第四部分：HyperLogLog Counting及Adaptive Counting） <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -852,8 +852,8 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://amazing0218.github.io/2018/09/09/algorithms-for-cardinality-estimation-part-iii/';
-          this.page.identifier = '2018/09/09/algorithms-for-cardinality-estimation-part-iii/';
+          this.page.url = 'http://amazing0218.github.io/2018/10/05/algorithms-for-cardinality-estimation-part-iii/';
+          this.page.identifier = '2018/10/05/algorithms-for-cardinality-estimation-part-iii/';
           this.page.title = '(转)解读Cardinality Estimation算法（第三部分：LogLog Counting）';
         };
         var d = document, s = d.createElement('script');
